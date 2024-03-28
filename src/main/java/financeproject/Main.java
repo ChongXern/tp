@@ -13,7 +13,7 @@ import user.InactivityTimer;
 import userinterface.UI;
 
 public class Main {
-    public static void main(String[] args) throws SecurityException, ExceededAttemptsException {
+    public static void main(String[] args) throws SecurityException {
         Storage storage = new Storage("./data");
         TransactionManager manager = new TransactionManager();
 

@@ -20,7 +20,7 @@ public class Parser {
         this.ui = ui;
     }
 
-    public BaseCommand parseCommand(String command) throws IncompletePromptException, Exception {
+    public BaseCommand parseCommand(String command) throws Exception {
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
         switch (action) {
@@ -65,7 +65,6 @@ public class Parser {
             return new ExitCommand(commandParts);
         default:
             throw new IncompletePromptException(command);
-            // throw new Exception("Invalid command");
         }
     }
 }

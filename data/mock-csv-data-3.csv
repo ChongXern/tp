@@ -1,0 +1,15 @@
+Name,Amount,BaseDate,Category
+Stocks,400,Oct 24 2024 12:00,INVESTMENT
+Refund,100,Jun 23 2023 17:00,REFUND
+Groceries,-150,Jun 23 2023 18:30,SHOPPING
+Salary,2000,Mar 15 2024 09:00,INCOME
+Electric Bill,-75,Mar 20 2024 16:45,DEBT
+Car Loan Payment,-300,Mar 22 2024 11:30,DEBT
+Amazon Purchase,-50,Mar 24 2024 14:15,SHOPPING
+Birthday Gift,50,Mar 25 2024 08:00,GIFT
+Rental Income,800,Mar 27 2024 12:00,INCOME
+Dinner Out,70,Mar 27 2024 19:30,TREAT
+Laptop Repair Expense,-200,Mar 28 2024 10:45,OTHER
+Tax Refund,300,Mar 29 2024 15:30,REFUND
+Health Insurance Premium,-150,Mar 30 2024 09:30,INSURANCE
+"Bank Robbery at Pyongyang, DPRK",1000,Apr 1 2024 11:00,OTHER
