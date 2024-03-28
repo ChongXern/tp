@@ -2,7 +2,7 @@ package financialtransactions;
 
 public class Outflow extends Transaction<Outflow.Category> {
     public enum Category {
-        RENT, DEBT, SHOPPING, TREAT, EDUCATION, OTHER
+        RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER
     }
 
     public Outflow(String name, double amount, String date) {

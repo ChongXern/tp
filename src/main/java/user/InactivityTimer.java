@@ -12,6 +12,7 @@ public class InactivityTimer {
     }
 
     public void resetTimer() {
+        assert startTime != System.currentTimeMillis();
         startTime = System.currentTimeMillis();
     }
     
@@ -20,7 +21,7 @@ public class InactivityTimer {
         if (timeDifference >= INACTIVITY_TIME) {
             System.out.println("Sorry, your session has ended. Please log in again.");
             throw new InactivityTimeoutException(true, false);
-        } else if (timeDifference >= GRACE_TIME) {
+        } else if (timeDifference >= INACTIVITY_TIME - GRACE_TIME) {
             throw new InactivityTimeoutException(false, true);
         }
     }    

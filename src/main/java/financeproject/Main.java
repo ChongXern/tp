@@ -1,18 +1,19 @@
 package financeproject;
 
-import customexceptions.InactivityTimeoutException;
 import command.BaseCommand;
+import customexceptions.ExceededAttemptsException;
+import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
-import user.InactivityTimer;
 import user.Authentication;
 import user.BaseUser;
+import user.InactivityTimer;
 import userinterface.UI;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SecurityException, ExceededAttemptsException {
         Storage storage = new Storage("./data");
         TransactionManager manager = new TransactionManager();
 
@@ -26,14 +27,29 @@ public class Main {
         BaseUser tempUser = new BaseUser("Bob", ui);
         Authentication auth = tempUser.getAuthentication();
         InactivityTimer inactivityTimer = new InactivityTimer();
+        boolean isAuthenticated = false;
 
-        if (!auth.authenticate()) {
-            ui.printMessage("Authentication error");
+        while (!isAuthenticated && auth.getWrongAttempts() < 3) {
+            try {
+                if (!auth.authenticate()) {
+                    ui.printMessage("Authentication error");
+                } else {
+                    ui.printMessage("Password is correct. You are now logged in");
+                    manager = storage.loadFile();
+                    isAuthenticated = true;
+                }
+            } catch (ExceededAttemptsException e) {
+                if (e.isCanTryAgain()) {
+                    ui.printMessage("Incorrect username or password. Please try again.");
+                } else {
+                    ui.printMessage("Too many incorrect attempts. Authentication failed.");
+                }
+            }
+        }
+
+        if (!isAuthenticated) {
             ui.closeScanner();
             return;
-        } else {
-            ui.printMessage("Password is correct. You are now logged in");
-            manager = storage.loadFile();
         }
 
         do {

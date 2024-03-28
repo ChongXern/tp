@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class IncompletePromptException extends Exception {
     public static final String[] INSTRUCTIONS = {
-        "add-inflow", "add-outflow", "delete-inflow", "delete-outflow",
-        "login", "quit", "view-history"};
+        "add-inflow", "add-outflow", "delete-inflow", "delete-outflow", "quit"};
     private boolean isTypo = false;
     private boolean isIncomplete = false;
     private boolean isUnknown = false;
@@ -13,10 +12,12 @@ public class IncompletePromptException extends Exception {
     public IncompletePromptException(String line) {
         int spaceIndex = line.indexOf(" ");
         String firstWord = (spaceIndex == -1) ? line : line.substring(0, spaceIndex);
-        if (!Arrays.asList(INSTRUCTIONS).contains(firstWord)) {
-            checkTypo(firstWord);
-        } else {
+        if (Arrays.asList(INSTRUCTIONS).contains(firstWord)) {
+            isTypo = false;
             isIncomplete = true;
+            isUnknown = false;
+        } else {
+            checkTypo(firstWord);
         }
     }
 

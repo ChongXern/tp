@@ -17,7 +17,7 @@ public class TransactionManager {
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             return inflows.addTransaction(inflow);
-        } 
+        }
         if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             return outflows.addTransaction(outflow);
@@ -56,7 +56,7 @@ public class TransactionManager {
         int numOfInflows = inflows.getTransactionListSize();
         Transaction<?> transactionEdited = inflows.getNthTransaction(numOfInflows - index);
         transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
-                                             updatedTransaction);
+                updatedTransaction);
         return inflows.editTransactionIndex(numOfInflows - index, (Inflow) updatedTransaction);
     }
 
@@ -64,7 +64,7 @@ public class TransactionManager {
         int numOfOutflows = outflows.getTransactionListSize();
         Transaction<?> transactionEdited = outflows.getNthTransaction(numOfOutflows - index);
         transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
-                                             updatedTransaction);
+                updatedTransaction);
         return outflows.editTransactionIndex(numOfOutflows - index, (Outflow) updatedTransaction);
     }
 

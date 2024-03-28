@@ -31,6 +31,7 @@ public class AddInflowCommand extends BaseCommand {
         }
         String inflowDateTime = inflowDate + " " + inflowTime;
         Inflow inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
+        assert inflowCategory != null;
         inflow.setCategory(Inflow.Category.valueOf(inflowCategory.toUpperCase()));
         manager.addTransaction(inflow);
         return "Ok. Added inflow";

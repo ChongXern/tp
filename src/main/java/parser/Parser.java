@@ -64,7 +64,8 @@ public class Parser {
         case "quit":
             return new ExitCommand(commandParts);
         default:
-            throw new Exception("Invalid command");
+            throw new IncompletePromptException(command);
+            // throw new Exception("Invalid command");
         }
     }
 }
