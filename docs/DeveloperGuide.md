@@ -15,6 +15,29 @@ The financial manager application is designed using an object-oriented approach,
 - **Inactivity Timer**: Automatically logs out users after a period of inactivity, enhancing security.
 - **Storage Management**: Handles the persistent storage of transaction data, allowing users to save and load their financial information.
 
+### View Transaction History feature:
+
+#### Implementation Details:
+
+#### Functionality:
+The View History feature allows users to retrieve a list of their recent transactions, categorized as inflows and outflows. The user can specify the number of transactions they want to view, and the system presents these transactions in reverse chronological order, with the latest transactions displayed first. Each transaction is presented with its description, date, and time of occurrence.
+
+#### Design Considerations:
+- **Data Structure**: The transaction data is stored in an instance of the `TransactionList` class, which is part of the `financialtransactions` package. This list maintains a record of all transactions made by the user, ensuring easy retrieval and manipulation of transaction data.
+- **Categorization**: Transactions are categorized as inflow or outflow based on their type. This categorization enables users to differentiate between different types of financial activities, such as income and expenses.
+- **Formatting**: The transactions are presented in a formatted string, providing clear and concise information to the user. Each transaction includes its description, date, and time.
+
+#### Implementation Details:
+- The `TransactionManager#showLastNTransactions()` method is responsible for retrieving the last N transactions from the Transaction List.
+- The method iterates over the transaction list in reverse order, starting from the latest transaction and moving towards older transactions.
+- Transactions are categorized as inflows or outflows based on their instance type (Inflow or Outflow), and the relevant transactions are added to the output string accordingly.
+- The formatted string containing the transaction details is returned to the user for display.
+
+#### Alternatives Considered:
+During the development of the View Transaction History feature, several alternatives were considered to achieve the desired functionality. These alternatives included:
+
+- Implementing a more complex data structure for storing transaction history, such as a linked list. However, a simple ArrayList-based approach was chosen for its simplicity and efficiency in managing transaction data.
+- Providing additional filtering options, such as filtering transactions by date range or transaction category. While these options could definitely enhance the feature, they were deemed unnecessary for the initial implementation and may be considered for future iterations.
 
 ## Product scope
 ### Target user profile
