@@ -20,6 +20,7 @@ public class Parser {
         this.ui = ui;
     }
 
+
     public BaseCommand parseCommand(String command) throws IncompletePromptException, Exception {
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
