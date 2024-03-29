@@ -3,6 +3,7 @@
 ## Acknowledgements
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+- [CS2113 Course Website](https://nus-cs2113-ay2324s2.github.io/website/index.html)
 
 ## Design & implementation
 
@@ -14,6 +15,9 @@ The financial manager application is designed using an object-oriented approach,
 - **User Authentication**: Ensures that users are authenticated before accessing their financial data, with a mechanism to track and limit failed attempts.
 - **Inactivity Timer**: Automatically logs out users after a period of inactivity, enhancing security.
 - **Storage Management**: Handles the persistent storage of transaction data, allowing users to save and load their financial information.
+- **[Proposed] Security features**: A maximum of three login attempts are inputted, failing which would cause the application to be exited automatically.
+- **[Proposed] Financial transaction visualiser**: When viewing history of transactions, the data will be visualised using bar charts for better user friendliness.
+- **[Proposed] Undo functionality**: Allows users to undo  their last prompt, but only permittable 10 seconds after the last action. 
 
 ### View Transaction History feature:
 
@@ -50,8 +54,6 @@ The financial manager application is designed for individual users seeking a sim
 This application simplifies personal financial management by providing an intuitive interface for tracking and analyzing income and expenses. Users can easily add, edit, or delete transactions, view recent transaction history, and ensure their data is securely managed with user authentication and automatic logout features.
 
 
-plaintext
-Copy code
 ## User Stories
 
 |Version| As a/an ... | I want to ... | So that ...|
@@ -88,7 +90,8 @@ Copy code
 
 ### Login Procedure:
 - Start the application and enter your username and password when prompted.
-- Test incorrect passwords to ensure the application correctly limits login attempts.
+- Test incorrect passwords to ensure the application correctly limits login attempts. 
+- [v2.0] If there are three incorrect attempts, the application will automatically exit and the user has to try again.
 
 ### Adding Transactions:
 - Use the `add-inflow` and `add-outflow` commands to add new transactions, following the command format provided in the `help` command.
@@ -102,6 +105,7 @@ Copy code
 ### Viewing Transaction History:
 - Use the `view-history` command to display recent transactions.
 - Test with different numbers of transactions to view.
+- [v2.0] Additional bar charts will be shown to display the different percentage of categories used in the past n transactions.
 
 ### Inactivity Timeout:
 - After logging in, do not input any commands for the duration specified by the inactivity timer to test automatic logout.
