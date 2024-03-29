@@ -14,12 +14,15 @@ public class TransactionManager {
 
     public boolean addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
+        transactionList.sortListByName();
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
+            transactionList.setTransactionsType("Inflow");
             return inflows.addTransaction(inflow);
         }
         if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
+            transactionList.setTransactionsType("Outflow");
             return outflows.addTransaction(outflow);
         }
         System.out.println("Invalid transaction type.");

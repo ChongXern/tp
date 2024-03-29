@@ -1,9 +1,12 @@
 package financialtransactions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TransactionList<T extends Transaction<?>> {
     private ArrayList<T> transactionList;
+    private String transactionsType;
 
     public TransactionList(){
         this.transactionList = new ArrayList<>();
@@ -32,12 +35,12 @@ public class TransactionList<T extends Transaction<?>> {
         return false;
     }
 
-    public boolean removeTransactionIndex (int index) throws Exception{
+    public boolean removeTransactionIndex (int index) {
         transactionList.remove(index);
         return true;
     }
 
-    public boolean editTransactionIndex (int index, T transaction) throws Exception {
+    public boolean editTransactionIndex (int index, T transaction) {
         transactionList.set(index, transaction);
         return true;
     }
@@ -76,4 +79,32 @@ public class TransactionList<T extends Transaction<?>> {
             System.out.println(" " + transaction.getName() + " " + transaction.getCategory());
         }
     }
+
+    public String getTransactionsType() {
+        return transactionsType;
+    }
+
+    public void setTransactionsType(String transactionsType) {
+        if (transactionsType.equals("Mixed")) {
+            return;
+        }
+        if (this.transactionsType == null) {
+            this.transactionsType = transactionsType;
+        }
+        else if (!this.transactionsType.equals(transactionsType)) {
+            this.transactionsType = "Mixed";
+        }
+    }
+
+    public class NameComparator<T extends Transaction<?>> implements Comparator<T> {
+        @Override
+        public int compare(T o1, T o2) {
+            return o2.getName().compareToIgnoreCase(o1.getName());
+        }
+    }
+
+    public void sortListByName() {
+        this.transactionList.sort(new NameComparator<>());
+    }
+
 }
