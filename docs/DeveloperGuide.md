@@ -44,6 +44,8 @@ Copy code
 |v1.0|user|Use a customisable interface for my financial goals|I can adjust these financial goals accordingly as time passes|
 |v1.0|user|add payment types such as credit card, debit card or cash|I can be reminded to pay credit card bills each month|
 |v1.0|user|Be confident that my banking information is encrypted and safe from being accessed by others|The private information is not easily leaked to others|
+|v2.0|user|Export my financial reports as a CSV|I can share my expenditure with my peers|
+|v2.0|user|Visualise my transactions in more meaningful diagrams|I can better understand my spending|
 
 ## Non-Functional Requirements
 
@@ -80,6 +82,9 @@ Copy code
 
 ### Inactivity Timeout:
 - After logging in, do not input any commands for the duration specified by the inactivity timer to test automatic logout.
+- A maximum of 2.5 minutes of inactivity will trigger the application to check with the user whether the user is still active or not. Input `yes` to indicate continued activity, otherwise input `no` to exit. 
+- 30 seconds after the 2.5 min (3 min), the application will automatically exit.
+- Implemented to provide enhanced security, so no third party can access finance transactions. 
 
 ### Data Persistence:
 - Exit the application and restart it to ensure that previously entered transactions are still present.
