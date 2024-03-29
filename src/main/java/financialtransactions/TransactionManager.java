@@ -14,7 +14,7 @@ public class TransactionManager {
 
     public boolean addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
-        transactionList.sortListByName();
+        // transactionList.sortListByName();
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");

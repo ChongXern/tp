@@ -27,7 +27,7 @@ public class BaseDate {
 
     private static final ArrayList<String> dateTimeFormats = dateTimeVary();
 
-    LocalDateTime dateTime = null;
+    private LocalDateTime dateTime = null;
     private final String defaultTime = " 0000";
 
     public BaseDate(String args) {
@@ -75,5 +75,9 @@ public class BaseDate {
             return this.dateTime.isBefore(otherDate.dateTime);
         }
         return false;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 }

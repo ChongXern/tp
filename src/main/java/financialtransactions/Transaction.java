@@ -50,4 +50,8 @@ public abstract class Transaction<T> {
     public String toSave() {
         return String.format("%s|%.2f|%s|%s\n", name, amount, date.toString(), category);
     }
+
+    protected BaseDate getDate() {
+        return date;
+    }
 }
