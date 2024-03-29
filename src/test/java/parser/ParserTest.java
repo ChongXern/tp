@@ -8,7 +8,8 @@ import command.AddInflowCommand;
 import command.AddOutflowCommand;
 import userinterface.UI;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class ParserTest {
     Parser parser = new Parser(new UI());
