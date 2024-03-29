@@ -39,6 +39,29 @@ During the development of the View Transaction History feature, several alternat
 - Implementing a more complex data structure for storing transaction history, such as a linked list. However, a simple ArrayList-based approach was chosen for its simplicity and efficiency in managing transaction data.
 - Providing additional filtering options, such as filtering transactions by date range or transaction category. While these options could definitely enhance the feature, they were deemed unnecessary for the initial implementation and may be considered for future iterations.
 
+### Save File feature:
+The `Storage#saveFile()` method will be called when the user decides to quit the application, the method will then get a string of all the transactions. This string will then be written to a file whose filename will be the username of the last user.
+
+#### Implementation Details:
+- The method first creates a FileWriter object.
+- It then calls `TransactionManager#toSave()`. 
+  - This method is similar to `toString()`, except that it creates a string that is more storage friendly.
+  - In this method, each transaction is returned as `name|amount|date|category\n`. 
+  - Each transaction is added line by line, after adding all transactions, the string is returned in the toSave() method.
+  - It is important to note that outflows are saved with a `-` in front of the amount. 
+- With the string generated in the `toSave()` method, the FileWriter will write it to the file before closing it.
+
+### Load File feature:
+The `Storage#loadFile()` method will be called after the user as logged in, it will then retrieve the transactions that were written in the past sessions, so that the user can continue using the finance manger.
+
+#### Implementation Details:
+- The method first creates a File object and a Transaction Manager object.
+- If the file exists
+  - The method will read from the file line by line, splitting each line by `|`. A new inflow or outflow object will be created with those values and then added to the Transaction Manager Object.
+- If the file does not exist
+  - An empty transaction manager object will be returned.
+- To differentiate between inflow or outflow, the `-` in front of the amount will be used.
+
 ## Product scope
 ### Target user profile
 
