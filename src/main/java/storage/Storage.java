@@ -2,6 +2,7 @@ package storage;
 
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
+import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 import user.BaseUser;
 
@@ -54,18 +55,23 @@ public class Storage {
         TransactionManager manager = new TransactionManager();
         try {
             Scanner sc = new Scanner(f);
+            manager.setBudget(Double.parseDouble(sc.nextLine()));
             while (sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
-                assert transactionInfo.length == 4 : "Transaction info should have 4 arguments";
+                assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
                 double amount = Double.parseDouble(transactionInfo[1]);
-                if (!transactionInfo[1].startsWith("-")) {
+                if (transactionInfo[4].equals("I")) {
                     Inflow inflow = new Inflow(transactionInfo[0], amount, transactionInfo[2]);
                     inflow.setCategory(Inflow.Category.valueOf(transactionInfo[3]));
                     manager.addTransaction(inflow);
-                } else {
+                } else if (transactionInfo[4].equals("O")){
                     Outflow outflow = new Outflow(transactionInfo[0], -amount, transactionInfo[2]);
                     outflow.setCategory(Outflow.Category.valueOf(transactionInfo[3]));
                     manager.addTransaction(outflow);
+                } else {
+                    Reminder reminder = new Reminder(transactionInfo[0], -amount, transactionInfo[2]);
+                    reminder.setCategory(Reminder.Category.valueOf(transactionInfo[3]));
+                    manager.addTransaction(reminder);
                 }
             }
             sc.close();

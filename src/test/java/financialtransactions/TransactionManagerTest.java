@@ -16,8 +16,16 @@ public class TransactionManagerTest {
         Outflow shopping = new Outflow("Shopping", 200, "23/05/2022 2000");
         shopping.setCategory(Outflow.Category.SHOPPING);
         managerTest.addTransaction(shopping);
-
-        assertEquals("Salary payment|400.00|May 23 2022 07:00PM|INCOME\n" +
-                "Shopping|-200.00|May 23 2022 08:00PM|SHOPPING\n", managerTest.toSave());
+        
+        Reminder bill = new Reminder("Water bills", 64.30, "25/06/2025 1500");
+        bill.setCategory(Reminder.Category.UTILITIES);
+        managerTest.addTransaction(bill);
+        
+        managerTest.setBudget(1500);
+        
+        assertEquals("1500.00\n" +
+                "Salary payment|400.00|May 23 2022 07:00PM|INCOME|I\n" +
+                "Shopping|-200.00|May 23 2022 08:00PM|SHOPPING|O\n" +
+                "Water bills|-64.30|Jun 25 2025 03:00PM|UTILITIES|R\n", managerTest.toSave());
     }
 }
