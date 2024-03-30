@@ -43,21 +43,9 @@ public class Authentication {
         return wrongAttempts;
     }
 
-    public boolean authenticate() throws ExceededAttemptsException {
-        System.out.println("username: ");
-        String inputUsername = this.ui.readInput();
+    public boolean authenticate(String inputUsername) throws ExceededAttemptsException {
         System.out.println("password: ");
         String inputPassword = this.ui.readInput();
-        /*try {
-            return this.checkPassword(inputUsername, inputPassword);
-        } catch (ExceededAttemptsException e) {
-            if (e.isCanTryAgain()) {
-                System.out.println("Wrong password or username, please try again.");
-            } else {
-                System.out.println("Sorry, too many incorrect attempts.");
-            }
-            return false;
-        }*/
         return this.checkPassword(inputUsername, inputPassword);
     }
 }

@@ -15,9 +15,36 @@ public class Storage {
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-
-    public TransactionManager loadFile() {
-        File f = new File(filePath + "/data.txt");
+    
+    public void addNewUser(String username, String password) {
+        try {
+            FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
+            fw.write(username + "|" + password + "\n");
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Could not add user");
+        }
+    }
+    
+    public String loadPassword(String username) {
+        File f = new File(filePath + "/passwords.txt");
+        try {
+            Scanner sc = new Scanner(f);
+            while (sc.hasNext()) {
+                String line = sc.nextLine();
+                if (line.startsWith(username)) {
+                    return line.split("\\|")[1];
+                }
+            }
+            return null;
+        } catch (FileNotFoundException e) {
+            createFileDir();
+            return null;
+        }
+    }
+    
+    public TransactionManager loadFile(String username) {
+        File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
             Scanner sc = new Scanner(f);
@@ -44,14 +71,12 @@ public class Storage {
 
     private void createFileDir() {
         File f = new File(filePath);
-        if (!f.mkdir()) {
-            System.out.println("create file failed");
-        }
+        f.mkdir();
     }
 
-    public void saveFile(TransactionManager tm) {
+    public void saveFile(String username, TransactionManager tm) {
         try {
-            FileWriter fw = new FileWriter(filePath + "/data.txt");
+            FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
         } catch (IOException e) {

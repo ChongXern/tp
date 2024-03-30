@@ -23,19 +23,19 @@ public class Main {
         Parser parser = new Parser(ui);
         BaseCommand baseCommand = null;
         String response = "";
-
-        BaseUser tempUser = new BaseUser("Bob", ui);
-        Authentication auth = tempUser.getAuthentication();
+        
+        BaseUser user = new BaseUser(ui, storage);
+        Authentication auth = user.getAuthentication();
         InactivityTimer inactivityTimer = new InactivityTimer();
         boolean isAuthenticated = false;
 
         while (!isAuthenticated && auth.getWrongAttempts() < 3) {
             try {
-                if (!auth.authenticate()) {
+                if (!auth.authenticate(user.getUsername())) {
                     ui.printMessage("Authentication error");
                 } else {
                     ui.printMessage("Password is correct. You are now logged in");
-                    manager = storage.loadFile();
+                    manager = storage.loadFile(user.getUsername());
                     isAuthenticated = true;
                 }
             } catch (ExceededAttemptsException e) {
@@ -71,7 +71,7 @@ public class Main {
                 System.out.println("Uh-oh, something went wrong: " + e.getMessage());
             }
 
-            storage.saveFile(manager);
+            storage.saveFile(user.getUsername(), manager);
 
             try {
                 inactivityTimer.checkTimeElapsed();
