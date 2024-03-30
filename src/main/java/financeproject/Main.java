@@ -4,6 +4,7 @@ import command.BaseCommand;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
+import customexceptions.UserNotFoundExcption;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -23,52 +24,40 @@ public class Main {
         Parser parser = new Parser(ui);
         BaseCommand baseCommand = null;
         String response = "";
-        
-        BaseUser user = new BaseUser(ui, storage);
-        Authentication auth = user.getAuthentication();
+
+        // Authenticating user
+        BaseUser user = null;
         InactivityTimer inactivityTimer = new InactivityTimer();
-        boolean isAuthenticated = false;
-
-        while (!isAuthenticated && auth.getWrongAttempts() < 3) {
-            try {
-                if (!auth.authenticate(user.getUsername())) {
-                    ui.printMessage("Authentication error");
-                } else {
-                    ui.printMessage("Password is correct. You are now logged in");
-                    manager = storage.loadFile(user.getUsername());
-                    isAuthenticated = true;
-                }
-            } catch (ExceededAttemptsException e) {
-                if (e.isCanTryAgain()) {
-                    ui.printMessage("Incorrect username or password. Please try again.");
-                } else {
-                    ui.printMessage("Too many incorrect attempts. Authentication failed.");
-                }
-            }
+        try {
+            ui.printMessage("Username: ");
+            response = ui.readInput();
+            user = storage.loadUser(response);
+            Authentication.authenticateUser(user, ui);
+        } catch (UserNotFoundExcption e) {
+            ui.printMessage(e.getMessage());
+            return;
+        } catch (ExceededAttemptsException e) {
+            ui.printMessage(e.getMessage());
+            return;
         }
-
-        if (!isAuthenticated) {
-            ui.closeScanner();
+        if (user != null) {
+            ui.printMessage("User has been authenticated. Starting program...");
+        } else {
             return;
         }
 
+        // Main program flow
         do {
-            String command = ui.readInput();
+            response = ui.readInput();
             try {
-                baseCommand = parser.parseCommand(command);
+                baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
                 ui.printMessage(response);
                 inactivityTimer.resetTimer();
             } catch (IncompletePromptException e) {
-                if (e.getIsTypo()) {
-                    System.out.println("Please prompt again with correct spelling.");
-                } else if (e.getIsIncomplete()) {
-                    System.out.println("Sorry, your prompt appears incomplete. Could you finish your sentence?");
-                } else if (e.getIsUnknown()) {
-                    System.out.println("Sorry, prompt inputted is unknown. ");
-                }
+                ui.printMessage(e.getMessage());
             } catch (Exception e) {
-                System.out.println("Uh-oh, something went wrong: " + e.getMessage());
+                ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
             storage.saveFile(user.getUsername(), manager);

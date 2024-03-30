@@ -3,6 +3,7 @@ package storage;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
+import user.BaseUser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,8 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import customexceptions.UserNotFoundExcption;
+
 public class Storage {
     private final String filePath;
+    private Scanner sc;
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -26,17 +30,19 @@ public class Storage {
         }
     }
     
-    public String loadPassword(String username) {
+    public BaseUser loadUser(String username) throws UserNotFoundExcption{
         File f = new File(filePath + "/passwords.txt");
         try {
-            Scanner sc = new Scanner(f);
+            this.sc = new Scanner(f);
             while (sc.hasNext()) {
                 String line = sc.nextLine();
                 if (line.startsWith(username)) {
-                    return line.split("\\|")[1];
+                    String password = line.split("\\|")[1];
+                    BaseUser newUser = new BaseUser(username, password);
+                    return newUser;
                 }
             }
-            return null;
+            throw new UserNotFoundExcption();
         } catch (FileNotFoundException e) {
             createFileDir();
             return null;
