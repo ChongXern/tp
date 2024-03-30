@@ -3,6 +3,7 @@ package parser;
 import customexceptions.IncompletePromptException;
 import command.AddInflowCommand;
 import command.AddOutflowCommand;
+import command.AddReminderCommand;
 import command.BaseCommand;
 import command.DeleteOutflowCommand;
 import command.ExitCommand;
@@ -11,6 +12,10 @@ import command.EditInflowCommand;
 import command.HelpCommand;
 import command.DeleteInflowCommand;
 import command.EditOutflowCommand;
+import command.DeleteReminderCommand;
+import command.EditReminderCommand;
+import command.SetBudgetCommand;
+
 import userinterface.UI;
 
 public class Parser {
@@ -37,6 +42,11 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             return new AddOutflowCommand(commandParts);
+        case "add-reminder":
+            if (commandParts.length < 6) {
+                throw new IncompletePromptException(command);
+            }
+            return new AddReminderCommand(commandParts);
         case "delete-inflow":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
@@ -47,6 +57,11 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             return new DeleteOutflowCommand(commandParts);
+        case "delete-reminder":
+            if (commandParts.length < 2) {
+                throw new IncompletePromptException(command);
+            }
+            return new DeleteReminderCommand(commandParts);
         case "edit-inflow":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
@@ -57,6 +72,16 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             return new EditOutflowCommand(commandParts);
+        case "edit-reminder":
+            if (commandParts.length < 7) {
+                throw new IncompletePromptException(command);
+            }
+            return new EditReminderCommand(commandParts);
+        case "set-budget":
+            if (commandParts.length < 2) {
+                throw new IncompletePromptException(command);
+            }
+            return new SetBudgetCommand(commandParts);
         case "view-history":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);

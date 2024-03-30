@@ -5,13 +5,21 @@ public class TransactionManager {
     private TransactionList<Transaction<?>> transactionList;
     private TransactionList<Inflow> inflows;
     private TransactionList<Outflow> outflows;
+    private TransactionList<Reminder> reminders;
+    
+    private double budget = 0.00;
 
     public TransactionManager() {
         this.transactionList = new TransactionList<>();
         this.inflows = new TransactionList<>();
         this.outflows = new TransactionList<>();
+        this.reminders = new TransactionList<>();
     }
-
+    
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+    
     public boolean addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
         // transactionList.sortListByName();
@@ -25,6 +33,11 @@ public class TransactionManager {
             transactionList.setTransactionsType("Outflow");
             return outflows.addTransaction(outflow);
         }
+        if (transaction instanceof Reminder) {
+            Reminder reminder = (Reminder) transaction;
+            transactionList.setTransactionsType("Reminder");
+            return reminders.addTransaction(reminder);
+        }
         System.out.println("Invalid transaction type.");
         return false;
     }
@@ -37,6 +50,9 @@ public class TransactionManager {
         }
         if (transactionRemoved instanceof Outflow) {
             return outflows.removeTransactionIndex(index);
+        }
+        if (transactionRemoved instanceof Reminder) {
+            return reminders.removeTransactionIndex(index);
         }
         return false;
     }
@@ -55,6 +71,13 @@ public class TransactionManager {
         return outflows.removeTransactionIndex(numOfOutflows - index);
     }
 
+    public boolean removeReminder(int index) throws Exception {
+        int numOfReminders = reminders.getTransactionListSize();
+        Transaction<?> transactionRemoved = reminders.getNthTransaction(numOfReminders - index);
+        transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
+        return reminders.removeTransactionIndex(numOfReminders - index);
+    }
+
     public boolean editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
         Transaction<?> transactionEdited = inflows.getNthTransaction(numOfInflows - index);
@@ -69,6 +92,14 @@ public class TransactionManager {
         transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
                 updatedTransaction);
         return outflows.editTransactionIndex(numOfOutflows - index, (Outflow) updatedTransaction);
+    }
+
+    public boolean editReminder(int index, Transaction<?> updatedTransaction) throws Exception {
+        int numOfReminders = reminders.getTransactionListSize();
+        Transaction<?> transactionEdited = reminders.getNthTransaction(numOfReminders - index);
+        transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
+                updatedTransaction);
+        return reminders.editTransactionIndex(numOfReminders - index, (Reminder) updatedTransaction);
     }
 
     public double getTotalBalance() {
@@ -106,10 +137,32 @@ public class TransactionManager {
                 index++;
             }
         }
+
+        index = 1;
+        returnedText += "\nReminders:\nTransactions:\n";
+        for (int i = listSize - 1; i > listSize - n - 1; i--) {
+            Transaction<?> transaction = transactionList.getNthTransaction(i);
+            if (transaction instanceof Reminder) {
+                returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
+                index++;
+            }
+        }
+        
         return returnedText;
     }
 
     public String toSave() {
-        return inflows.toSave() + outflows.toSave();
+        return String.format("%.2f\n", budget) + inflows.toSave() + outflows.toSave() + reminders.toSave();
+    }
+    
+    public String generateQuickReport() {
+        String baseString = "";
+        baseString += String.format("You have spent " +
+                "%.2f in the current month.\n", outflows.totalSpentInPastMonth());
+        baseString += String.format("With a budget of " +
+                "%.2f, you have %.2f left to spend.\n", budget, budget - outflows.totalSpentInPastMonth());
+        baseString += String.format("You have " +
+                "%d upcoming payments that require your attention", reminders.getTransactionListSize());
+        return baseString;
     }
 }

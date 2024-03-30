@@ -1,5 +1,6 @@
 package financialtransactions;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -115,5 +116,14 @@ public class TransactionList<T extends Transaction<?>> {
     public void sortListByDate() {
         this.transactionList.sort(new DateComparator<>());
     }
-
+    
+    public double totalSpentInPastMonth() {
+        double amount = 0;
+        for (T transaction : transactionList) {
+            if (transaction.getDate().getDateTime().getMonth() == LocalDateTime.now().getMonth()) {
+                amount += transaction.getAmount();
+            }
+        }
+        return amount;
+    }
 }

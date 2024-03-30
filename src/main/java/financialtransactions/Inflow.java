@@ -10,4 +10,9 @@ public class Inflow extends Transaction<Inflow.Category> {
     public void setCategory(Category category) {
         super.category = category;
     }
+    
+    @Override
+    public String toSave() {
+        return super.toSave() + "|I\n";
+    }
 }
