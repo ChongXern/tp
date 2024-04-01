@@ -20,6 +20,6 @@ public class ViewHistoryCommand extends BaseCommand {
         if (numTransactionsString != null) {
             numTransactions = Integer.parseInt(numTransactionsString);
         }
-        return manager.showLastNTransactions(numTransactions);
+        return manager.showLastNTransactions(numTransactions, false);
     }
 }
