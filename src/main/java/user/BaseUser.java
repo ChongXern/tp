@@ -1,21 +1,31 @@
 package user;
 
-import userinterface.UI;
+import financialtransactions.TransactionManager;
 
 public class BaseUser {
-    String name;
+    String username;
     Authentication auth;
-    UI ui;
+    TransactionManager manager = null;
 
-    public BaseUser(String name, UI ui) {
-        this.name = name;
-        String username = name.replace(" ", "_");
-        this.auth = new Authentication("password", username, ui);
-        this.ui = ui;
+    public BaseUser(String username, String password) {
+        this.username = username;
+        this.auth = new Authentication(username, password);
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
+    }
+
+    public boolean setTransactionManager(TransactionManager manager){
+        if(this.manager == null){
+            this.manager = manager;
+            return true;
+        }
+        return false;
+    }
+
+    public TransactionManager getTransactionManager(){
+        return this.manager;
     }
 
     public Authentication getAuthentication(){

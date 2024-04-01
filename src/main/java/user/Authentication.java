@@ -4,29 +4,24 @@ import customexceptions.ExceededAttemptsException;
 import userinterface.UI;
 
 public class Authentication {
+    private static int attemptsLimit = 3;
     String username;
     UI ui;
     private String password;
-    private int wrongAttempts;
-    
 
-    public Authentication(String password, String username, UI ui) {
+    public Authentication(String username, String password) {
         this.password = password;
         this.username = username;
-        this.ui = ui;
-        this.wrongAttempts = 0;
     }
 
     public String getUsername() {
         return this.username;
     }
 
-    public boolean checkPassword(String username, String password) throws ExceededAttemptsException {
+    public boolean checkPassword(String username, String password) {
+        System.out.println(password + " and " + this.password);
+        System.out.println(username + " and " + this.username);
         boolean isMatch = this.password.equals(password) && this.username.equals(username);
-        if (!isMatch) {
-            wrongAttempts++;
-            throw new ExceededAttemptsException(wrongAttempts < 3);
-        }
         return isMatch;
     }
 
@@ -39,25 +34,18 @@ public class Authentication {
         return true;
     }
 
-    public int getWrongAttempts() {
-        return wrongAttempts;
-    }
-
-    public boolean authenticate() throws ExceededAttemptsException {
-        System.out.println("username: ");
-        String inputUsername = this.ui.readInput();
-        System.out.println("password: ");
-        String inputPassword = this.ui.readInput();
-        /*try {
-            return this.checkPassword(inputUsername, inputPassword);
-        } catch (ExceededAttemptsException e) {
-            if (e.isCanTryAgain()) {
-                System.out.println("Wrong password or username, please try again.");
+    public static boolean authenticateUser(BaseUser user, UI ui) throws ExceededAttemptsException {
+        Authentication auth = user.getAuthentication();
+        String passwordInput;
+        for (int i = 0; i < Authentication.attemptsLimit; i++) {
+            ui.printMessage("Password: ");
+            passwordInput = ui.readInput();
+            if (auth.checkPassword(user.getUsername(), passwordInput)) {
+                return true;
             } else {
-                System.out.println("Sorry, too many incorrect attempts.");
+                ui.printMessage("Wrong password");
             }
-            return false;
-        }*/
-        return this.checkPassword(inputUsername, inputPassword);
+        }
+        throw new ExceededAttemptsException();
     }
 }

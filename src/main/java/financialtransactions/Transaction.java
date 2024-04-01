@@ -46,12 +46,12 @@ public abstract class Transaction<T> {
     public String toString() {
         return String.format("Name: %s, Amount: %.2f, Date: %s", name, amount, date.toString());
     }
-
+    
     public String toSave() {
-        return String.format("%s|%.2f|%s|%s\n", name, amount, date.toString(), category);
+        return String.format("%s|%.2f|%s|%s", name, amount, date.toString(), category);
     }
 
-    protected BaseDate getDate() {
+    public BaseDate getDate() {
         return date;
     }
 }

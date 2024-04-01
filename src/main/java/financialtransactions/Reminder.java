@@ -1,11 +1,11 @@
 package financialtransactions;
 
-public class Outflow extends Transaction<Outflow.Category> {
+public class Reminder extends Transaction<Reminder.Category> {
     public enum Category {
-        FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER
+        INSTALLMENT, CREDITCARD, UTILITIES
     }
 
-    public Outflow(String name, double amount, String date) {
+    public Reminder(String name, double amount, String date) {
         super(name, -1.00 * amount, date);
     }
 
@@ -15,6 +15,6 @@ public class Outflow extends Transaction<Outflow.Category> {
 
     @Override
     public String toSave() {
-        return super.toSave() + "|O\n";
+        return super.toSave() + "|R\n";
     }
 }
