@@ -1,6 +1,8 @@
 package financialtransactions;
 
 
+import storage.BarChart;
+
 public class TransactionManager {
     private TransactionList<Transaction<?>> transactionList;
     private TransactionList<Inflow> inflows;
@@ -82,7 +84,7 @@ public class TransactionManager {
         return "Inflows:\n" + inflows.toString() + "\nOutflows:\n" + outflows.toString();
     }
 
-    public String showLastNTransactions(int n) throws Exception{
+    public String showLastNTransactions(int n, boolean isIncludeBarChart) throws Exception {
         int listSize = transactionList.getTransactionListSize();
         if (n > listSize) {
             throw new Exception("Invalid index");
@@ -105,6 +107,10 @@ public class TransactionManager {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
                 index++;
             }
+        }
+        if (isIncludeBarChart) {
+            BarChart<Transaction<?>> barChart = new BarChart<>(transactionList);
+            barChart.printBarChart();
         }
         return returnedText;
     }
