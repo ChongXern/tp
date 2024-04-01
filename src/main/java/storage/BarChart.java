@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BarChart<T extends Transaction<?>> {
+    private static final int TOTAL_BAR_SIZE = 50;
+    private static final int LEGEND_SIZE = 10;
     private TransactionList<T> transactionList;
     private int totalTransactionsCount;
     private HashMap<String, Integer> categoryFrequencies;
-    private static final int TOTAL_BAR_SIZE = 50;
-    private static final int LEGEND_SIZE = 10;
 
     public BarChart(TransactionList<T> transactionList) {
         this.transactionList = transactionList;
