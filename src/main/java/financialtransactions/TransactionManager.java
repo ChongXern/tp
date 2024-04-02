@@ -22,62 +22,76 @@ public class TransactionManager {
         this.budget = budget;
     }
     
-    public boolean addTransaction(Transaction<?> transaction) {
+    public void addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
-        // transactionList.sortListByName();
+        // transactionList.sortList();
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
-            return inflows.addTransaction(inflow);
+            inflows.addTransaction(inflow);
+            return;
         }
         if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             transactionList.setTransactionsType("Outflow");
-            return outflows.addTransaction(outflow);
+            outflows.addTransaction(outflow);
+            return;
         }
         if (transaction instanceof Reminder) {
             Reminder reminder = (Reminder) transaction;
             transactionList.setTransactionsType("Reminder");
-            return reminders.addTransaction(reminder);
+            reminders.addTransaction(reminder);
+            return;
         }
         System.out.println("Invalid transaction type.");
-        return false;
     }
 
-    public boolean removeTransaction(int index) throws Exception{
+    public void removeTransaction(Transaction<?> transaction) {
+        int index = transactionList.getIndexOfParticularTransaction(transaction);
         transactionList.removeTransactionIndex(index);
-        Transaction<?> transactionRemoved = transactionList.getNthTransaction(index);
-        if (transactionRemoved instanceof Inflow) {
-            return inflows.removeTransactionIndex(index);
+        if (transaction instanceof Inflow) {
+            Inflow inflow = (Inflow) transaction;
+            int inflowIndex = inflows.getIndexOfParticularTransaction(inflow);
+            inflows.removeTransactionIndex(inflowIndex);
+            return;
         }
-        if (transactionRemoved instanceof Outflow) {
-            return outflows.removeTransactionIndex(index);
+        if (transaction instanceof Outflow) {
+            Outflow outflow = (Outflow) transaction;
+            int outflowIndex = outflows.getIndexOfParticularTransaction(outflow);
+            outflows.removeTransactionIndex(outflowIndex);
+            return;
         }
-        if (transactionRemoved instanceof Reminder) {
-            return reminders.removeTransactionIndex(index);
+        if (transaction instanceof Reminder) {
+            Reminder reminder = (Reminder) transaction;
+            int reminderIndex = reminders.getIndexOfParticularTransaction(reminder);
+            reminders.removeTransactionIndex(reminderIndex);
+            return;
         }
-        return false;
+        System.out.println("Invalid transaction type.");
     }
 
-    public boolean removeInflow(int index) throws Exception {
+    public Inflow removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Transaction<?> transactionRemoved = inflows.getNthTransaction(numOfInflows - index);
+        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        return inflows.removeTransactionIndex(numOfInflows - index);
+        inflows.removeTransactionIndex(numOfInflows - index);
+        return transactionRemoved;
     }
 
-    public boolean removeOutflow(int index) throws Exception {
+    public Outflow removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Transaction<?> transactionRemoved = outflows.getNthTransaction(numOfOutflows - index);
+        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        return outflows.removeTransactionIndex(numOfOutflows - index);
+        outflows.removeTransactionIndex(numOfOutflows - index);
+        return transactionRemoved;
     }
 
-    public boolean removeReminder(int index) throws Exception {
+    public Reminder removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
-        Transaction<?> transactionRemoved = reminders.getNthTransaction(numOfReminders - index);
+        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(numOfReminders - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        return reminders.removeTransactionIndex(numOfReminders - index);
+        reminders.removeTransactionIndex(numOfReminders - index);
+        return transactionRemoved;
     }
 
     public boolean editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
@@ -171,5 +185,28 @@ public class TransactionManager {
         baseString += String.format("You have " +
                 "%d upcoming payments that require your attention", reminders.getTransactionListSize());
         return baseString;
+    }
+
+    public int getTransactionListSize() {
+        return transactionList.getTransactionListSize();
+    }
+
+    public int findTransactionIndex(Transaction<?> transaction) {
+        return transactionList.getIndexOfParticularTransaction(transaction);
+    }
+
+    public Inflow getNthInflowFromList(int n) throws Exception {
+        return (Inflow) inflows.getNthTransaction(n - 1);
+    }
+
+    public Outflow getNthOutflowFromList(int n) throws Exception {
+        return (Outflow) outflows.getNthTransaction(n - 1);
+    }
+
+    public Reminder getNthReminderFromList(int n) throws Exception {
+        return (Reminder) reminders.getNthTransaction(n -1);
+    }
+    public void printTransactionListSafeInfo() {
+        transactionList.printTransactionsSafeInfo();
     }
 }

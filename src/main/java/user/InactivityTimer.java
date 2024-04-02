@@ -5,6 +5,7 @@ import customexceptions.InactivityTimeoutException;
 public class InactivityTimer {
     public static final int INACTIVITY_TIME = 180_000;
     public static final int GRACE_TIME = 30_000;
+    public static final int PERMITTED_UNDO_TIME = 10_000;
     private long startTime;
 
     public InactivityTimer() {
@@ -24,5 +25,10 @@ public class InactivityTimer {
         } else if (timeDifference >= INACTIVITY_TIME - GRACE_TIME) {
             throw new InactivityTimeoutException(false, true);
         }
-    }    
+    }
+
+    public boolean canUndo() {
+        long timeDifference = System.currentTimeMillis() - startTime;
+        return timeDifference <= PERMITTED_UNDO_TIME;
+    }
 }

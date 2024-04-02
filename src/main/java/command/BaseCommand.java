@@ -1,11 +1,16 @@
 package command;
 
+import financialtransactions.Inflow;
+import financialtransactions.Outflow;
+import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
 public abstract class BaseCommand {
     public boolean isExit;
+    protected Inflow inflow;
+    protected Outflow outflow;
+    protected Reminder reminder;
     String[] commandParts;
-    
     public BaseCommand(Boolean isExit, String[] commandParts){
         this.isExit = isExit;
         this.commandParts = commandParts;
@@ -17,5 +22,14 @@ public abstract class BaseCommand {
     }
     public void setIsExit(boolean isExit) {
         this.isExit = isExit;
+    }
+    public Inflow getInflow() {
+        return inflow;
+    }
+    public Outflow getOutflow() {
+        return outflow;
+    }
+    public Reminder getReminder() {
+        return reminder;
     }
 }

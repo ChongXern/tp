@@ -6,9 +6,10 @@ import financialtransactions.TransactionManager;
 public class AddReminderCommand extends BaseCommand {
     public AddReminderCommand(String[] commandParts) {
         super(false, commandParts);
+        createReminder();
     }
     
-    public String execute(TransactionManager manager) {
+    private void createReminder() {
         String reminderName = null;
         double reminderAmount = 0.0;
         String reminderDate = null;
@@ -29,8 +30,12 @@ public class AddReminderCommand extends BaseCommand {
             }
         }
         String reminderDateTime = reminderDate + " " + reminderTime;
-        Reminder reminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
+        reminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
+        assert reminderCategory != null;
         reminder.setCategory(Reminder.Category.valueOf(reminderCategory.toUpperCase()));
+    }
+
+    public String execute(TransactionManager manager) {
         manager.addTransaction(reminder);
         return "Ok. Added reminder";
     }

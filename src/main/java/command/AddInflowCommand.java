@@ -7,10 +7,10 @@ public class AddInflowCommand extends BaseCommand {
 
     public AddInflowCommand(String[] commandParts) {
         super(false, commandParts);
+        createInflow();
     }
 
-    public String execute(TransactionManager manager) {
-        //@@author Kishen271828
+    private void createInflow() {
         String inflowName = null;
         double inflowAmount = 0;
         String inflowDate = null;
@@ -31,9 +31,12 @@ public class AddInflowCommand extends BaseCommand {
             }
         }
         String inflowDateTime = inflowDate + " " + inflowTime;
-        Inflow inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
+        inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null;
         inflow.setCategory(Inflow.Category.valueOf(inflowCategory.toUpperCase()));
+    }
+    public String execute(TransactionManager manager) {
+        //@@author Kishen271828
         manager.addTransaction(inflow);
         return "Ok. Added inflow";
     }

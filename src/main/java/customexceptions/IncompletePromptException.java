@@ -2,7 +2,7 @@ package customexceptions;
 
 public class IncompletePromptException extends Exception {
     public static final String[] INSTRUCTIONS = {
-        "add-inflow", "add-outflow", "delete-inflow", "delete-outflow", "quit"};
+        "add-inflow", "add-outflow", "delete-inflow", "delete-outflow", "undo", "quit"};
 
     public IncompletePromptException(String line) {
         super(setMessage(line));
@@ -11,7 +11,7 @@ public class IncompletePromptException extends Exception {
     private static String setMessage(String prompt){
         String message = "Sorry, prompt input is unknown.";
         for(String instr: IncompletePromptException.INSTRUCTIONS){
-            if(instr.equals(prompt)){
+            if (instr.equals(prompt)){
                 message = "Sorry, your prompt appears incomplete. Could you finish your sentence?";
                 break;
             } else if (instr.contains(prompt)){

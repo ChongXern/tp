@@ -16,8 +16,8 @@ public class TransactionList<T extends Transaction<?>> {
         return this.transactionList.size();
     }
 
-    public T getNthTransaction(int n) throws Exception{
-        if(n >= this.transactionList.size()){
+    public Transaction<?> getNthTransaction(int n) throws Exception {
+        if (n >= this.transactionList.size()) {
             throw new Exception("Invalid index");
         }
         return this.transactionList.get(n);
@@ -27,8 +27,8 @@ public class TransactionList<T extends Transaction<?>> {
         return this.transactionList.indexOf(particularTransaction);
     }
 
-    public boolean addTransaction(T newTransaction){
-        if (newTransaction != null){
+    public boolean addTransaction(T newTransaction) {
+        if (newTransaction != null) {
             transactionList.add(newTransaction);
             return true;
         }
@@ -76,7 +76,8 @@ public class TransactionList<T extends Transaction<?>> {
         int index = 1;
         for (T transaction : transactionList) {
             System.out.print(index++);
-            System.out.println(" " + transaction.getName() + " " + transaction.getCategory());
+            System.out.print(" " + transaction.getName() + " | " + transaction.getCategory());
+            System.out.println(" | " + transaction.getClass());
         }
     }
 
@@ -109,7 +110,15 @@ public class TransactionList<T extends Transaction<?>> {
         }
     }
 
-    public void sortListByName() {
+    public class FlowComparator<T extends Transaction<?>> implements Comparator<T> {
+        @Override
+        public int compare(T o1, T o2) {
+            return o2.getClass().toString().compareTo(o1.getClass().toString());
+        }
+    }
+
+    public void sortList() {
+        this.transactionList.sort(new FlowComparator<>());
         this.transactionList.sort(new NameComparator<>());
     }
 

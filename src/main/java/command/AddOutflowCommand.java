@@ -7,10 +7,10 @@ public class AddOutflowCommand extends BaseCommand {
 
     public AddOutflowCommand(String[] commandParts) {
         super(false, commandParts);
+        createOutflow();
     }
 
-    public String execute(TransactionManager manager) {
-        //@@author Kishen271828
+    private void createOutflow() {
         String outflowName = null;
         double outflowAmount = 0.0;
         String outflowDate = null;
@@ -32,8 +32,13 @@ public class AddOutflowCommand extends BaseCommand {
         }
         String outflowDateTime = outflowDate + " " + outflowTime;
 
-        Outflow outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
+        outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
+        assert outflowCategory != null;
         outflow.setCategory(Outflow.Category.valueOf(outflowCategory.toUpperCase()));
+    }
+
+    public String execute(TransactionManager manager) {
+        //@@author Kishen271828
         manager.addTransaction(outflow);
         return "Ok. Added outflow";
     }

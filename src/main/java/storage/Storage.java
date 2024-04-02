@@ -12,7 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import customexceptions.UserNotFoundExcption;
+import customexceptions.UserNotFoundException;
 
 public class Storage {
     private final String filePath;
@@ -31,7 +31,7 @@ public class Storage {
         }
     }
     
-    public BaseUser loadUser(String username) throws UserNotFoundExcption{
+    public BaseUser loadUser(String username) throws UserNotFoundException {
         File f = new File(filePath + "/passwords.txt");
         try {
             this.sc = new Scanner(f);
@@ -43,9 +43,10 @@ public class Storage {
                     return newUser;
                 }
             }
-            throw new UserNotFoundExcption();
+            throw new UserNotFoundException();
         } catch (FileNotFoundException e) {
             createFileDir();
+            System.out.println("File is not found, please try again.");
             return null;
         }
     }
