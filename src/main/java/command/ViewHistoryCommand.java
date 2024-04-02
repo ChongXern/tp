@@ -18,6 +18,6 @@ public class ViewHistoryCommand extends BaseCommand {
         } else if (commandParts[1].equals("all")) {
             numTransactions = manager.getTransactionListSize();
         }
-        return manager.showLastNTransactions(numTransactions);
+        return manager.showLastNTransactions(numTransactions, false);
     }
 }
