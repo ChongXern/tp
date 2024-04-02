@@ -4,7 +4,7 @@ import command.BaseCommand;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
-import customexceptions.UserNotFoundExcption;
+import customexceptions.UserNotFoundException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -14,8 +14,9 @@ import user.InactivityTimer;
 import userinterface.UI;
 
 public class Main {
-    public static void main(String[] args) throws SecurityException, ExceededAttemptsException {
-        Storage storage = new Storage("./data");
+    public static void main(String[] args) throws SecurityException {
+        // Storage storage = new Storage("./data"); // Storage manager for jar file
+        Storage storage = new Storage("../../../data");
         
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
@@ -32,10 +33,7 @@ public class Main {
             response = ui.readInput();
             user = storage.loadUser(response);
             Authentication.authenticateUser(user, ui);
-        } catch (UserNotFoundExcption e) {
-            ui.printMessage(e.getMessage());
-            return;
-        } catch (ExceededAttemptsException e) {
+        } catch (UserNotFoundException | ExceededAttemptsException e) {
             ui.printMessage(e.getMessage());
             return;
         }
@@ -58,7 +56,11 @@ public class Main {
             } catch (IncompletePromptException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
+                StackTraceElement[] stackTrace = e.getStackTrace();
                 ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
+                for (StackTraceElement element : stackTrace) {
+                    System.out.println("Exception caught in " + element.getClassName() + " at line " + element.getLineNumber());
+                }
             }
 
             storage.saveFile(user.getUsername(), manager);

@@ -15,7 +15,7 @@ public class DeleteReminderCommand extends BaseCommand {
             }
         }
         assert reminderIndex != null : "reminderIndex should not be null";
-        manager.removeReminder(Integer.parseInt(reminderIndex));
-        return "Ok. Reminder deleted";
+        reminder = manager.removeReminder(Integer.parseInt(reminderIndex));
+        return "Ok. Inflow " + reminder.getName() + " | " + reminder.getCategory().toString() + " deleted";
     }
 }

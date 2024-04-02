@@ -14,6 +14,7 @@ public abstract class Transaction<T> {
     protected T category;
 
     public Transaction(String name, double amount, String date) {
+        assert name != null : "NULL name detected";
         if (name.length() > NAME_MAX_LEN) {
             System.out.println("Sorry, the description inputted exceeds the maximum permeable length. " +
                     "Please try again.");
@@ -28,11 +29,11 @@ public abstract class Transaction<T> {
         }
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    public double getAmount() {
+    protected double getAmount() {
         return amount;
     }
 

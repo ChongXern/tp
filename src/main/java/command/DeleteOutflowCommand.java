@@ -1,5 +1,7 @@
 package command;
 
+import financialtransactions.Outflow;
+import financialtransactions.Transaction;
 import financialtransactions.TransactionManager;
 
 public class DeleteOutflowCommand extends BaseCommand {
@@ -9,13 +11,13 @@ public class DeleteOutflowCommand extends BaseCommand {
 
     public String execute(TransactionManager manager) throws Exception {
         String outflowIndex = null;
-        for (String part : commandParts) {
-            if (part.startsWith("i/")) {
-                outflowIndex = part.substring(2);
-            }
+        if (commandParts[1].startsWith("i/")) {
+            outflowIndex = commandParts[1].substring(2);
         }
         assert outflowIndex != null : "outflowIndex should not be null";
-        manager.removeOutflow(Integer.parseInt(outflowIndex));
-        return "Ok. Outflow deleted";
+        int outflowIndexParsed = Integer.parseInt(outflowIndex);
+        outflow = manager.removeOutflow(outflowIndexParsed);
+        //outflow = manager.getNthOutflowFromList(outflowIndexParsed);
+        return "Ok. Outflow " + outflow.getName() + " " + outflow.getCategory().toString() + " deleted";
     }
 }
