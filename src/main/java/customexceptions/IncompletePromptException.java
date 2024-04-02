@@ -15,7 +15,7 @@ public class IncompletePromptException extends Exception {
                 message = "Sorry, your prompt appears incomplete. Could you finish your sentence?";
                 break;
             } else if (instr.contains(prompt)){
-                message = "Please prompt again with correct spelling.";
+                message = "Please prompt again with correct spelling. Did you mean to type " + instr;
                 break;
             }
         }
