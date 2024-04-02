@@ -6,11 +6,11 @@ import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
 public abstract class BaseCommand {
+    public boolean isExit;
     protected Inflow inflow;
     protected Outflow outflow;
     protected Reminder reminder;
     String[] commandParts;
-    public boolean isExit;
     public BaseCommand(Boolean isExit, String[] commandParts){
         this.isExit = isExit;
         this.commandParts = commandParts;
