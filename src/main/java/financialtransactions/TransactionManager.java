@@ -25,17 +25,20 @@ public class TransactionManager {
     public void addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
         // transactionList.sortList();
-        if (transaction instanceof Inflow inflow) {
+        if (transaction instanceof Inflow) {
+            Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
             inflows.addTransaction(inflow);
             return;
         }
-        if (transaction instanceof Outflow outflow) {
+        if (transaction instanceof Outflow) {
+            Outflow outflow = (Outflow) transaction;
             transactionList.setTransactionsType("Outflow");
             outflows.addTransaction(outflow);
             return;
         }
-        if (transaction instanceof Reminder reminder) {
+        if (transaction instanceof Reminder) {
+            Reminder reminder = (Reminder) transaction;
             transactionList.setTransactionsType("Reminder");
             reminders.addTransaction(reminder);
             return;
@@ -46,17 +49,20 @@ public class TransactionManager {
     public void removeTransaction(Transaction<?> transaction) {
         int index = transactionList.getIndexOfParticularTransaction(transaction);
         transactionList.removeTransactionIndex(index);
-        if (transaction instanceof Inflow inflow) {
+        if (transaction instanceof Inflow) {
+            Inflow inflow = (Inflow) transaction;
             int inflowIndex = inflows.getIndexOfParticularTransaction(inflow);
             inflows.removeTransactionIndex(inflowIndex);
             return;
         }
-        if (transaction instanceof Outflow outflow) {
+        if (transaction instanceof Outflow) {
+            Outflow outflow = (Outflow) transaction;
             int outflowIndex = outflows.getIndexOfParticularTransaction(outflow);
             outflows.removeTransactionIndex(outflowIndex);
             return;
         }
-        if (transaction instanceof Reminder reminder) {
+        if (transaction instanceof Reminder) {
+            Reminder reminder = (Reminder) transaction;
             int reminderIndex = reminders.getIndexOfParticularTransaction(reminder);
             reminders.removeTransactionIndex(reminderIndex);
             return;
