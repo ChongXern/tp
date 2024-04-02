@@ -56,11 +56,7 @@ public class Main {
             } catch (IncompletePromptException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
-                StackTraceElement[] stackTrace = e.getStackTrace();
                 ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
-                for (StackTraceElement element : stackTrace) {
-                    System.out.println("Exception caught in " + element.getClassName() + " at line " + element.getLineNumber());
-                }
             }
 
             storage.saveFile(user.getUsername(), manager);

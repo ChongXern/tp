@@ -76,7 +76,8 @@ public class TransactionList<T extends Transaction<?>> {
         int index = 1;
         for (T transaction : transactionList) {
             System.out.print(index++);
-            System.out.println(" " + transaction.getName() + " | " + transaction.getCategory() + " | " + transaction.getClass());
+            System.out.println(" " + transaction.getName() + " | " + transaction.getCategory() +
+	            " | " + transaction.getClass());
         }
     }
 

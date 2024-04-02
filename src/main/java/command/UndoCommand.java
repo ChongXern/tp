@@ -80,6 +80,8 @@ public class UndoCommand extends BaseCommand {
             manager.removeTransaction(reminder);
             //manager.addTransaction(commandBeforeUndo.reminder);
             break;
+        default:
+            return "Sorry, unable to undo action.";
         }
         if (canUndo) {
             return "Ok. " + action + " has been undone.";
