@@ -9,8 +9,8 @@ public abstract class BaseCommand {
     protected Inflow inflow;
     protected Outflow outflow;
     protected Reminder reminder;
-    public boolean isExit;
     String[] commandParts;
+    public boolean isExit;
     public BaseCommand(Boolean isExit, String[] commandParts){
         this.isExit = isExit;
         this.commandParts = commandParts;
