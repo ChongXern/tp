@@ -15,6 +15,7 @@ import command.ExitCommand;
 import command.ViewHistoryCommand;
 import command.BaseCommand;
 import command.HelpCommand;
+import command.GenerateReportCommand;
 import customexceptions.IncompletePromptException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
@@ -118,6 +119,11 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             return new ViewHistoryCommand(commandParts);
+        case "generate-report":
+            if (commandParts.length < 3) {
+                throw new IncompletePromptException(command);
+            }
+            return new GenerateReportCommand(commandParts);
         case "undo":
             UndoCommand undoCommand = new UndoCommand(lastCommandParts);
             if (lastCommandParts[0].contains("inflow")) {
