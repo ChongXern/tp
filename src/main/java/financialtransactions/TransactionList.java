@@ -64,6 +64,7 @@ public class TransactionList<T extends Transaction<?>> {
         return baseString.toString();
     }
 
+    //@@author chenhowy    
     public String toSave() {
         StringBuilder baseString = new StringBuilder();
         for (T transaction : transactionList) {
@@ -71,7 +72,7 @@ public class TransactionList<T extends Transaction<?>> {
         }
         return baseString.toString();
     }
-
+    //@@author
     protected void printTransactionsSafeInfo() {
         int index = 1;
         for (T transaction : transactionList) {
@@ -125,14 +126,36 @@ public class TransactionList<T extends Transaction<?>> {
     public void sortListByDate() {
         this.transactionList.sort(new DateComparator<>());
     }
-    
+    //@@author chenhowy
     public double totalSpentInPastMonth() {
         double amount = 0;
         for (T transaction : transactionList) {
-            if (transaction.getDate().getDateTime().getMonth() == LocalDateTime.now().getMonth()) {
+            if ((transaction.getDate().getDateTime().getMonth() == LocalDateTime.now().getMonth()) && 
+                    transaction.getDate().getDateTime().isBefore(LocalDateTime.now())) {
                 amount += transaction.getAmount();
             }
         }
         return amount;
+    }
+    
+    public double getTotalSpentInMonth(int month, int year) {
+        double amount = 0;
+        for (T transaction : transactionList) {
+            if (transaction.getDate().getDateTime().getMonthValue() == month && 
+                    transaction.getDate().getDateTime().getYear() == year) {
+                amount += transaction.getAmount();
+            }
+        }
+        return amount;
+    }
+    public int getTransactionsAfterToday() {
+        int numberOfTransactions = 0;
+        LocalDateTime today = LocalDateTime.now();
+        for (T transaction : transactionList) {
+            if (transaction.getDate().getDateTime().isAfter(today)) {
+                numberOfTransactions++;
+            }
+        }
+        return numberOfTransactions;
     }
 }

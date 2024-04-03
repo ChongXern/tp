@@ -3,6 +3,8 @@ package financialtransactions;
 
 import storage.BarChart;
 
+import java.time.LocalDateTime;
+
 public class TransactionManager {
     private TransactionList<Transaction<?>> transactionList;
     private TransactionList<Inflow> inflows;
@@ -173,20 +175,50 @@ public class TransactionManager {
     }
 
     public String toSave() {
-        return String.format("%.2f\n", budget) + inflows.toSave() + outflows.toSave() + reminders.toSave();
+        return String.format("%.2f\n", budget) + transactionList.toSave();
     }
     
+    //@@author chenhowy    
     public String generateQuickReport() {
         String baseString = "";
         baseString += String.format("You have spent " +
                 "%.2f in the current month.\n", outflows.totalSpentInPastMonth());
         baseString += String.format("With a budget of " +
-                "%.2f, you have %.2f left to spend.\n", budget, budget - outflows.totalSpentInPastMonth());
+                "%.2f, you have %.2f left to spend.\n", budget, budget - outflows.totalSpentInPastMonth() - 
+                reminders.totalSpentInPastMonth());
         baseString += String.format("You have " +
-                "%d upcoming payments that require your attention", reminders.getTransactionListSize());
+                "%d upcoming payments that require your attention", reminders.getTransactionsAfterToday());
         return baseString;
     }
-
+    
+    public String generateFullReport(String monthString, int month, int year) {
+        if (!isBefore(month, year)) {
+            return "Please enter a month that is before the current month";
+        }
+        String baseString = "";
+        baseString += String.format("In the month of %s %s, " +
+                "you had an income of $%.2f.\n", monthString, year, inflows.getTotalSpentInMonth(month, year));
+        baseString += String.format("You spent $%.2f.\n", outflows.getTotalSpentInMonth(month, year) + 
+                reminders.getTotalSpentInMonth(month, year));
+        baseString += String.format("You managed to save $%.2f!", 
+                inflows.getTotalSpentInMonth(month, year) - outflows.getTotalSpentInMonth(month, year) - 
+                        reminders.getTotalSpentInMonth(month, year));
+        return baseString;
+    }
+    
+    public boolean isBefore(int month, int year) {
+        LocalDateTime today = LocalDateTime.now();
+        int todayMonth = today.getMonthValue();
+        int todayYear = today.getYear();
+        if (year < todayYear) {
+            return true;
+        } else if (year == todayYear && month < todayMonth) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //@@author    
     public int getTransactionListSize() {
         return transactionList.getTransactionListSize();
     }
