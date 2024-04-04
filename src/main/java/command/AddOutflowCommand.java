@@ -11,12 +11,12 @@ public class AddOutflowCommand extends BaseCommand {
         super(false, commandParts);
         try {
             createOutflow();
-        } catch (CategoryNotFoundException | IncorrectCommandSyntaxException e) {
+        } catch (IncorrectCommandSyntaxException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void createOutflow() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
+    private void createOutflow() throws IncorrectCommandSyntaxException {
         //@@author Kishen271828
         String outflowName = null;
         double outflowAmount = 0.0;
@@ -46,12 +46,19 @@ public class AddOutflowCommand extends BaseCommand {
 
         outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null;
-        outflow.setCategory(Outflow.Category.valueOf(outflowCategory.toUpperCase()));
-        //@@author
+        try {
+            outflow.setCategory(outflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
     }
 
     public String execute(TransactionManager manager) {
         //@@author Kishen271828
+        if (!canExecute) {
+            return "Sorry, outflow not added.";
+        }
         manager.addTransaction(outflow);
         return "Ok. Added outflow";
     }

@@ -10,10 +10,14 @@ public abstract class BaseCommand {
     protected Inflow inflow;
     protected Outflow outflow;
     protected Reminder reminder;
+    protected boolean canExecute = true;
     String[] commandParts;
     public BaseCommand(Boolean isExit, String[] commandParts){
         this.isExit = isExit;
         this.commandParts = commandParts;
+    }
+    public void setCanExecuteToFalse() {
+        this.canExecute = false;
     }
     public abstract String execute(TransactionManager manager) throws Exception;
 

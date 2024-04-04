@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
@@ -41,7 +42,15 @@ public class EditInflowCommand extends BaseCommand {
         String inflowDateTime = inflowDate + " " + inflowTime;
         Inflow updatedInflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null : "inflowCategory should not be null";
-        updatedInflow.setCategory(Inflow.Category.valueOf(inflowCategory.toUpperCase()));
+        try {
+            updatedInflow.setCategory(inflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
+        if (!canExecute) {
+            return "Sorry, inflow not edited.";
+        }
         manager.editInflow(inflowIndex, updatedInflow);
         return "Ok. Edited inflow";
     }

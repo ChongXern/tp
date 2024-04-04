@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
@@ -41,7 +42,15 @@ public class EditOutflowCommand extends BaseCommand {
         String outflowDateTime = outflowDate + " " + outflowTime;
         Outflow updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null : "outflowCategory should not be null";
-        updatedOutflow.setCategory(Outflow.Category.valueOf(outflowCategory.toUpperCase()));
+        try {
+            updatedOutflow.setCategory(outflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
+        if (!canExecute) {
+            return "Sorry, outflow not edited.";
+        }
         manager.editOutflow(outflowIndex, updatedOutflow);
         return "Ok. Edited outflow";
     }

@@ -11,12 +11,12 @@ public class AddInflowCommand extends BaseCommand {
         super(false, commandParts);
         try {
             createInflow();
-        } catch (CategoryNotFoundException | IncorrectCommandSyntaxException e) {
+        } catch (IncorrectCommandSyntaxException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void createInflow() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
+    private void createInflow() throws IncorrectCommandSyntaxException {
         //@@author Kishen271828
         String inflowName = null;
         double inflowAmount = 0;
@@ -45,12 +45,19 @@ public class AddInflowCommand extends BaseCommand {
         String inflowDateTime = inflowDate + " " + inflowTime;
         inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null;
-        inflow.setCategory(Inflow.Category.valueOf(inflowCategory.toUpperCase()));
-        //@@author
+        try {
+            inflow.setCategory(inflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
     }
 
     public String execute(TransactionManager manager) {
         //@@author Kishen271828
+        if (!canExecute) {
+            return "Sorry, inflow not added.";
+        }
         manager.addTransaction(inflow);
         return "Ok. Added inflow";
     }
