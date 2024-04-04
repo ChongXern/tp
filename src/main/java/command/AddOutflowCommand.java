@@ -1,6 +1,7 @@
 package command;
 
 import customexceptions.CategoryNotFoundException;
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
 
@@ -10,19 +11,22 @@ public class AddOutflowCommand extends BaseCommand {
         super(false, commandParts);
         try {
             createOutflow();
-        } catch (CategoryNotFoundException e) {
+        } catch (CategoryNotFoundException | IncorrectCommandSyntaxException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void createOutflow() throws CategoryNotFoundException {
+    private void createOutflow() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
         String outflowName = null;
         double outflowAmount = 0.0;
         String outflowDate = null;
         String outflowTime = null;
         String outflowCategory = null;
 
-        for (String part : commandParts) {
+        /* Iterates through the parts of the original command string that checks and updates
+        relevant outflow information. */
+        for (int i = 1 ; i < commandParts.length; i++) {
+            String part = commandParts[i];
             if (part.startsWith("n/")) {
                 outflowName = part.substring(2);
             } else if (part.startsWith("a/")) {
@@ -33,6 +37,8 @@ public class AddOutflowCommand extends BaseCommand {
                 outflowTime = part.substring(2);
             } else if (part.startsWith("c/")) {
                 outflowCategory = part.substring(2);
+            } else {
+                throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
         String outflowDateTime = outflowDate + " " + outflowTime;

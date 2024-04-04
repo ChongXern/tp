@@ -5,6 +5,7 @@ import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
 import customexceptions.UserNotFoundException;
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -52,7 +53,7 @@ public class Main {
                 response = baseCommand.execute(manager);
                 ui.printMessage(response);
                 inactivityTimer.resetTimer();
-            } catch (IncompletePromptException e) {
+            } catch (IncompletePromptException | IncorrectCommandSyntaxException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
                 ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());

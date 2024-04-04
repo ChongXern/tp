@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 
 public class SetBudgetCommand extends BaseCommand{
@@ -9,11 +10,11 @@ public class SetBudgetCommand extends BaseCommand{
     
     public String execute(TransactionManager manager) throws Exception{
         String budgetString = null;
-        for (String part : commandParts) {
-            if (part.startsWith("a/")) {
-                budgetString = part.substring(2);
-            }
-        }       
+        if (commandParts[1].startsWith("a/")) {
+            budgetString = commandParts[1].substring(2);
+        } else {
+            throw new IncorrectCommandSyntaxException(commandParts[0]);
+        }
         double budget = Double.parseDouble(budgetString);
         manager.setBudget(budget);
         return "Ok. Budget set.";

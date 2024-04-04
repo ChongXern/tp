@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
 
@@ -16,7 +17,10 @@ public class EditInflowCommand extends BaseCommand {
         String inflowTime = null;
         String inflowCategory = null;
 
-        for (String part : commandParts) {
+        /* Iterates through the parts of the original command string that checks and updates
+        relevant inflow information. */
+        for (int i = 1; i < commandParts.length; i++) {
+            String part = commandParts[i];
             if (part.startsWith("i/")) {
                 inflowIndex = Integer.parseInt(part.substring(2));
             } else if (part.startsWith("n/")) {
@@ -29,6 +33,8 @@ public class EditInflowCommand extends BaseCommand {
                 inflowTime = part.substring(2);
             } else if (part.startsWith("c/")) {
                 inflowCategory = part.substring(2);
+            } else {
+                throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
 

@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 
 public class ViewHistoryCommand extends BaseCommand {
@@ -18,7 +19,7 @@ public class ViewHistoryCommand extends BaseCommand {
         } else if (commandParts[1].equals("all")) {
             numTransactions = manager.getTransactionListSize();
         } else {
-            return "Sorry, please use the correct syntax for view-history.";
+            throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
         boolean isIncludeBarChart = commandParts.length == 3 && commandParts[2].equals("w/chart");
         return manager.showLastNTransactions(numTransactions, isIncludeBarChart);
