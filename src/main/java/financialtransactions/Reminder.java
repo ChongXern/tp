@@ -2,8 +2,6 @@ package financialtransactions;
 
 import customexceptions.CategoryNotFoundException;
 
-import java.util.EnumSet;
-
 public class Reminder extends Transaction<Reminder.Category> {
     public enum Category {
         INSTALLMENT, CREDITCARD, UTILITIES

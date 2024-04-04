@@ -2,8 +2,6 @@ package financialtransactions;
 
 import customexceptions.CategoryNotFoundException;
 
-import java.util.EnumSet;
-
 public class Outflow extends Transaction<Outflow.Category> {
     public enum Category {
         FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER
