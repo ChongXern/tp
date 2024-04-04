@@ -1,5 +1,6 @@
 package storage;
 
+import customexceptions.CategoryNotFoundException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
@@ -12,7 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import customexceptions.UserNotFoundExcption;
+import customexceptions.UserNotFoundException;
 
 public class Storage {
     private final String filePath;
@@ -33,17 +34,13 @@ public class Storage {
                 if (line.startsWith(username)) {
                     String password = line.split("\\|")[1];
                     BaseUser newUser = new BaseUser(username, password);
-                    this.sc.close();
                     return newUser;
                 }
             }
-            this.sc.close();
-            throw new UserNotFoundExcption();
+            throw new UserNotFoundException();
         } catch (FileNotFoundException e) {
-            if (!createFileDir()){
-                throw new Exception("Failed to create directory");
-            }
-            this.sc.close();
+            createFileDir();
+            System.out.println("File is not found, please try again.");
             return null;
         }
     }
@@ -62,7 +59,7 @@ public class Storage {
                     Inflow inflow = new Inflow(transactionInfo[0], amount, transactionInfo[2]);
                     inflow.setCategory(Inflow.Category.valueOf(transactionInfo[3]));
                     manager.addTransaction(inflow);
-                } else if (transactionInfo[4].equals("O")){
+                } else if (transactionInfo[4].equals("O")) {
                     Outflow outflow = new Outflow(transactionInfo[0], -amount, transactionInfo[2]);
                     outflow.setCategory(Outflow.Category.valueOf(transactionInfo[3]));
                     manager.addTransaction(outflow);
@@ -74,7 +71,7 @@ public class Storage {
             }
         } catch (FileNotFoundException e) {
             createFileDir();
-        }
+        } catch (CategoryNotFoundException ignored){}
         sc.close();
         return manager;
     }

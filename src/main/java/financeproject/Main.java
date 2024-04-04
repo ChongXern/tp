@@ -4,7 +4,6 @@ import command.BaseCommand;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
-import customexceptions.UserNotFoundExcption;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -40,17 +39,12 @@ public class Main {
             return;
         }
         TransactionManager manager;
-        try{
-            manager = storage.loadFile(user.getUsername());
-        } catch (CategoryNotFoundException e){
-            ui.printMessage(e.getMessage());
-            return;
-        }
+        manager = storage.loadFile(user.getUsername());
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
         do {
-            ui.printMessage("How can we help you today? \n Enter 'help' to see commands");
+            ui.printMessage("How can we help you today? \nEnter 'help' to see commands");
             response = ui.readInput();
             try {
                 baseCommand = parser.parseCommand(response);
