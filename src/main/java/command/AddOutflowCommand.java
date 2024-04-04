@@ -17,6 +17,7 @@ public class AddOutflowCommand extends BaseCommand {
     }
 
     private void createOutflow() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
+        //@@author Kishen271828
         String outflowName = null;
         double outflowAmount = 0.0;
         String outflowDate = null;
@@ -46,6 +47,7 @@ public class AddOutflowCommand extends BaseCommand {
         outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null;
         outflow.setCategory(Outflow.Category.valueOf(outflowCategory.toUpperCase()));
+        //@@author
     }
 
     public String execute(TransactionManager manager) {

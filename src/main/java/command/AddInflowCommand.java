@@ -17,6 +17,7 @@ public class AddInflowCommand extends BaseCommand {
     }
 
     private void createInflow() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
+        //@@author Kishen271828
         String inflowName = null;
         double inflowAmount = 0;
         String inflowDate = null;
@@ -45,7 +46,9 @@ public class AddInflowCommand extends BaseCommand {
         inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null;
         inflow.setCategory(Inflow.Category.valueOf(inflowCategory.toUpperCase()));
+        //@@author
     }
+
     public String execute(TransactionManager manager) {
         //@@author Kishen271828
         manager.addTransaction(inflow);

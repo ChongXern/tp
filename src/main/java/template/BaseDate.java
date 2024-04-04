@@ -80,4 +80,9 @@ public class BaseDate {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    public int compareTo(BaseDate otherDate) {
+        return this.dateTime.compareTo(otherDate.dateTime);
+    }
+
 }

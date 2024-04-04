@@ -56,4 +56,9 @@ public abstract class Transaction<T> {
     public BaseDate getDate() {
         return date;
     }
+
+    public int compareTo(Transaction<?> otherTransaction) {
+        return this.date.compareTo(otherTransaction.getDate());
+    }
+
 }
