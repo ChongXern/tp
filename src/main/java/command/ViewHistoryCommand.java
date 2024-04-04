@@ -17,7 +17,10 @@ public class ViewHistoryCommand extends BaseCommand {
             numTransactions = Integer.parseInt(numTransactionsString);
         } else if (commandParts[1].equals("all")) {
             numTransactions = manager.getTransactionListSize();
+        } else {
+            return "Sorry, please use the correct syntax for view-history.";
         }
-        return manager.showLastNTransactions(numTransactions, false);
+        boolean isIncludeBarChart = commandParts.length == 3 && commandParts[2].equals("w/chart");
+        return manager.showLastNTransactions(numTransactions, isIncludeBarChart);
     }
 }
