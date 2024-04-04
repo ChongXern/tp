@@ -1,7 +1,5 @@
-//@@author chenhowy
 package storage;
 
-import customexceptions.CategoryNotFoundException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
@@ -14,19 +12,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import customexceptions.UserNotFoundException;
+import customexceptions.UserNotFoundExcption;
 
 public class Storage {
     private final String filePath;
     private Scanner sc;
     public Storage(String filePath) {
         this.filePath = filePath;
-    }
-    
-    public void addNewUser(String username, String password) throws IOException{
-        FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
-        fw.write(username + "|" + password + "\n");
-        fw.close();
     }
 
     public BaseUser loadMockUser(){
@@ -40,27 +32,29 @@ public class Storage {
                 String line = sc.nextLine();
                 if (line.startsWith(username)) {
                     String password = line.split("\\|")[1];
-                    return new BaseUser(username, password);
+                    BaseUser newUser = new BaseUser(username, password);
+                    this.sc.close();
+                    return newUser;
                 }
             }
-            throw new UserNotFoundException();
+            this.sc.close();
+            throw new UserNotFoundExcption();
         } catch (FileNotFoundException e) {
-            createFileDir();
+            if (!createFileDir()){
+                throw new Exception("Failed to create directory");
+            }
+            this.sc.close();
             return null;
         }
     }
     
-    public TransactionManager loadFile(String username) throws CategoryNotFoundException{
+    public TransactionManager loadFile(String username) {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
-            Scanner sc = new Scanner(f);
-            double budget = 0.00;
-            if(sc.hasNext()){
-                budget = Double.parseDouble(sc.nextLine());
-            }
-            manager.setBudget(budget);
-            while (sc.hasNext()) {
+            this.sc = new Scanner(f);
+            manager.setBudget(Double.parseDouble(sc.nextLine()));
+            while (this.sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
                 double amount = Double.parseDouble(transactionInfo[1]);
@@ -78,16 +72,16 @@ public class Storage {
                     manager.addTransaction(reminder);
                 }
             }
-            sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
         }
+        sc.close();
         return manager;
     }
 
-    private void createFileDir() {
+    private boolean createFileDir() {
         File f = new File(filePath);
-        f.mkdir();
+        return f.mkdir();
     }
 
     public String saveFile(String username, TransactionManager tm) {

@@ -1,10 +1,10 @@
 package financeproject;
 
 import command.BaseCommand;
-import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
+import customexceptions.UserNotFoundExcption;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -15,7 +15,7 @@ import userinterface.UI;
 
 public class Main {
     public static void main(String[] args) throws SecurityException {
-        Storage storage = new Storage("./data"); // Storage manager for jar file
+        Storage storage = new Storage("./data");
         
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
