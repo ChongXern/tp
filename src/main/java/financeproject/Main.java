@@ -1,10 +1,8 @@
 package financeproject;
 
 import command.BaseCommand;
-import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
-import customexceptions.UserNotFoundExcption;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -14,7 +12,7 @@ import user.InactivityTimer;
 import userinterface.UI;
 
 public class Main {
-    public static void main(String[] args) throws SecurityException, ExceededAttemptsException {
+    public static void main(String[] args) throws SecurityException {
         Storage storage = new Storage("./data");
         
         UI ui = new UI();
@@ -22,28 +20,21 @@ public class Main {
 
         Parser parser = new Parser(ui);
         BaseCommand baseCommand = null;
-        String response = "";
+        String response;
 
         // Authenticating user
-        BaseUser user = null;
+        BaseUser user;
         InactivityTimer inactivityTimer = new InactivityTimer();
         try {
             ui.printMessage("Username: ");
             response = ui.readInput();
             user = storage.loadUser(response);
             Authentication.authenticateUser(user, ui);
-        } catch (UserNotFoundExcption e) {
-            ui.printMessage(e.getMessage());
-            return;
-        } catch (ExceededAttemptsException e) {
+        } catch (Exception e){
             ui.printMessage(e.getMessage());
             return;
         }
-        if (user != null) {
-            ui.printMessage("User has been authenticated. Starting program...");
-        } else {
-            return;
-        }
+        ui.printMessage("User has been authenticated. Starting program...");
         TransactionManager manager = storage.loadFile(user.getUsername());
         ui.printMessage(manager.generateQuickReport());
 
