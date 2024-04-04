@@ -45,6 +45,8 @@ public class Main {
         // Main program flow
         do {
             response = ui.readInput();
+            ui.printMessage("How can we help you financially today?\n" + //
+                                "Type 'help' to view guide\n");
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);

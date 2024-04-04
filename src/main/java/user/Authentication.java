@@ -19,8 +19,6 @@ public class Authentication {
     }
 
     public boolean checkPassword(String username, String password) {
-        System.out.println(password + " and " + this.password);
-        System.out.println(username + " and " + this.username);
         boolean isMatch = this.password.equals(password) && this.username.equals(username);
         return isMatch;
     }
