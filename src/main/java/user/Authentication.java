@@ -4,9 +4,8 @@ import customexceptions.ExceededAttemptsException;
 import userinterface.UI;
 
 public class Authentication {
-    private static int attemptsLimit = 3;
+    private static final int attemptsLimit = 3;
     String username;
-    UI ui;
     private String password;
 
     public Authentication(String username, String password) {
@@ -14,15 +13,8 @@ public class Authentication {
         this.username = username;
     }
 
-    public String getUsername() {
-        return this.username;
-    }
-
     public boolean checkPassword(String username, String password) {
-        System.out.println(password + " and " + this.password);
-        System.out.println(username + " and " + this.username);
-        boolean isMatch = this.password.equals(password) && this.username.equals(username);
-        return isMatch;
+        return this.password.equals(password) && this.username.equals(username);
     }
 
     public boolean changePassword(String username, String oldPassword, String newPassword)

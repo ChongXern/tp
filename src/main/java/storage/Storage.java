@@ -32,7 +32,10 @@ public class Storage {
             System.out.println("Could not add user");
         }
     }
-    
+
+    public BaseUser loadMockUser(){
+        return new BaseUser("Bob", "password");
+    }
     public BaseUser loadUser(String username) throws UserNotFoundException {
         File f = new File(filePath + "/passwords.txt");
         try {
@@ -41,8 +44,7 @@ public class Storage {
                 String line = sc.nextLine();
                 if (line.startsWith(username)) {
                     String password = line.split("\\|")[1];
-                    BaseUser newUser = new BaseUser(username, password);
-                    return newUser;
+                    return new BaseUser(username, password);
                 }
             }
             throw new UserNotFoundException();
@@ -58,7 +60,11 @@ public class Storage {
         TransactionManager manager = new TransactionManager();
         try {
             Scanner sc = new Scanner(f);
-            manager.setBudget(Double.parseDouble(sc.nextLine()));
+            double budget = 0.00;
+            if(sc.hasNext()){
+                budget = Double.parseDouble(sc.nextLine());
+            }
+            manager.setBudget(budget);
             while (sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";

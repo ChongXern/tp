@@ -4,7 +4,6 @@ import command.BaseCommand;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
-import customexceptions.UserNotFoundException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -22,23 +21,21 @@ public class Main {
 
         Parser parser = new Parser(ui);
         BaseCommand baseCommand = null;
-        String response = "";
+        String response;
 
         // Authenticating user
-        BaseUser user = null;
+        BaseUser user;
         InactivityTimer inactivityTimer = new InactivityTimer();
         try {
             ui.printMessage("Username: ");
             response = ui.readInput();
-            user = storage.loadUser(response);
-            Authentication.authenticateUser(user, ui);
-        } catch (UserNotFoundException | ExceededAttemptsException e) {
+//            user = storage.loadUser(response);
+            user = storage.loadMockUser();
+            if (Authentication.authenticateUser(user, ui)){
+                ui.printMessage("User has been authenticated. Starting program...");
+            }
+        } catch (ExceededAttemptsException e) {
             ui.printMessage(e.getMessage());
-            return;
-        }
-        if (user != null) {
-            ui.printMessage("User has been authenticated. Starting program...");
-        } else {
             return;
         }
         TransactionManager manager = storage.loadFile(user.getUsername());
@@ -71,11 +68,11 @@ public class Main {
                     String wantToContinue = ui.readInput();
                     if (wantToContinue.equalsIgnoreCase("y") ||
                             wantToContinue.equalsIgnoreCase("yes")) {
-                        System.out.println("Session continued.");
+                        ui.printMessage("Session continued.");
                         inactivityTimer.resetTimer();
                     } else if (wantToContinue.equalsIgnoreCase("n") ||
                             wantToContinue.equalsIgnoreCase("no")) {
-                        System.out.println("Session ended. ");
+                        ui.printMessage("Session ended. ");
                         assert baseCommand != null;
                         baseCommand.setIsExit(true);
                     }
