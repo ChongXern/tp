@@ -20,15 +20,16 @@ FinTrack is a desktop app designed for individuals who want to manage their fina
 
 ### Viewing Help: `help`
 
-- Shows a message explaining how to access the help page or list of commands.
+- Shows a message explaining the different commands available and their formats.
 
 Format: `help`
 
 ### View Transaction History: `view-history`
 
-- Access getter for all the last n transactions made.
+- Displays the last n transactions made.
+- `view-history all` command shows all the whole list of transactions.
 
-Format: `view-history n/NUM`
+Format: `view-history n/NUM` or `view-history all`
 
 Example: `view-history n/20`
 
