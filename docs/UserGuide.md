@@ -27,11 +27,15 @@ Format: `help`
 ### View Transaction History: view-history
 
 - Access getter for all the last n transactions made.
+- Optional `w/chart` can be added at the end to visualise transaction history with bar charts.
+- `all` tag allows the user to view all transactions made.
 
-Format: `view-history n/NUM`
+Format: `view-history n/NUM [w/CHART]`
 
-Example: `view-history n/20`
-
+Examples:
+- `view-history n/20 w/chart`
+- `view-history all`
+  
 ### Add Inflow: add-inflow
 
 - Adds a new inflow of money to your financial records.
@@ -90,6 +94,17 @@ Format: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
 Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
 
+### Undo last action: `undo`
+- This command will undo the last command inputted by the user.
+- Only applicable for the commands:
+  - `add-inflow`
+  - `add-outflow`
+  - `add-reminder`
+  - `delete-inflow`
+  - `delete-outflow`
+  - `delete-reminder`
+
+Format: `undo`
 
 ### Exiting the Program: `quit`
 
@@ -101,6 +116,10 @@ Format: `quit`
 
 FinTrack data is saved in the hard disk automatically when the user exits the program. There is no need to save the data manually.
 
+### Inactivity Timer
+
+FinTrack allows a maximum of 3 minutes of inactivity on the software, then it will shut down by itself. However, a grace period of 30 seconds is offered to the user, whereby the user is asked whether there will be any further activity or not. 
+
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?
@@ -110,7 +129,7 @@ FinTrack data is saved in the hard disk automatically when the user exits the pr
 ## Command Summary
 
 * View Help: `help`
-* View Transaction History: `view-history n/NUM`
+* View Transaction History: `view-history n/NUM [w/CHART]`
 * Add Inflow: `add-inflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 * Delete Inflow: `delete-inflow i/INDEX`
 * Edit Inflow: `edit-inflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
@@ -118,3 +137,4 @@ FinTrack data is saved in the hard disk automatically when the user exits the pr
 * Delete Outflow: `delete-outflow i/INDEX`
 * Edit Outflow: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 * Exit Program: `quit`
+* Undo: `undo`
