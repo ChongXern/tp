@@ -21,17 +21,7 @@ public class Storage {
         this.filePath = filePath;
     }
     
-    public void addNewUser(String username, String password) {
-        try {
-            FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
-            fw.write(username + "|" + password + "\n");
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Could not add user");
-        }
-    }
-    
-    public BaseUser loadUser(String username) throws UserNotFoundExcption{
+    public BaseUser loadUser(String username) throws Exception{
         File f = new File(filePath + "/passwords.txt");
         try {
             this.sc = new Scanner(f);
@@ -40,12 +30,17 @@ public class Storage {
                 if (line.startsWith(username)) {
                     String password = line.split("\\|")[1];
                     BaseUser newUser = new BaseUser(username, password);
+                    this.sc.close();
                     return newUser;
                 }
             }
+            this.sc.close();
             throw new UserNotFoundExcption();
         } catch (FileNotFoundException e) {
-            createFileDir();
+            if (!createFileDir()){
+                throw new Exception("Failed to create directory");
+            }
+            this.sc.close();
             return null;
         }
     }
@@ -54,9 +49,9 @@ public class Storage {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
-            Scanner sc = new Scanner(f);
+            this.sc = new Scanner(f);
             manager.setBudget(Double.parseDouble(sc.nextLine()));
-            while (sc.hasNext()) {
+            while (this.sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
                 double amount = Double.parseDouble(transactionInfo[1]);
@@ -77,13 +72,16 @@ public class Storage {
             sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
+            sc.close();
+        }  catch (Exception e){
+            System.out.println(e.getMessage());
         }
         return manager;
     }
 
-    private void createFileDir() {
+    private boolean createFileDir() {
         File f = new File(filePath);
-        f.mkdir();
+        return f.mkdir();
     }
 
     public void saveFile(String username, TransactionManager tm) {
