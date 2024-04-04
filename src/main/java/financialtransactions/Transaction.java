@@ -5,8 +5,6 @@ import template.BaseDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.EnumSet;
-
 
 public abstract class Transaction<T> {
     private static final int NAME_MAX_LEN = 30;
