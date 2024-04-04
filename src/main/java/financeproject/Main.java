@@ -41,8 +41,8 @@ public class Main {
         } else {
             return;
         }
+
         TransactionManager manager = storage.loadFile(user.getUsername());
-        //TransactionManager manager = new TransactionManager();
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
