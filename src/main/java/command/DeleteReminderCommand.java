@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 
 public class DeleteReminderCommand extends BaseCommand {
@@ -9,10 +10,10 @@ public class DeleteReminderCommand extends BaseCommand {
 
     public String execute(TransactionManager manager) throws Exception {
         String reminderIndex = null;
-        for (String part : commandParts) {
-            if (part.startsWith("i/")) {
-                reminderIndex = part.substring(2);
-            }
+        if (commandParts[1].startsWith("i/")) {
+            reminderIndex = commandParts[1].substring(2);
+        } else {
+            throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
         assert reminderIndex != null : "reminderIndex should not be null";
         reminder = manager.removeReminder(Integer.parseInt(reminderIndex));

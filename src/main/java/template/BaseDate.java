@@ -6,9 +6,11 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ArrayList;
-
+//@@author dylansiew
 public class BaseDate {
+    //@@author dylansiew
     public static DateTimeFormatter formatter = null;
+
     private static final List<String> dateFormats = List.of(
             "yyyy-MM-dd",
             "dd-MM-yyyy",
@@ -30,6 +32,7 @@ public class BaseDate {
     private LocalDateTime dateTime = null;
 
     public BaseDate(String args) {
+        //@@author dylansiew
         args = args.strip();
         if (!args.contains(" ")) {
             String defaultTime = " 0000";
@@ -39,13 +42,15 @@ public class BaseDate {
             try {
                 formatter = DateTimeFormatter.ofPattern(format);
                 dateTime = LocalDateTime.parse(args, formatter);
-            } catch (DateTimeParseException ignored) {
+            } catch (DateTimeParseException e) {
+                continue;
             }
 
         }
     }
 
     private static ArrayList<String> dateTimeVary() {
+        //@@author dylansiew
         ArrayList<String> varyList = new ArrayList<>();
         for (String dateFormat : dateFormats) {
             for (String timeFormat : timeFormats) {
@@ -58,11 +63,13 @@ public class BaseDate {
 
     @Override
     public String toString() {
+        //@@author dylansiew
         formatter = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma", Locale.US);
         return String.format("%s", dateTime.format(formatter));
     }
 
     public boolean equals(BaseDate otherDate) {
+        //@@author dylansiew
         if (otherDate != null && this.dateTime != null) {
             return this.dateTime.toLocalDate().equals(otherDate.dateTime.toLocalDate());
         }
@@ -70,6 +77,7 @@ public class BaseDate {
     }
 
     public boolean isBefore(BaseDate otherDate) {
+        //@@author dylansiew
         if (otherDate != null && this.dateTime != null) {
             return this.dateTime.isBefore(otherDate.dateTime);
         }
@@ -79,4 +87,9 @@ public class BaseDate {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    public int compareTo(BaseDate otherDate) {
+        return this.dateTime.compareTo(otherDate.dateTime);
+    }
+
 }

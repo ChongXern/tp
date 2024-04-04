@@ -36,8 +36,8 @@ public abstract class Transaction<T> {
         return category;
     }
 
-    protected abstract void setCategory(T category) throws CategoryNotFoundException;
-    protected abstract boolean isValidCategory(T category);
+    protected abstract void setCategory(String category) throws CategoryNotFoundException;
+    protected abstract boolean isValidCategory(String category);
 
     @Override
     public String toString() {
@@ -51,4 +51,9 @@ public abstract class Transaction<T> {
     public BaseDate getDate() {
         return date;
     }
+
+    public int compareTo(Transaction<?> otherTransaction) {
+        return this.date.compareTo(otherTransaction.getDate());
+    }
+
 }

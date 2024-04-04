@@ -45,7 +45,7 @@ public class Storage {
         }
     }
     
-    public TransactionManager loadFile(String username) {
+    public TransactionManager loadFile(String username) throws CategoryNotFoundException{
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
@@ -57,21 +57,21 @@ public class Storage {
                 double amount = Double.parseDouble(transactionInfo[1]);
                 if (transactionInfo[4].equals("I")) {
                     Inflow inflow = new Inflow(transactionInfo[0], amount, transactionInfo[2]);
-                    inflow.setCategory(Inflow.Category.valueOf(transactionInfo[3]));
+                    inflow.setCategory(transactionInfo[3]);
                     manager.addTransaction(inflow);
                 } else if (transactionInfo[4].equals("O")) {
                     Outflow outflow = new Outflow(transactionInfo[0], -amount, transactionInfo[2]);
-                    outflow.setCategory(Outflow.Category.valueOf(transactionInfo[3]));
+                    outflow.setCategory(transactionInfo[3]);
                     manager.addTransaction(outflow);
                 } else {
                     Reminder reminder = new Reminder(transactionInfo[0], -amount, transactionInfo[2]);
-                    reminder.setCategory(Reminder.Category.valueOf(transactionInfo[3]));
+                    reminder.setCategory(transactionInfo[3]);
                     manager.addTransaction(reminder);
                 }
             }
         } catch (FileNotFoundException e) {
             createFileDir();
-        } catch (CategoryNotFoundException ignored){}
+        }
         sc.close();
         return manager;
     }

@@ -1,5 +1,7 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
 
@@ -16,7 +18,10 @@ public class EditOutflowCommand extends BaseCommand {
         String outflowTime = null;
         String outflowCategory = null;
 
-        for (String part : commandParts) {
+        /* Iterates through the parts of the original command string that checks and updates
+        relevant outflow information. */
+        for (int i = 1; i < commandParts.length; i++) {
+            String part = commandParts[i];
             if (part.startsWith("i/")) {
                 outflowIndex = Integer.parseInt(part.substring(2));
             } else if (part.startsWith("n/")) {
@@ -29,13 +34,23 @@ public class EditOutflowCommand extends BaseCommand {
                 outflowTime = part.substring(2);
             } else if (part.startsWith("c/")) {
                 outflowCategory = part.substring(2);
+            } else {
+                throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
 
         String outflowDateTime = outflowDate + " " + outflowTime;
         Outflow updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null : "outflowCategory should not be null";
-        updatedOutflow.setCategory(Outflow.Category.valueOf(outflowCategory.toUpperCase()));
+        try {
+            updatedOutflow.setCategory(outflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
+        if (!canExecute) {
+            return "Sorry, outflow not edited.";
+        }
         manager.editOutflow(outflowIndex, updatedOutflow);
         return "Ok. Edited outflow";
     }

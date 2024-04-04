@@ -26,7 +26,7 @@ public class TransactionManager {
     
     public String addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
-        // transactionList.sortList();
+        transactionList.sortTransactions();
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
@@ -72,7 +72,10 @@ public class TransactionManager {
         int numOfInflows = inflows.getTransactionListSize();
         Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
+        transactionList.sortTransactions();
+
         inflows.removeTransactionIndex(numOfInflows - index);
+        inflows.sortTransactions();
         return transactionRemoved;
     }
 
@@ -80,7 +83,10 @@ public class TransactionManager {
         int numOfOutflows = outflows.getTransactionListSize();
         Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
+        transactionList.sortTransactions();
+
         outflows.removeTransactionIndex(numOfOutflows - index);
+        outflows.sortTransactions();
         return transactionRemoved;
     }
 
@@ -92,20 +98,28 @@ public class TransactionManager {
         return transactionRemoved;
     }
 
-    public boolean editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
+    public Inflow editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Transaction<?> transactionEdited = inflows.getNthTransaction(numOfInflows - index);
+        Inflow transactionEdited = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
                 updatedTransaction);
-        return inflows.editTransactionIndex(numOfInflows - index, (Inflow) updatedTransaction);
+        transactionList.sortTransactions();
+
+        inflows.editTransactionIndex(numOfInflows - index, (Inflow) updatedTransaction);
+        inflows.sortTransactions();
+        return (Inflow) transactionEdited;
     }
 
-    public boolean editOutflow(int index, Transaction<?> updatedTransaction) throws Exception {
+    public Outflow editOutflow(int index, Transaction<?> updatedTransaction) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
         Transaction<?> transactionEdited = outflows.getNthTransaction(numOfOutflows - index);
         transactionList.editTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionEdited),
                 updatedTransaction);
-        return outflows.editTransactionIndex(numOfOutflows - index, (Outflow) updatedTransaction);
+        transactionList.sortTransactions();
+
+        outflows.editTransactionIndex(numOfOutflows - index, (Outflow) updatedTransaction);
+        outflows.sortTransactions();
+        return (Outflow) transactionEdited;
     }
 
     public boolean editReminder(int index, Transaction<?> updatedTransaction) throws Exception {
