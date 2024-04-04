@@ -39,7 +39,7 @@ Example: `view-history n/20`
 
 Format: `add-inflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/job`
+Example: `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 
 ### Delete Inflow: delete-inflow
 
@@ -57,7 +57,7 @@ Example: `delete-inflow i/2`
 
 Format: `add-outflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-outflow n/John a/100 d/19/02/2024 t/1600 c/entertainment`
+Example: `add-outflow n/John a/100 d/19/02/2024 t/1600 c/treat`
 
 ### Delete Outflow: delete-outflow
 
@@ -77,7 +77,7 @@ Example: `delete-outflow i/5`
 
 Format: `edit-inflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/job`
+Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 
 ### Edit Outflow: edit-outflow
 
@@ -88,7 +88,7 @@ Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/job`
 
 Format: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/entertainment`
+Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
 
 
 ### Exiting the Program: `quit`
