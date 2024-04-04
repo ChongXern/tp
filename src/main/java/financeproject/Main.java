@@ -31,15 +31,12 @@ public class Main {
         try {
             ui.printMessage("Username: ");
             response = ui.readInput();
-            user = storage.loadUser(response);
+            //user = storage.loadUser(response);
+            user = storage.loadMockUser();
             Authentication.authenticateUser(user, ui);
-        } catch (UserNotFoundException | ExceededAttemptsException e) {
-            ui.printMessage(e.getMessage());
-            return;
-        }
-        if (user != null) {
             ui.printMessage("User has been authenticated. Starting program...");
-        } else {
+        } catch (ExceededAttemptsException e) {
+            ui.printMessage(e.getMessage());
             return;
         }
 

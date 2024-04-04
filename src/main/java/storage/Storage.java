@@ -33,6 +33,10 @@ public class Storage {
         }
     }
     
+    public BaseUser loadMockUser(){
+        return new BaseUser("Bob", "password");
+    }
+    
     public BaseUser loadUser(String username) throws UserNotFoundException {
         File f = new File(filePath + "/passwords.txt");
         try {
