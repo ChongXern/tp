@@ -73,9 +73,6 @@ public class Parser {
             lastCommandParts = commandParts;
             lastCommand = new DeleteInflowCommand(commandParts);
             lastInflow = lastCommand.getInflow();
-            if (lastInflow == null) {
-                System.out.println("Last inflow is null");
-            }
             return lastCommand;
         case "delete-outflow":
             if (commandParts.length < 2) {

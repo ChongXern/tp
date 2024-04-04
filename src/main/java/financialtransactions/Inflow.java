@@ -12,6 +12,7 @@ public class Inflow extends Transaction<Inflow.Category> {
     public Inflow(String name, double amount, String date) {
         super(name, amount, date);
     }
+
     public void setCategory(Category category) throws CategoryNotFoundException {
         if (!isValidCategory(category)) {
             throw new CategoryNotFoundException(Category.values());
