@@ -15,8 +15,7 @@ import userinterface.UI;
 
 public class Main {
     public static void main(String[] args) throws SecurityException {
-         Storage storage = new Storage("./data"); // Storage manager for jar file
-        //Storage storage = new Storage("../../../data");
+        Storage storage = new Storage("./data"); // Storage manager for jar file
         
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
