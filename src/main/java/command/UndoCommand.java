@@ -63,22 +63,16 @@ public class UndoCommand extends BaseCommand {
             manager.addTransaction(reminderToRemove);
             break;
         case "add-inflow":
-            //commandToUndo = new DeleteInflowCommand(commandParts);
             canUndo = true;
             manager.removeTransaction(inflow);
-            //manager.addTransaction(commandBeforeUndo.inflow);
             break;
         case "add-outflow":
-            //commandToUndo = new DeleteOutflowCommand(commandParts);
             canUndo = true;
             manager.removeTransaction(outflow);
-            //manager.addTransaction(commandBeforeUndo.outflow);
             break;
         case "add-reminder":
-            //commandToUndo = new DeleteReminderCommand(commandParts);
             canUndo = true;
             manager.removeTransaction(reminder);
-            //manager.addTransaction(commandBeforeUndo.reminder);
             break;
         default:
             return "Sorry, unable to undo action.";

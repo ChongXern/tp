@@ -1,9 +1,11 @@
 package financialtransactions;
 
+import customexceptions.CategoryNotFoundException;
 import template.BaseDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.EnumSet;
 
 
 public abstract class Transaction<T> {
@@ -41,7 +43,8 @@ public abstract class Transaction<T> {
         return category;
     }
 
-    protected abstract void setCategory(T category);
+    protected abstract void setCategory(T category) throws CategoryNotFoundException;
+    protected abstract boolean isValidCategory(T category);
 
     @Override
     public String toString() {

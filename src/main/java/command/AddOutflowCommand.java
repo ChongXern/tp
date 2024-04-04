@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
 
@@ -7,10 +8,14 @@ public class AddOutflowCommand extends BaseCommand {
 
     public AddOutflowCommand(String[] commandParts) {
         super(false, commandParts);
-        createOutflow();
+        try {
+            createOutflow();
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void createOutflow() {
+    private void createOutflow() throws CategoryNotFoundException {
         String outflowName = null;
         double outflowAmount = 0.0;
         String outflowDate = null;
