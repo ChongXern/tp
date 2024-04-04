@@ -4,7 +4,6 @@ import command.BaseCommand;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
-import customexceptions.UserNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
