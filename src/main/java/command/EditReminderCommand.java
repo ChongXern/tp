@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
@@ -41,7 +42,15 @@ public class EditReminderCommand extends BaseCommand {
         String reminderDateTime = reminderDate + " " + reminderTime;
         Reminder updatedReminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
         assert reminderCategory != null : "reminderCategory should not be null";
-        updatedReminder.setCategory(Reminder.Category.valueOf(reminderCategory.toUpperCase()));
+        try {
+            updatedReminder.setCategory(reminderCategory.toUpperCase());
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
+        if (!canExecute) {
+            return "Sorry, reminder not edited.";
+        }
         manager.editOutflow(reminderIndex, updatedReminder);
         return "Ok. Edited reminder";
     }

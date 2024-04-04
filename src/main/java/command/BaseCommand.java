@@ -6,6 +6,7 @@ import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
 public abstract class BaseCommand {
+    protected boolean canExecute = true;
     public boolean isExit;
     protected Inflow inflow;
     protected Outflow outflow;
@@ -14,6 +15,9 @@ public abstract class BaseCommand {
     public BaseCommand(Boolean isExit, String[] commandParts){
         this.isExit = isExit;
         this.commandParts = commandParts;
+    }
+    public void setCanExecuteToFalse() {
+        this.canExecute = false;
     }
     public abstract String execute(TransactionManager manager) throws Exception;
 

@@ -10,12 +10,12 @@ public class AddReminderCommand extends BaseCommand {
         super(false, commandParts);
         try {
             createReminder();
-        } catch (CategoryNotFoundException | IncorrectCommandSyntaxException e) {
+        } catch (IncorrectCommandSyntaxException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void createReminder() throws CategoryNotFoundException, IncorrectCommandSyntaxException {
+    private void createReminder() throws IncorrectCommandSyntaxException {
         String reminderName = null;
         double reminderAmount = 0.0;
         String reminderDate = null;
@@ -43,10 +43,18 @@ public class AddReminderCommand extends BaseCommand {
         String reminderDateTime = reminderDate + " " + reminderTime;
         reminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
         assert reminderCategory != null;
-        reminder.setCategory(Reminder.Category.valueOf(reminderCategory.toUpperCase()));
+        try {
+            reminder.setCategory(reminderCategory.toUpperCase());
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
     }
 
     public String execute(TransactionManager manager) {
+        if (!canExecute) {
+            return "Sorry, reminder not added.";
+        }
         manager.addTransaction(reminder);
         return "Ok. Added reminder";
     }
