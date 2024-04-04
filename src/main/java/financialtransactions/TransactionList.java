@@ -2,9 +2,7 @@ package financialtransactions;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class TransactionList<T extends Transaction<?>> {
     private ArrayList<T> transactionList;
