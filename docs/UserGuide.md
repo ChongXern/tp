@@ -24,7 +24,7 @@ FinTrack is a desktop app designed for individuals who want to manage their fina
 
 Format: `help`
 
-### View Transaction History: view-history
+### View Transaction History: `view-history`
 
 - Access getter for all the last n transactions made.
 
@@ -32,16 +32,17 @@ Format: `view-history n/NUM`
 
 Example: `view-history n/20`
 
-### Add Inflow: add-inflow
+### Add Inflow: `add-inflow`
 
 - Adds a new inflow of money to your financial records.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
 
 Format: `add-inflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
 Example: `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 
-### Delete Inflow: delete-inflow
+### Delete Inflow: `delete-inflow`
 
 - Checks for and deletes existing entry of inflow from financial record.
 - Before deleting, the list of inflows along with their indices can be viewed using the `view-history` command.
@@ -50,16 +51,17 @@ Format: `delete-source i/INDEX`
 
 Example: `delete-inflow i/2`
 
-### Add Outflow: add-outflow
+### Add Outflow: `add-outflow`
 
 - Adds a new outflow of money to your financial records.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
 
 Format: `add-outflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
 Example: `add-outflow n/John a/100 d/19/02/2024 t/1600 c/treat`
 
-### Delete Outflow: delete-outflow
+### Delete Outflow: `delete-outflow`
 
 - Checks for and deletes existing entry of outflow from financial record.
 - Before deleting, the list of outflows along with their indices can be viewed using the `view-history` command.
@@ -68,22 +70,24 @@ Format: `delete-outflow i/INDEX`
 
 Example: `delete-outflow i/5`
 
-### Edit Inflow: edit-inflow
+### Edit Inflow: `edit-inflow`
 
 - Edits an existing entry of inflow from your financial records.
 - Before editing, the list of inflows along with their indices can be viewed using the `view-history` command.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
 - Input the index you want to edit and provide the details you want to update for the inflow.
 
 Format: `edit-inflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
 Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 
-### Edit Outflow: edit-outflow
+### Edit Outflow: `edit-outflow`
 
 - Edits an existing entry of outflow from your financial records.
 - Before editing, the list of outflows along with their indices can be viewed using the `view-history` command.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
 
 Format: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
