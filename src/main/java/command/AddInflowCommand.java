@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
 
@@ -7,10 +8,14 @@ public class AddInflowCommand extends BaseCommand {
 
     public AddInflowCommand(String[] commandParts) {
         super(false, commandParts);
-        createInflow();
+        try {
+            createInflow();
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void createInflow() {
+    private void createInflow() throws CategoryNotFoundException {
         String inflowName = null;
         double inflowAmount = 0;
         String inflowDate = null;

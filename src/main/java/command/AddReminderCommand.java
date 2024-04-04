@@ -1,15 +1,20 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
 public class AddReminderCommand extends BaseCommand {
     public AddReminderCommand(String[] commandParts) {
         super(false, commandParts);
-        createReminder();
+        try {
+            createReminder();
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
-    private void createReminder() {
+    private void createReminder() throws CategoryNotFoundException {
         String reminderName = null;
         double reminderAmount = 0.0;
         String reminderDate = null;

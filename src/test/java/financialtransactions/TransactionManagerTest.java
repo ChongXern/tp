@@ -1,5 +1,6 @@
 package financialtransactions;
 
+import customexceptions.CategoryNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,17 +11,29 @@ public class TransactionManagerTest {
         TransactionManager managerTest = new TransactionManager();
 
         Inflow income = new Inflow("Salary payment", 400.00, "23/05/2022 1900");
-        income.setCategory(Inflow.Category.INCOME);
+        try {
+            income.setCategory(Inflow.Category.INCOME);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         managerTest.addTransaction(income);
 
         Outflow shopping = new Outflow("Shopping", 200, "23/05/2022 2000");
-        shopping.setCategory(Outflow.Category.SHOPPING);
+        try {
+            shopping.setCategory(Outflow.Category.SHOPPING);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         managerTest.addTransaction(shopping);
-        
+
         Reminder bill = new Reminder("Water bills", 64.30, "25/06/2025 1500");
-        bill.setCategory(Reminder.Category.UTILITIES);
+        try {
+            bill.setCategory(Reminder.Category.UTILITIES);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         managerTest.addTransaction(bill);
-        
+
         managerTest.setBudget(1500);
         
         assertEquals("1500.00\n" +

@@ -1,6 +1,7 @@
 //@@author chenhowy
 package storage;
 
+import customexceptions.CategoryNotFoundException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
@@ -79,6 +80,8 @@ public class Storage {
             sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
         }
         return manager;
     }

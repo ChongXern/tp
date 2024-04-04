@@ -1,10 +1,10 @@
 package financialtransactions;
 
+import customexceptions.CategoryNotFoundException;
 import template.BaseDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 
 public abstract class Transaction<T> {
     private static final int NAME_MAX_LEN = 30;
@@ -41,7 +41,8 @@ public abstract class Transaction<T> {
         return category;
     }
 
-    protected abstract void setCategory(T category);
+    protected abstract void setCategory(T category) throws CategoryNotFoundException;
+    protected abstract boolean isValidCategory(T category);
 
     @Override
     public String toString() {
