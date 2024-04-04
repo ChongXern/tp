@@ -51,7 +51,7 @@ Example: `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 - Checks for and deletes existing entry of inflow from financial record.
 - Before deleting, the list of inflows along with their indices can be viewed using the `view-history` command.
 
-Format: `delete-source i/INDEX`
+Format: `delete-inflow i/INDEX`
 
 Example: `delete-inflow i/2`
 
@@ -73,6 +73,26 @@ Example: `add-outflow n/John a/100 d/19/02/2024 t/1600 c/treat`
 Format: `delete-outflow i/INDEX`
 
 Example: `delete-outflow i/5`
+
+### Add Reminder: `add-reminder`
+
+- Adds a new reminder of upcoming payment to your financial records.
+- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Take note that the date entered must be in the future.
+- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
+
+Format: `add-reminder n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
+
+Example: `add-reminder n/water bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+
+### Delete Reminder: `delete-reminder`
+
+- Checks for and deletes existing entry of reminder from financial record.
+- Before deleting, the list of reminders along with their indices can be viewed using the `view-history` command.
+
+Format: `delete-reminder i/INDEX`
+
+Example: `delete-reminder i/5`
 
 ### Edit Inflow: `edit-inflow`
 
@@ -98,6 +118,18 @@ Format: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
 Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
 
+### Edit Reminder: `edit-reminder`
+
+- Edits an existing entry of reminder in your financial records.
+- Before editing, the list of reminders along with their indices can be viewed using the `view-history` command.
+- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
+- Input the index you want to edit and provide the details you want to edit for the outflow.
+
+Format: `edit-reminder i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
+
+Example: `edit-reminder i/2 n/water bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+
 ### Undo last action: `undo`
 - This command will undo the last command inputted by the user.
 - Only applicable for the commands:
@@ -109,6 +141,27 @@ Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
   - `delete-reminder`
 
 Format: `undo`
+
+### Set a budget `set-budget`
+- Sets a per-month budget from a default of $0.00.
+
+Format: `set-budget a/AMOUNT`
+
+Examples of usage:
+
+`set-budget a/2000.00`
+
+### Generating a report `generate-report`
+- Generates a report of a certain month.
+- Take note that MMM is the 3-letter abbreviation of the month in all-caps.
+
+Format: `generate-report m/MMM y/YYYY`
+
+Examples of usage:
+
+`generate-report m/JUN y/2023`
+
+`generate-report m/MAR y/2024`
 
 ### Exiting the Program: `quit`
 
@@ -140,5 +193,7 @@ FinTrack allows a maximum of 3 minutes of inactivity on the software, then it wi
 * Add Outflow: `add-outflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 * Delete Outflow: `delete-outflow i/INDEX`
 * Edit Outflow: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
-* Exit Program: `quit`
 * Undo: `undo`
+* Set budget: `set-budget a/AMOUNT`
+* Generate report: `generate-report m/MMM y/YYYY`
+* Exit Program: `quit`
