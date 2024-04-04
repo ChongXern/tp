@@ -134,7 +134,13 @@ This application simplifies personal financial management by providing an intuit
 - After logging in, do not input any commands for the duration specified by the inactivity timer to test automatic logout.
 - A maximum of 2.5 minutes of inactivity will trigger the application to check with the user whether the user is still active or not. Input `yes` to indicate continued activity, otherwise input `no` to exit. 
 - 30 seconds after the 2.5 min (3 min), the application will automatically exit.
-- Implemented to provide enhanced security, so no third party can access finance transactions. 
+- Implemented to provide enhanced security, so no third party can access finance transactions.
+
+
+![photo_2024-04-04 23 54 55](https://github.com/AY2324S2-CS2113-F14-4/tp/assets/88567790/aa2df04e-c493-443e-a4f1-e3cfc506e56a)
+![photo_2024-04-04 23 54 54](https://github.com/AY2324S2-CS2113-F14-4/tp/assets/88567790/95585373-a8a8-4d12-bfce-80cde6f57ebc)
+![photo_2024-04-04 23 54 53](https://github.com/AY2324S2-CS2113-F14-4/tp/assets/88567790/64698f02-9acd-42b5-a8d6-1cbc22574a05)
+
 
 ### Data Persistence:
 - Exit the application and restart it to ensure that previously entered transactions are still present.
