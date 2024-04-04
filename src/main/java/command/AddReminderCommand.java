@@ -5,13 +5,9 @@ import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
 public class AddReminderCommand extends BaseCommand {
-    public AddReminderCommand(String[] commandParts) {
+    public AddReminderCommand(String[] commandParts) throws CategoryNotFoundException{
         super(false, commandParts);
-        try {
-            createReminder();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        createReminder();
     }
     
     private void createReminder() throws CategoryNotFoundException {

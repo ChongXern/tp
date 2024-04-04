@@ -1,5 +1,7 @@
 package financialtransactions;
 
+import userinterface.UI;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -73,12 +75,13 @@ public class TransactionList<T extends Transaction<?>> {
         return baseString.toString();
     }
     //@@author
-    protected void printTransactionsSafeInfo() {
+    protected void printTransactionsSaveInfo(UI ui) {
         int index = 1;
+        String transactionString;
         for (T transaction : transactionList) {
-            System.out.print(index++);
-            System.out.print(" " + transaction.getName() + " | " + transaction.getCategory());
-            System.out.println(" | " + transaction.getClass());
+            transactionString = String.format("%d\t %s | %s | %s", index++, transaction.getName(),
+                    transaction.getCategory(), transaction.getClass());
+            ui.printMessage(transactionString);
         }
     }
 

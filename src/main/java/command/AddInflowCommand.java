@@ -6,13 +6,9 @@ import financialtransactions.TransactionManager;
 
 public class AddInflowCommand extends BaseCommand {
 
-    public AddInflowCommand(String[] commandParts) {
+    public AddInflowCommand(String[] commandParts) throws CategoryNotFoundException{
         super(false, commandParts);
-        try {
-            createInflow();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        createInflow();
     }
 
     private void createInflow() throws CategoryNotFoundException {

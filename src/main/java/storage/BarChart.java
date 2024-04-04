@@ -31,8 +31,9 @@ public class BarChart<T extends Transaction<?>> {
         }
     }
 
-    public void printBarChart() throws Exception {
+    public String generateBarChart() throws Exception {
         computeTransactionFrequencies();
+        String barChartString = "";
         for (Map.Entry<String, Integer> entry : categoryFrequencies.entrySet()) {
             String category = entry.getKey();
             Integer frequency = entry.getValue();
@@ -43,14 +44,15 @@ public class BarChart<T extends Transaction<?>> {
             int barSize = (int)(percentage * TOTAL_BAR_SIZE);
             System.out.print(category);
             for (int i = 0; i < LEGEND_SIZE - category.length(); i++) {
-                System.out.print(" ");
+                barChartString += " ";
             }
             System.out.print(": ");
             for (int i = 0; i < barSize; i++) {
-                System.out.print("|");
+                barChartString += "|";
             }
             percentage = Math.round(percentage * 10000.0) / 100.0;
-            System.out.println(" " + percentage + "%");
+            barChartString += (" " + percentage + "%\n");
         }
+        return barChartString;
     }
 }

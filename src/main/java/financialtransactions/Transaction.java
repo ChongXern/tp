@@ -15,11 +15,6 @@ public abstract class Transaction<T> {
 
     public Transaction(String name, double amount, String date) {
         assert name != null : "NULL name detected";
-        if (name.length() > NAME_MAX_LEN) {
-            System.out.println("Sorry, the description inputted exceeds the maximum permeable length. " +
-                    "Please try again.");
-            return;
-        }
         this.name = name;
         this.amount = amount;
         if (date == null){

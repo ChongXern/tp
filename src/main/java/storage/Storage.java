@@ -23,14 +23,10 @@ public class Storage {
         this.filePath = filePath;
     }
     
-    public void addNewUser(String username, String password) {
-        try {
-            FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
-            fw.write(username + "|" + password + "\n");
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Could not add user");
-        }
+    public void addNewUser(String username, String password) throws IOException{
+        FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
+        fw.write(username + "|" + password + "\n");
+        fw.close();
     }
 
     public BaseUser loadMockUser(){
@@ -50,12 +46,11 @@ public class Storage {
             throw new UserNotFoundException();
         } catch (FileNotFoundException e) {
             createFileDir();
-            System.out.println("File is not found, please try again.");
             return null;
         }
     }
     
-    public TransactionManager loadFile(String username) {
+    public TransactionManager loadFile(String username) throws CategoryNotFoundException{
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
@@ -86,8 +81,6 @@ public class Storage {
             sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
         }
         return manager;
     }
@@ -97,13 +90,14 @@ public class Storage {
         f.mkdir();
     }
 
-    public void saveFile(String username, TransactionManager tm) {
+    public String saveFile(String username, TransactionManager tm) {
         try {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
+            return "File saved...";
         } catch (IOException e) {
-            System.out.println("Unable to save tasks!");
+            return "Unable to save tasks!";
         }
     }
 }

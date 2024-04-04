@@ -28,26 +28,25 @@ public class BaseDate {
     private static final ArrayList<String> dateTimeFormats = dateTimeVary();
 
     private LocalDateTime dateTime = null;
-    private final String defaultTime = " 0000";
 
     public BaseDate(String args) {
         args = args.strip();
         if (!args.contains(" ")) {
+            String defaultTime = " 0000";
             args = args + defaultTime;
         }
         for (String format : dateTimeFormats) {
             try {
                 formatter = DateTimeFormatter.ofPattern(format);
                 dateTime = LocalDateTime.parse(args, formatter);
-            } catch (DateTimeParseException e) {
-                continue;
+            } catch (DateTimeParseException ignored) {
             }
 
         }
     }
 
     private static ArrayList<String> dateTimeVary() {
-        ArrayList<String> varyList = new ArrayList<String>();
+        ArrayList<String> varyList = new ArrayList<>();
         for (String dateFormat : dateFormats) {
             for (String timeFormat : timeFormats) {
                 varyList.add(String.format("%s %s", dateFormat, timeFormat));
@@ -64,14 +63,14 @@ public class BaseDate {
     }
 
     public boolean equals(BaseDate otherDate) {
-        if (otherDate != null) {
+        if (otherDate != null && this.dateTime != null) {
             return this.dateTime.toLocalDate().equals(otherDate.dateTime.toLocalDate());
         }
         return false;
     }
 
     public boolean isBefore(BaseDate otherDate) {
-        if (otherDate != null) {
+        if (otherDate != null && this.dateTime != null) {
             return this.dateTime.isBefore(otherDate.dateTime);
         }
         return false;

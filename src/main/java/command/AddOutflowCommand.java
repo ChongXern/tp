@@ -6,13 +6,9 @@ import financialtransactions.TransactionManager;
 
 public class AddOutflowCommand extends BaseCommand {
 
-    public AddOutflowCommand(String[] commandParts) {
+    public AddOutflowCommand(String[] commandParts) throws CategoryNotFoundException{
         super(false, commandParts);
-        try {
-            createOutflow();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        createOutflow();
     }
 
     private void createOutflow() throws CategoryNotFoundException {

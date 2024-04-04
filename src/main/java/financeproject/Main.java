@@ -1,6 +1,7 @@
 package financeproject;
 
 import command.BaseCommand;
+import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
@@ -38,11 +39,18 @@ public class Main {
             ui.printMessage(e.getMessage());
             return;
         }
-        TransactionManager manager = storage.loadFile(user.getUsername());
+        TransactionManager manager;
+        try{
+            manager = storage.loadFile(user.getUsername());
+        } catch (CategoryNotFoundException e){
+            ui.printMessage(e.getMessage());
+            return;
+        }
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
         do {
+            ui.printMessage("How can we help you today? \n Enter 'help' to see commands");
             response = ui.readInput();
             try {
                 baseCommand = parser.parseCommand(response);
@@ -55,11 +63,12 @@ public class Main {
                 ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
-            storage.saveFile(user.getUsername(), manager);
+            ui.printMessage(storage.saveFile(user.getUsername(), manager));
 
             try {
                 inactivityTimer.checkTimeElapsed();
             } catch (InactivityTimeoutException e) {
+                ui.printMessage(e.getMessage());
                 if (e.isTimeOut()) {
                     assert baseCommand != null;
                     baseCommand.setIsExit(true);

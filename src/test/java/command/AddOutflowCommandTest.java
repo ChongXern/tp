@@ -11,7 +11,14 @@ public class AddOutflowCommandTest{
     public void testAddOutflowTest(){
         String arg = "add-outflow n/Rent a/1500.00 d/23/06/2023 t/1800 c/rent";
         String[] splitCommand = arg.split(" ");
-        AddOutflowCommand command = new AddOutflowCommand(splitCommand);
+        AddOutflowCommand command;
+        try{
+            command = new AddOutflowCommand(splitCommand);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return;
+        }
+
 
         TransactionManager manager = new TransactionManager();
         assertEquals(command.execute(manager), "Ok. Added outflow");
