@@ -16,7 +16,7 @@ import userinterface.UI;
 public class Main {
     public static void main(String[] args) throws SecurityException {
         Storage storage = new Storage("./data"); // Storage manager for jar file
-        
+
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
 
@@ -25,7 +25,7 @@ public class Main {
         String response = "";
 
         // Authenticating user
-        BaseUser user = null;
+        BaseUser user;
         InactivityTimer inactivityTimer = new InactivityTimer();
         try {
             ui.printMessage("Username: ");
@@ -41,6 +41,7 @@ public class Main {
         } else {
             return;
         }
+
         TransactionManager manager = storage.loadFile(user.getUsername());
         ui.printMessage(manager.generateQuickReport());
 

@@ -73,6 +73,7 @@ public class TransactionList<T extends Transaction<?>> {
         return baseString.toString();
     }
     //@@author
+
     protected void printTransactionsSafeInfo() {
         int index = 1;
         for (T transaction : transactionList) {
@@ -96,6 +97,11 @@ public class TransactionList<T extends Transaction<?>> {
             this.transactionsType = "Mixed";
         }
     }
+
+    public void sortTransactions() {
+        transactionList.sort(new TransactionComparator());
+    }
+
 
     public class NameComparator<T extends Transaction<?>> implements Comparator<T> {
         @Override
@@ -126,6 +132,7 @@ public class TransactionList<T extends Transaction<?>> {
     public void sortListByDate() {
         this.transactionList.sort(new DateComparator<>());
     }
+
     //@@author chenhowy
     public double totalSpentInPastMonth() {
         double amount = 0;
@@ -148,6 +155,7 @@ public class TransactionList<T extends Transaction<?>> {
         }
         return amount;
     }
+
     public int getTransactionsAfterToday() {
         int numberOfTransactions = 0;
         LocalDateTime today = LocalDateTime.now();
