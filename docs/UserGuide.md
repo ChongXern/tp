@@ -10,7 +10,7 @@ FinTrack is a desktop app designed for individuals who want to manage their fina
 2. Download the latest version of `FinTrack.jar` from [here].
 3. Copy the file to the folder you want to use as the home folder for your FinTrack app.
 4. Open a command terminal, navigate to the folder containing the jar file, and run the command `java -jar FinTrack.jar` to run the application.
-5. Upon starting FinTrack, you will first be prompted to type the username and password. The username is **Bob** and the password is **password**.
+5. Upon starting FinTrack, you will first be prompted to type the username and password. The username is **Bob** and the password is **password**
 
 ## Features
 
@@ -39,6 +39,7 @@ Examples:
 ### Add Inflow: add-inflow
 
 - Adds a new inflow of money to your financial records.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
 
@@ -58,6 +59,7 @@ Example: `delete-inflow i/2`
 ### Add Outflow: `add-outflow`
 
 - Adds a new outflow of money to your financial records.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
 
@@ -77,13 +79,14 @@ Example: `delete-outflow i/5`
 ### Add Reminder: `add-reminder`
 
 - Adds a new reminder of upcoming payment to your financial records.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Take note that the date entered must be in the future.
 - Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
 
 Format: `add-reminder n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-reminder n/water bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+Example: `add-reminder n/water_bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
 
 ### Delete Reminder: `delete-reminder`
 
@@ -98,6 +101,7 @@ Example: `delete-reminder i/5`
 
 - Edits an existing entry of inflow from your financial records.
 - Before editing, the list of inflows along with their indices can be viewed using the `view-history` command.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
 - Input the index you want to edit and provide the details you want to update for the inflow.
@@ -110,6 +114,7 @@ Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/income`
 
 - Edits an existing entry of outflow from your financial records.
 - Before editing, the list of outflows along with their indices can be viewed using the `view-history` command.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
@@ -122,6 +127,7 @@ Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
 
 - Edits an existing entry of reminder in your financial records.
 - Before editing, the list of reminders along with their indices can be viewed using the `view-history` command.
+- `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
