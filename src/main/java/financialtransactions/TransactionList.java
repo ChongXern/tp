@@ -126,6 +126,7 @@ public class TransactionList<T extends Transaction<?>> {
     public void sortListByDate() {
         this.transactionList.sort(new DateComparator<>());
     }
+
     //@@author chenhowy
     public double totalSpentInPastMonth() {
         double amount = 0;
