@@ -2,8 +2,6 @@ package financialtransactions;
 
 import customexceptions.CategoryNotFoundException;
 
-import java.util.EnumSet;
-
 public class Inflow extends Transaction<Inflow.Category> {
     public enum Category {
         INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER
@@ -13,18 +11,24 @@ public class Inflow extends Transaction<Inflow.Category> {
         super(name, amount, date);
     }
 
-    public void setCategory(Category category) throws CategoryNotFoundException {
+    @Override
+    public void setCategory(String category) throws CategoryNotFoundException {
         if (!isValidCategory(category)) {
             throw new CategoryNotFoundException(Category.values());
         }
-        super.category = category;
+        super.category = Category.valueOf(category.toUpperCase());
     }
 
-    public boolean isValidCategory(Category category) {
-        EnumSet<Category> categories = EnumSet.allOf(Category.class);
-        return categories.contains(category);
+    public boolean isValidCategory(String category) {
+        for (Category enumCategory : Category.values()) {
+            if (enumCategory.toString().equalsIgnoreCase(category)) {
+                return true;
+            }
+        }
+        return false;
     }
-    
+
+
     @Override
     public String toSave() {
         return super.toSave() + "|I\n";

@@ -1,5 +1,7 @@
 package command;
 
+import customexceptions.CategoryNotFoundException;
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 
@@ -16,7 +18,10 @@ public class EditReminderCommand extends BaseCommand {
         String reminderTime = null;
         String reminderCategory = null;
 
-        for (String part : commandParts) {
+        /* Iterates through the parts of the original command string that checks and updates
+        relevant reminder information. */
+        for (int i = 1; i < commandParts.length; i++) {
+            String part = commandParts[i];
             if (part.startsWith("i/")) {
                 reminderIndex = Integer.parseInt(part.substring(2));
             } else if (part.startsWith("n/")) {
@@ -29,13 +34,23 @@ public class EditReminderCommand extends BaseCommand {
                 reminderTime = part.substring(2);
             } else if (part.startsWith("c/")) {
                 reminderCategory = part.substring(2);
+            } else {
+                throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
 
         String reminderDateTime = reminderDate + " " + reminderTime;
         Reminder updatedReminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
         assert reminderCategory != null : "reminderCategory should not be null";
-        updatedReminder.setCategory(Reminder.Category.valueOf(reminderCategory.toUpperCase()));
+        try {
+            updatedReminder.setCategory(reminderCategory.toUpperCase());
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.disableExecute(this);
+        }
+        if (!canExecute) {
+            return "Sorry, reminder not edited.";
+        }
         manager.editOutflow(reminderIndex, updatedReminder);
         return "Ok. Edited reminder";
     }

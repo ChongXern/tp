@@ -10,7 +10,7 @@ public class OutflowTest {
     public void testSetCategory() {
         Outflow outflow = new Outflow("2024 Sem 2 School Fees", 999999.99, "2024-02-01");
         try {
-            outflow.setCategory(Outflow.Category.EDUCATION);
+            outflow.setCategory("Education");
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
         }

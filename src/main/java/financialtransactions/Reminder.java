@@ -2,8 +2,6 @@ package financialtransactions;
 
 import customexceptions.CategoryNotFoundException;
 
-import java.util.EnumSet;
-
 public class Reminder extends Transaction<Reminder.Category> {
     public enum Category {
         INSTALLMENT, CREDITCARD, UTILITIES
@@ -13,16 +11,20 @@ public class Reminder extends Transaction<Reminder.Category> {
         super(name, -1.00 * amount, date);
     }
 
-    public void setCategory(Category category) throws CategoryNotFoundException {
+    public void setCategory(String category) throws CategoryNotFoundException {
         if (!isValidCategory(category)) {
             throw new CategoryNotFoundException(Category.values());
         }
-        this.category = category;
+        this.category = Category.valueOf(category.toUpperCase());
     }
 
-    public boolean isValidCategory(Category category) {
-        EnumSet<Category> categories = EnumSet.allOf(Category.class);
-        return categories.contains(category);
+    public boolean isValidCategory(String category) {
+        for (Category enumCategory : Category.values()) {
+            if (enumCategory.toString().equalsIgnoreCase(category)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

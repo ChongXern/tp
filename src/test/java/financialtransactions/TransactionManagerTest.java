@@ -12,7 +12,7 @@ public class TransactionManagerTest {
 
         Inflow income = new Inflow("Salary payment", 400.00, "23/05/2022 1900");
         try {
-            income.setCategory(Inflow.Category.INCOME);
+            income.setCategory("INCOME");
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -20,7 +20,7 @@ public class TransactionManagerTest {
 
         Outflow shopping = new Outflow("Shopping", 200, "23/05/2022 2000");
         try {
-            shopping.setCategory(Outflow.Category.SHOPPING);
+            shopping.setCategory("Shopping");
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -28,7 +28,7 @@ public class TransactionManagerTest {
 
         Reminder bill = new Reminder("Water bills", 64.30, "25/06/2025 1500");
         try {
-            bill.setCategory(Reminder.Category.UTILITIES);
+            bill.setCategory("utilities");
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
         }
