@@ -21,10 +21,21 @@ public class Storage {
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-
+    
+    public void addNewUser(String username, String password) throws Exception {
+        try {
+            FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
+            fw.write(username + "|" + password + "\n");
+            fw.close();
+        } catch (IOException e) {
+           throw new Exception("Error adding user");
+        }
+    }
+    
     public BaseUser loadMockUser(){
         return new BaseUser("Bob", "password");
     }
+    
     public BaseUser loadUser(String username) throws UserNotFoundException {
         File f = new File(filePath + "/passwords.txt");
         try {
@@ -44,13 +55,18 @@ public class Storage {
         }
     }
     
-    public TransactionManager loadFile(String username) throws CategoryNotFoundException{
+    public TransactionManager loadFile(String username) throws CategoryNotFoundException {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
+        Scanner sc;
         try {
-            this.sc = new Scanner(f);
-            manager.setBudget(Double.parseDouble(sc.nextLine()));
-            while (this.sc.hasNext()) {
+             sc = new Scanner(f);
+            double budget = 0.00;
+            if (sc.hasNextLine()){
+                budget = Double.parseDouble(sc.nextLine());
+            }
+            manager.setBudget(budget);
+            while (sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
                 double amount = Double.parseDouble(transactionInfo[1]);
@@ -68,10 +84,10 @@ public class Storage {
                     manager.addTransaction(reminder);
                 }
             }
+            sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
         }
-        sc.close();
         return manager;
     }
 
@@ -80,14 +96,14 @@ public class Storage {
         return f.mkdir();
     }
 
-    public String saveFile(String username, TransactionManager tm) {
+    public String saveFile(String username, TransactionManager tm) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
             return "File saved...";
         } catch (IOException e) {
-            return "Unable to save tasks!";
+            throw new Exception("Error saving file");
         }
     }
 }

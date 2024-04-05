@@ -65,7 +65,7 @@ public class Main {
             }
 
             try{
-                storage.saveFile(user.getUsername(), manager);
+                ui.printMessage(storage.saveFile(user.getUsername(), manager));
             } catch (Exception e){
                 ui.printMessage(e.getMessage());
             }
