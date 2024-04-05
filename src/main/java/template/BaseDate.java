@@ -6,9 +6,11 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ArrayList;
-
+//@@author dylansiew
 public class BaseDate {
+    //@@author dylansiew
     public static DateTimeFormatter formatter = null;
+
     private static final List<String> dateFormats = List.of(
             "yyyy-MM-dd",
             "dd-MM-yyyy",
@@ -28,11 +30,12 @@ public class BaseDate {
     private static final ArrayList<String> dateTimeFormats = dateTimeVary();
 
     private LocalDateTime dateTime = null;
-    private final String defaultTime = " 0000";
 
     public BaseDate(String args) {
+        //@@author dylansiew
         args = args.strip();
         if (!args.contains(" ")) {
+            String defaultTime = " 0000";
             args = args + defaultTime;
         }
         for (String format : dateTimeFormats) {
@@ -47,7 +50,8 @@ public class BaseDate {
     }
 
     private static ArrayList<String> dateTimeVary() {
-        ArrayList<String> varyList = new ArrayList<String>();
+        //@@author dylansiew
+        ArrayList<String> varyList = new ArrayList<>();
         for (String dateFormat : dateFormats) {
             for (String timeFormat : timeFormats) {
                 varyList.add(String.format("%s %s", dateFormat, timeFormat));
@@ -59,19 +63,22 @@ public class BaseDate {
 
     @Override
     public String toString() {
+        //@@author dylansiew
         formatter = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma", Locale.US);
         return String.format("%s", dateTime.format(formatter));
     }
 
     public boolean equals(BaseDate otherDate) {
-        if (otherDate != null) {
+        //@@author dylansiew
+        if (otherDate != null && this.dateTime != null) {
             return this.dateTime.toLocalDate().equals(otherDate.dateTime.toLocalDate());
         }
         return false;
     }
 
     public boolean isBefore(BaseDate otherDate) {
-        if (otherDate != null) {
+        //@@author dylansiew
+        if (otherDate != null && this.dateTime != null) {
             return this.dateTime.isBefore(otherDate.dateTime);
         }
         return false;

@@ -4,8 +4,9 @@ import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
-
+//@@author dylansiew
 public abstract class BaseCommand {
+    //@@author dylansiew
     public boolean isExit;
     protected Inflow inflow;
     protected Outflow outflow;
@@ -13,6 +14,7 @@ public abstract class BaseCommand {
     protected boolean canExecute = true;
     String[] commandParts;
     public BaseCommand(Boolean isExit, String[] commandParts){
+        //@@author dylansiew
         this.isExit = isExit;
         this.commandParts = commandParts;
     }

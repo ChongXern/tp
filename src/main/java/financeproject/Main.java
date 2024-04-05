@@ -46,7 +46,6 @@ public class Main {
             ui.printMessage(e.getMessage());
             return;
         }
-
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow

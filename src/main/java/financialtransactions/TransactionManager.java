@@ -43,7 +43,7 @@ public class TransactionManager {
             reminders.addTransaction(reminder);
             return String.format("Added: %s", reminder.toString());
         }
-        return ("Invalid transaction type.");
+        return "Invalid transaction type.";
     }
 
     public String removeTransaction(Transaction<?> transaction) {
@@ -54,20 +54,18 @@ public class TransactionManager {
             int inflowIndex = inflows.getIndexOfParticularTransaction(inflow);
             inflows.removeTransactionIndex(inflowIndex);
             return String.format("Removed: %s", inflow.toString());
-        }
-        if (transaction instanceof Outflow) {
+        } else if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             int outflowIndex = outflows.getIndexOfParticularTransaction(outflow);
             outflows.removeTransactionIndex(outflowIndex);
             return String.format("Removed: %s", outflow.toString());
-        }
-        if (transaction instanceof Reminder) {
+        } else if (transaction instanceof Reminder) {
             Reminder reminder = (Reminder) transaction;
             int reminderIndex = reminders.getIndexOfParticularTransaction(reminder);
             reminders.removeTransactionIndex(reminderIndex);
             return String.format("Removed: %s", reminder.toString());
         }
-        return ("Invalid transaction type.");
+        return "Invalid transaction type.";
     }
 
     public Inflow removeInflow(int index) throws Exception {
@@ -180,7 +178,7 @@ public class TransactionManager {
 
         if (isIncludeBarChart) {
             BarChart<Transaction<?>> barChart = new BarChart<>(transactionList);
-            barChart.printBarChart();
+            returnedText = barChart.generateBarChart() + returnedText;
         }
         
         return returnedText;
