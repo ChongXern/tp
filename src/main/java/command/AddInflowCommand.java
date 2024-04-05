@@ -7,16 +7,12 @@ import financialtransactions.TransactionManager;
 
 public class AddInflowCommand extends BaseCommand {
 
-    public AddInflowCommand(String[] commandParts) {
+    public AddInflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException{
         super(false, commandParts);
-        try {
-            createInflow();
-        } catch (IncorrectCommandSyntaxException e) {
-            System.out.println(e.getMessage());
-        }
+        createInflow();
     }
 
-    private void createInflow() throws IncorrectCommandSyntaxException {
+    private void createInflow() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         //@@author Kishen271828
         String inflowName = null;
         double inflowAmount = 0;
@@ -45,12 +41,7 @@ public class AddInflowCommand extends BaseCommand {
         String inflowDateTime = inflowDate + " " + inflowTime;
         inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null;
-        try {
-            inflow.setCategory(inflowCategory);
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        inflow.setCategory(inflowCategory);
     }
 
     public String execute(TransactionManager manager) {
