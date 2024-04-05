@@ -28,9 +28,10 @@ public class Storage {
             fw.write(username + "|" + password + "\n");
             fw.close();
         } catch (IOException e) {
-           throw new Exception("Error adding user");
+            throw new Exception("Error adding user");
         }
     }
+    
     
     public BaseUser loadMockUser(){
         return new BaseUser("Bob", "password");
@@ -60,7 +61,7 @@ public class Storage {
         TransactionManager manager = new TransactionManager();
         Scanner sc;
         try {
-             sc = new Scanner(f);
+            sc = new Scanner(f);
             double budget = 0.00;
             if (sc.hasNextLine()){
                 budget = Double.parseDouble(sc.nextLine());

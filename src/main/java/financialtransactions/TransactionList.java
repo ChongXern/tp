@@ -78,7 +78,8 @@ public class TransactionList<T extends Transaction<?>> {
         int index = 1;
         String response = "";
         for (T transaction : transactionList) {
-            response += String.format("%d\t%s | %s | %s", index++, transaction.getName(), transaction.getCategory(), transaction.getClass());
+            response += String.format("%d\t%s | %s | %s", index++, transaction.getName(), 
+            transaction.getCategory(), transaction.getClass());
         }
         return response;
     }
