@@ -13,6 +13,25 @@ FinTrack is a desktop app designed for individuals who want to manage their fina
 5. Upon starting FinTrack, you will first be prompted to type the username and password. The username is **Bob** and the password is **password**
 
 ## Features
+- [Logging in into user session](#logging-in-into-user-session)
+- [Viewing help](#viewing-help-help)
+- [View Transaction History](#view-transaction-history-view-history)
+- [Add Inflow](#add-inflow-add-inflow)
+- [Delete Inflow](#delete-inflow-delete-inflow)
+- [Add Outflow](#add-outflow-add-outflow)
+- [Delete Outflow](#delete-outflow-delete-outflow)
+- [Add Reminder](#add-reminder-add-reminder)
+- [Delete Reminder](#delete-reminder-delete-reminder)
+- [Edit Inflow](#edit-inflow-edit-inflow)
+- [Edit Outflow](#edit-outflow-edit-outflow)
+- [Edit Reminder](#edit-reminder-edit-reminder)
+- [Undo last action](#undo-last-action-undo)
+- [Set budget](#set-a-budget-set-budget)
+- [Generate report](#generating-a-report-generate-report)
+- [Exit Program](#exiting-the-program-quit)
+- [Saving Data](#saving-the-data)
+- [Inactivity Timer](#inactivity-timer)
+
 
 ### Logging in into user session:
 
