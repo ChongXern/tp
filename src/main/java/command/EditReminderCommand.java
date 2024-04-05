@@ -10,7 +10,7 @@ public class EditReminderCommand extends BaseCommand {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
+    public String execute(TransactionManager manager) throws Exception, CategoryNotFoundException {
         int reminderIndex = -1;
         String reminderName = null;
         double reminderAmount = 0.0;
@@ -42,12 +42,7 @@ public class EditReminderCommand extends BaseCommand {
         String reminderDateTime = reminderDate + " " + reminderTime;
         Reminder updatedReminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
         assert reminderCategory != null : "reminderCategory should not be null";
-        try {
-            updatedReminder.setCategory(reminderCategory.toUpperCase());
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        updatedReminder.setCategory(reminderCategory.toUpperCase());
         if (!canExecute) {
             return "Sorry, reminder not edited.";
         }

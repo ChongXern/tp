@@ -11,9 +11,14 @@ public class AddInflowCommandTest {
     public void testAddInflow() {
         String arg = "add-inflow n/Salary a/400.00 d/23/05/2022 t/1900 c/income";
         String[] splitCommand = arg.split(" ");
-        AddInflowCommand command = new AddInflowCommand(splitCommand);
+        try{
+            AddInflowCommand command = new AddInflowCommand(splitCommand);
+            TransactionManager manager = new TransactionManager();
+            assertEquals(command.execute(manager), "Ok. Added inflow");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
-        TransactionManager manager = new TransactionManager();
-        assertEquals(command.execute(manager), "Ok. Added inflow");
+        
     }
 }

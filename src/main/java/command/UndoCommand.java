@@ -38,10 +38,10 @@ public class UndoCommand extends BaseCommand {
 
     public String execute(TransactionManager manager) throws Exception {
         if (!timer.canUndo()) {
-            System.out.println("Sorry, no longer able to undo the last action as 10 seconds have passed.");
+            return ("Sorry, no longer able to undo the last action as 10 seconds have passed.");
         }
         if (commandParts == null) {
-            System.out.println("Sorry, there is no action to undo.");
+            return ("Sorry, there is no action to undo.");
         }
         switch (action) {
         case "delete-inflow":

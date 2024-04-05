@@ -1,6 +1,7 @@
 package financeproject;
 
 import command.BaseCommand;
+import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
@@ -38,8 +39,14 @@ public class Main {
             ui.printMessage(e.getMessage());
             return;
         }
+        TransactionManager manager;
+        try{
+            manager = storage.loadFile(user.getUsername());
+        } catch (CategoryNotFoundException e){
+            ui.printMessage(e.getMessage());
+            return;
+        }
 
-        TransactionManager manager = storage.loadFile(user.getUsername());
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
@@ -58,7 +65,11 @@ public class Main {
                 ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
-            storage.saveFile(user.getUsername(), manager);
+            try{
+                storage.saveFile(user.getUsername(), manager);
+            } catch (Exception e){
+                ui.printMessage(e.getMessage());
+            }
 
             try {
                 inactivityTimer.checkTimeElapsed();
@@ -71,11 +82,11 @@ public class Main {
                     String wantToContinue = ui.readInput();
                     if (wantToContinue.equalsIgnoreCase("y") ||
                             wantToContinue.equalsIgnoreCase("yes")) {
-                        System.out.println("Session continued.");
+                        ui.printMessage("Session continued.");
                         inactivityTimer.resetTimer();
                     } else if (wantToContinue.equalsIgnoreCase("n") ||
                             wantToContinue.equalsIgnoreCase("no")) {
-                        System.out.println("Session ended. ");
+                        ui.printMessage("Session ended. ");
                         assert baseCommand != null;
                         baseCommand.setIsExit(true);
                     }

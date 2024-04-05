@@ -24,52 +24,50 @@ public class TransactionManager {
         this.budget = budget;
     }
     
-    public void addTransaction(Transaction<?> transaction) {
+    public String addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
         transactionList.sortTransactions();
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
             inflows.addTransaction(inflow);
-            return;
-        }
-        if (transaction instanceof Outflow) {
+            return String.format("Added: %s", inflow.toString());
+        } else if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             transactionList.setTransactionsType("Outflow");
             outflows.addTransaction(outflow);
-            return;
-        }
-        if (transaction instanceof Reminder) {
+            return String.format("Added: %s", outflow.toString());
+        } else if (transaction instanceof Reminder) {
             Reminder reminder = (Reminder) transaction;
             transactionList.setTransactionsType("Reminder");
             reminders.addTransaction(reminder);
-            return;
+            return String.format("Added: %s", reminder.toString());
         }
-        System.out.println("Invalid transaction type.");
+        return ("Invalid transaction type.");
     }
 
-    public void removeTransaction(Transaction<?> transaction) {
+    public String removeTransaction(Transaction<?> transaction) {
         int index = transactionList.getIndexOfParticularTransaction(transaction);
         transactionList.removeTransactionIndex(index);
         if (transaction instanceof Inflow) {
             Inflow inflow = (Inflow) transaction;
             int inflowIndex = inflows.getIndexOfParticularTransaction(inflow);
             inflows.removeTransactionIndex(inflowIndex);
-            return;
+            return String.format("Removed: %s", inflow.toString());
         }
         if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             int outflowIndex = outflows.getIndexOfParticularTransaction(outflow);
             outflows.removeTransactionIndex(outflowIndex);
-            return;
+            return String.format("Removed: %s", outflow.toString());
         }
         if (transaction instanceof Reminder) {
             Reminder reminder = (Reminder) transaction;
             int reminderIndex = reminders.getIndexOfParticularTransaction(reminder);
             reminders.removeTransactionIndex(reminderIndex);
-            return;
+            return String.format("Removed: %s", reminder.toString());
         }
-        System.out.println("Invalid transaction type.");
+        return ("Invalid transaction type.");
     }
 
     public Inflow removeInflow(int index) throws Exception {

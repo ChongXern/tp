@@ -10,7 +10,7 @@ public class EditOutflowCommand extends BaseCommand {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
+    public String execute(TransactionManager manager) throws Exception, CategoryNotFoundException {
         int outflowIndex = -1;
         String outflowName = null;
         double outflowAmount = 0.0;
@@ -42,12 +42,7 @@ public class EditOutflowCommand extends BaseCommand {
         String outflowDateTime = outflowDate + " " + outflowTime;
         Outflow updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null : "outflowCategory should not be null";
-        try {
-            updatedOutflow.setCategory(outflowCategory);
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        updatedOutflow.setCategory(outflowCategory);
         if (!canExecute) {
             return "Sorry, outflow not edited.";
         }

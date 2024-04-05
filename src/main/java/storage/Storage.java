@@ -23,13 +23,13 @@ public class Storage {
         this.filePath = filePath;
     }
     
-    public void addNewUser(String username, String password) {
+    public void addNewUser(String username, String password) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
             fw.write(username + "|" + password + "\n");
             fw.close();
         } catch (IOException e) {
-            System.out.println("Could not add user");
+           throw new Exception("Error adding user");
         }
     }
     
@@ -52,17 +52,20 @@ public class Storage {
             throw new UserNotFoundException();
         } catch (FileNotFoundException e) {
             createFileDir();
-            System.out.println("File is not found, please try again.");
-            return null;
+            throw new UserNotFoundException();
         }
     }
     
-    public TransactionManager loadFile(String username) {
+    public TransactionManager loadFile(String username) throws CategoryNotFoundException {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
         try {
             Scanner sc = new Scanner(f);
-            manager.setBudget(Double.parseDouble(sc.nextLine()));
+            double budget = 0.00;
+            if (sc.hasNextLine()){
+                budget = Double.parseDouble(sc.nextLine());
+            }
+            manager.setBudget(budget);
             while (sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
@@ -84,8 +87,6 @@ public class Storage {
             sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
         }
         return manager;
     }
@@ -95,13 +96,13 @@ public class Storage {
         f.mkdir();
     }
 
-    public void saveFile(String username, TransactionManager tm) {
+    public void saveFile(String username, TransactionManager tm) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
         } catch (IOException e) {
-            System.out.println("Unable to save tasks!");
+            throw new Exception("Error saving file");
         }
     }
 }

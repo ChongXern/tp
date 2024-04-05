@@ -10,7 +10,7 @@ public class EditInflowCommand extends BaseCommand {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
+    public String execute(TransactionManager manager) throws Exception, CategoryNotFoundException {
         int inflowIndex = -1;
         String inflowName = null;
         double inflowAmount = 0;
@@ -42,12 +42,7 @@ public class EditInflowCommand extends BaseCommand {
         String inflowDateTime = inflowDate + " " + inflowTime;
         Inflow updatedInflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
         assert inflowCategory != null : "inflowCategory should not be null";
-        try {
-            updatedInflow.setCategory(inflowCategory);
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        updatedInflow.setCategory(inflowCategory);
         if (!canExecute) {
             return "Sorry, inflow not edited.";
         }
