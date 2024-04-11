@@ -12,7 +12,7 @@ public class AddReminderCommand extends BaseCommand {
         timer = new InactivityTimer();
         try {
             createReminder();
-        } catch (IncorrectCommandSyntaxException e) {
+        } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -32,6 +32,9 @@ public class AddReminderCommand extends BaseCommand {
                 reminderName = part.substring(2);
             } else if (part.startsWith("a/")) {
                 reminderAmount = Double.parseDouble(part.substring(2));
+                if (reminderAmount <= 0) {
+                    throw new IllegalArgumentException("Sorry, inflow amount must be positive.");
+                }
             } else if (part.startsWith("d/")) {
                 reminderDate = part.substring(2);
             } else if (part.startsWith("t/")) {

@@ -12,7 +12,7 @@ public class AddOutflowCommand extends BaseCommand {
         timer = new InactivityTimer();
         try {
             createOutflow();
-        } catch (IncorrectCommandSyntaxException e) {
+        } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -33,6 +33,9 @@ public class AddOutflowCommand extends BaseCommand {
                 outflowName = part.substring(2);
             } else if (part.startsWith("a/")) {
                 outflowAmount = Double.parseDouble(part.substring(2));
+                if (outflowAmount <= 0) {
+                    throw new IllegalArgumentException("Sorry, inflow amount must be positive.");
+                }
             } else if (part.startsWith("d/")) {
                 outflowDate = part.substring(2);
             } else if (part.startsWith("t/")) {
