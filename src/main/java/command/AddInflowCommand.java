@@ -8,7 +8,7 @@ import user.InactivityTimer;
 
 public class AddInflowCommand extends BaseCommand {
 
-    public AddInflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException{
+    public AddInflowCommand(String[] commandParts) throws CategoryNotFoundException, IllegalArgumentException {
         super(false, commandParts);
         timer = new InactivityTimer();
         try {
@@ -34,6 +34,9 @@ public class AddInflowCommand extends BaseCommand {
                 inflowName = part.substring(2);
             } else if (part.startsWith("a/")) {
                 inflowAmount = Double.parseDouble(part.substring(2));
+                if (inflowAmount <= 0) {
+                    throw new IllegalArgumentException("Sorry, inflow amount must be positive.");
+                }
             } else if (part.startsWith("d/")) {
                 inflowDate = part.substring(2);
             } else if (part.startsWith("t/")) {
@@ -58,4 +61,5 @@ public class AddInflowCommand extends BaseCommand {
         manager.addTransaction(inflow);
         return "Ok. Added inflow";
     }
+
 }

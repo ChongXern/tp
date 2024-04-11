@@ -1,6 +1,5 @@
 package command;
 
-import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
@@ -10,7 +9,7 @@ public class EditReminderCommand extends BaseCommand {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception, CategoryNotFoundException {
+    public String execute(TransactionManager manager) throws Exception {
         int reminderIndex = -1;
         String reminderName = null;
         double reminderAmount = 0.0;
@@ -28,6 +27,9 @@ public class EditReminderCommand extends BaseCommand {
                 reminderName = part.substring(2);
             } else if (part.startsWith("a/")) {
                 reminderAmount = Double.parseDouble(part.substring(2));
+                if (reminderAmount <= 0) {
+                    throw new IllegalArgumentException("Sorry, inflow amount must be positive.");
+                }
             } else if (part.startsWith("d/")) {
                 reminderDate = part.substring(2);
             } else if (part.startsWith("t/")) {

@@ -1,6 +1,5 @@
 package command;
 
-import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
@@ -10,7 +9,7 @@ public class EditInflowCommand extends BaseCommand {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception, CategoryNotFoundException {
+    public String execute(TransactionManager manager) throws Exception {
         int inflowIndex = -1;
         String inflowName = null;
         double inflowAmount = 0;
@@ -28,6 +27,9 @@ public class EditInflowCommand extends BaseCommand {
                 inflowName = part.substring(2);
             } else if (part.startsWith("a/")) {
                 inflowAmount = Double.parseDouble(part.substring(2));
+                if (inflowAmount <= 0) {
+                    throw new IllegalArgumentException("Sorry, inflow amount must be positive.");
+                }
             } else if (part.startsWith("d/")) {
                 inflowDate = part.substring(2);
             } else if (part.startsWith("t/")) {
