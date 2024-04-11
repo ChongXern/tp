@@ -7,7 +7,7 @@ import financialtransactions.TransactionManager;
 import user.InactivityTimer;
 
 public class AddReminderCommand extends BaseCommand {
-    public AddReminderCommand(String[] commandParts) {
+    public AddReminderCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         super(false, commandParts);
         timer = new InactivityTimer();
         try {
@@ -17,7 +17,7 @@ public class AddReminderCommand extends BaseCommand {
         }
     }
 
-    private void createReminder() throws IncorrectCommandSyntaxException {
+    private void createReminder() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         String reminderName = null;
         double reminderAmount = 0.0;
         String reminderDate = null;
@@ -45,12 +45,7 @@ public class AddReminderCommand extends BaseCommand {
         String reminderDateTime = reminderDate + " " + reminderTime;
         reminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
         assert reminderCategory != null;
-        try {
-            reminder.setCategory(reminderCategory.toUpperCase());
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        reminder.setCategory(reminderCategory.toUpperCase());
     }
 
     public String execute(TransactionManager manager) {

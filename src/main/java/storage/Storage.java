@@ -1,4 +1,3 @@
-//@@author chenhowy
 package storage;
 
 import customexceptions.CategoryNotFoundException;
@@ -23,15 +22,16 @@ public class Storage {
         this.filePath = filePath;
     }
     
-    public void addNewUser(String username, String password) {
+    public void addNewUser(String username, String password) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
             fw.write(username + "|" + password + "\n");
             fw.close();
         } catch (IOException e) {
-            System.out.println("Could not add user");
+            throw new Exception("Error adding user");
         }
     }
+    
     
     public BaseUser loadMockUser(){
         return new BaseUser("Bob", "password");
@@ -52,17 +52,21 @@ public class Storage {
             throw new UserNotFoundException();
         } catch (FileNotFoundException e) {
             createFileDir();
-            System.out.println("File is not found, please try again.");
-            return null;
+            throw new UserNotFoundException();
         }
     }
     
-    public TransactionManager loadFile(String username) {
+    public TransactionManager loadFile(String username) throws CategoryNotFoundException {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
+        Scanner sc;
         try {
-            Scanner sc = new Scanner(f);
-            manager.setBudget(Double.parseDouble(sc.nextLine()));
+            sc = new Scanner(f);
+            double budget = 0.00;
+            if (sc.hasNextLine()){
+                budget = Double.parseDouble(sc.nextLine());
+            }
+            manager.setBudget(budget);
             while (sc.hasNext()) {
                 String[] transactionInfo = sc.nextLine().split("\\|");
                 assert transactionInfo.length == 5 : "Transaction info should have 5 arguments";
@@ -71,7 +75,7 @@ public class Storage {
                     Inflow inflow = new Inflow(transactionInfo[0], amount, transactionInfo[2]);
                     inflow.setCategory(transactionInfo[3]);
                     manager.addTransaction(inflow);
-                } else if (transactionInfo[4].equals("O")){
+                } else if (transactionInfo[4].equals("O")) {
                     Outflow outflow = new Outflow(transactionInfo[0], -amount, transactionInfo[2]);
                     outflow.setCategory(transactionInfo[3]);
                     manager.addTransaction(outflow);
@@ -84,24 +88,23 @@ public class Storage {
             sc.close();
         } catch (FileNotFoundException e) {
             createFileDir();
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
         }
         return manager;
     }
 
-    private void createFileDir() {
+    private boolean createFileDir() {
         File f = new File(filePath);
-        f.mkdir();
+        return f.mkdir();
     }
 
-    public void saveFile(String username, TransactionManager tm) {
+    public String saveFile(String username, TransactionManager tm) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
+            return "File saved...";
         } catch (IOException e) {
-            System.out.println("Unable to save tasks!");
+            throw new Exception("Error saving file");
         }
     }
 }

@@ -36,30 +36,27 @@ public class UndoCommand extends BaseCommand {
 
     public String execute(TransactionManager manager) throws Exception {
         if (!timer.canUndo()) {
-            System.out.println("Sorry, no longer able to undo the last action as 10 seconds have passed.");
+            return "Sorry, no longer able to undo the last action as 10 seconds have passed.";
         }
         if (commandParts == null) {
-            System.out.println("Sorry, there is no action to undo.");
+            return "Sorry, there is no action to undo.";
         }
         switch (action) {
         case "delete-inflow":
             canUndo = true;
             int inflowIndex = Integer.parseInt(commandParts[1].substring(2));
             Inflow inflowToRemove = manager.getNthInflowFromList(inflowIndex);
-            manager.addTransaction(inflowToRemove);
-            break;
+            return manager.addTransaction(inflowToRemove);
         case "delete-outflow":
             canUndo = true;
             int outflowIndex = Integer.parseInt(commandParts[1].substring(2));
             Outflow outflowToRemove = manager.getNthOutflowFromList(outflowIndex);
-            manager.addTransaction(outflowToRemove);
-            break;
+            return manager.addTransaction(outflowToRemove);
         case "delete-reminder":
             canUndo = true;
             int reminderIndex = Integer.parseInt(commandParts[1].substring(2));
             Reminder reminderToRemove = manager.getNthReminderFromList(reminderIndex);
-            manager.addTransaction(reminderToRemove);
-            break;
+            return manager.addTransaction(reminderToRemove);
         case "add-inflow":
             canUndo = true;
             manager.removeTransaction(inflow);

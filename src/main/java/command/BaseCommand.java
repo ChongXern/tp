@@ -6,7 +6,9 @@ import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 import user.InactivityTimer;
 
+//@@author dylansiew
 public abstract class BaseCommand {
+    //@@author dylansiew
     public boolean isExit;
     protected Inflow inflow;
     protected Outflow outflow;
@@ -15,6 +17,7 @@ public abstract class BaseCommand {
     protected InactivityTimer timer;
     String[] commandParts;
     public BaseCommand(Boolean isExit, String[] commandParts){
+        //@@author dylansiew
         this.isExit = isExit;
         this.commandParts = commandParts;
     }

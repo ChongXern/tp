@@ -208,6 +208,30 @@ FinTrack allows a maximum of 3 minutes of inactivity on the software, then it wi
 
 **A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous FinTrack home folder.
 
+**Q**: Can I customize the categories for transactions in FinTrack?
+
+**A**: Currently, FinTrack comes with predefined categories for both inflow and outflow transactions. Custom categories are not supported in the current version, but we're always looking to improve and may include this feature in future releases.
+
+**Q**: Is it possible to have multiple user accounts on FinTrack?
+
+**A**: FinTrack is designed to be used by a single user, and it does not support multiple user accounts in its current version. If multiple users wish to use FinTrack, they would need to install it in separate directories or use different machines.
+
+**Q**: What should I do if I encounter an error or a bug?
+
+**A**: If you encounter any errors or bugs while using FinTrack, please report them to our support team. You can do this by creating an issue on our GitHub repository. Please provide detailed information about the issue and steps to reproduce it, if possible.
+
+**Q**: Can FinTrack be used on mobile devices?
+
+**A**: FinTrack is a desktop application designed for use on computers with Java 11 or above. It is not currently available for mobile devices. However, accessing the application via remote desktop software might be a workaround for accessing FinTrack on a mobile device.
+
+**Q**: How secure is my financial data with FinTrack?
+
+**A**: Your financial data is stored locally on your device and is not transmitted over the internet. We recommend keeping your device secure and regularly backing up your FinTrack data file to prevent data loss. Ensure your device has adequate security measures, such as updated antivirus software and a strong login password.
+
+**Q**: Can I export FinTrack data for use in other applications?
+
+**A**: FinTrack does not currently support exporting data directly to other financial software or applications. However, you can manually input the data into other applications if they support similar transaction formats.
+
 ## Command Summary
 
 * View Help: `help`

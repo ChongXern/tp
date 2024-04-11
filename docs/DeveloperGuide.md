@@ -7,6 +7,9 @@
 
 ## Design & implementation
 
+![java](https://github.com/AY2324S2-CS2113-F14-4/tp/assets/88567790/2588478b-65bd-4e65-a295-6bc96ee6c23b)
+
+
 The financial manager application is designed using an object-oriented approach, focusing on user authentication, transaction management, and user interaction. The core components include:
 
 - **Main Application Loop**: Handles the initialization of the application, including loading data from storage, authenticating the user, and processing user commands until the application exits.
