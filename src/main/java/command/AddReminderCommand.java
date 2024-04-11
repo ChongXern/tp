@@ -4,11 +4,17 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
+import user.InactivityTimer;
 
 public class AddReminderCommand extends BaseCommand {
     public AddReminderCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         super(false, commandParts);
-        createReminder();
+        timer = new InactivityTimer();
+        try {
+            createReminder();
+        } catch (IncorrectCommandSyntaxException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void createReminder() throws IncorrectCommandSyntaxException, CategoryNotFoundException {

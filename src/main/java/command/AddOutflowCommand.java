@@ -4,12 +4,17 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
+import user.InactivityTimer;
 
 public class AddOutflowCommand extends BaseCommand {
-
     public AddOutflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         super(false, commandParts);
-        createOutflow();
+        timer = new InactivityTimer();
+        try {
+            createOutflow();
+        } catch (IncorrectCommandSyntaxException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void createOutflow() throws IncorrectCommandSyntaxException, CategoryNotFoundException {

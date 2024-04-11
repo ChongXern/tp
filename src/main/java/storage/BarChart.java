@@ -5,6 +5,7 @@ import financialtransactions.TransactionList;
 import java.util.HashMap;
 import java.util.Map;
 
+//@@author ChongXern
 public class BarChart<T extends Transaction<?>> {
     private static final int TOTAL_BAR_SIZE = 50;
     private static final int LEGEND_SIZE = 10;
