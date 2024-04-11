@@ -21,7 +21,7 @@ public class ViewHistoryCommand extends BaseCommand {
         } else {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
-        boolean isIncludeBarChart = commandParts.length == 3 && commandParts[2].equals("w/chart");
+        boolean isIncludeBarChart = commandParts.length == 3 && commandParts[2].equalsIgnoreCase("w/chart");
         return manager.showLastNTransactions(numTransactions, isIncludeBarChart);
     }
 }
