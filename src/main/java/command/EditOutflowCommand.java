@@ -1,6 +1,5 @@
 package command;
 
-import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
