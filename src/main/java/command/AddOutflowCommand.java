@@ -7,8 +7,7 @@ import financialtransactions.TransactionManager;
 import user.InactivityTimer;
 
 public class AddOutflowCommand extends BaseCommand {
-
-    public AddOutflowCommand(String[] commandParts) {
+    public AddOutflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         super(false, commandParts);
         timer = new InactivityTimer();
         try {
@@ -18,7 +17,7 @@ public class AddOutflowCommand extends BaseCommand {
         }
     }
 
-    private void createOutflow() throws IncorrectCommandSyntaxException {
+    private void createOutflow() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         //@@author Kishen271828
         String outflowName = null;
         double outflowAmount = 0.0;
@@ -48,12 +47,7 @@ public class AddOutflowCommand extends BaseCommand {
 
         outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
         assert outflowCategory != null;
-        try {
-            outflow.setCategory(outflowCategory);
-        } catch (CategoryNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.disableExecute(this);
-        }
+        outflow.setCategory(outflowCategory);
     }
 
     public String execute(TransactionManager manager) {

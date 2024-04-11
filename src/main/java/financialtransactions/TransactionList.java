@@ -74,13 +74,14 @@ public class TransactionList<T extends Transaction<?>> {
     }
     //@@author
 
-    protected void printTransactionsSafeInfo() {
+    protected String printTransactionsSafeInfo() {
         int index = 1;
+        String response = "";
         for (T transaction : transactionList) {
-            System.out.print(index++);
-            System.out.print(" " + transaction.getName() + " | " + transaction.getCategory());
-            System.out.println(" | " + transaction.getClass());
+            response += String.format("%d\t%s | %s | %s", index++, transaction.getName(), 
+            transaction.getCategory(), transaction.getClass());
         }
+        return response;
     }
 
     public String getTransactionsType() {
