@@ -95,17 +95,26 @@ public class Parser {
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            return new EditInflowCommand(commandParts);
+            lastCommandParts = commandParts;
+            lastCommand = new EditInflowCommand(commandParts);
+            lastInflow = lastCommand.getInflow();
+            return lastCommand;
         case "edit-outflow":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            return new EditOutflowCommand(commandParts);
+            lastCommandParts = commandParts;
+            lastCommand = new EditOutflowCommand(commandParts);
+            lastOutflow = lastCommand.getOutflow();
+            return lastCommand;
         case "edit-reminder":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            return new EditReminderCommand(commandParts);
+            lastCommandParts = commandParts;
+            lastCommand = new EditReminderCommand(commandParts);
+            lastReminder = lastCommand.getReminder();
+            return lastCommand;
         case "set-budget":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);

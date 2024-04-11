@@ -4,7 +4,6 @@ import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 //@@author ChongXern
 public class UndoCommand extends BaseCommand {
