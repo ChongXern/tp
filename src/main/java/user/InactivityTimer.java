@@ -2,6 +2,7 @@ package user;
 
 import customexceptions.InactivityTimeoutException;
 
+//@@author ChongXern
 public class InactivityTimer {
     public static final int INACTIVITY_TIME = 180_000;
     public static final int GRACE_TIME = 30_000;

@@ -6,17 +6,16 @@ import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
 import user.InactivityTimer;
 
+//@@author ChongXern
 public class UndoCommand extends BaseCommand {
     private Inflow inflow;
     private Outflow outflow;
     private Reminder reminder;
     private String action;
     private boolean canUndo = false;
-    private InactivityTimer timer;
 
     public UndoCommand(String[] commandParts) {
         super(false, commandParts);
-        this.timer = new InactivityTimer();
         action = commandParts[0];
     }
 

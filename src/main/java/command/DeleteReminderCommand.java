@@ -2,10 +2,12 @@ package command;
 
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
+import user.InactivityTimer;
 
 public class DeleteReminderCommand extends BaseCommand {
     public DeleteReminderCommand(String[] commandParts) {
         super(false, commandParts);
+        timer = new InactivityTimer();
     }
 
     public String execute(TransactionManager manager) throws Exception {

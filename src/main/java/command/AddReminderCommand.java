@@ -4,10 +4,12 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
+import user.InactivityTimer;
 
 public class AddReminderCommand extends BaseCommand {
     public AddReminderCommand(String[] commandParts) {
         super(false, commandParts);
+        timer = new InactivityTimer();
         try {
             createReminder();
         } catch (IncorrectCommandSyntaxException e) {
