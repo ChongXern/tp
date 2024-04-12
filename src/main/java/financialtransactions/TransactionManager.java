@@ -107,7 +107,7 @@ public class TransactionManager {
 
         inflows.editTransactionIndex(numOfInflows - index, (Inflow) updatedTransaction);
         inflows.sortTransactions();
-        return (Inflow) transactionEdited;
+        return transactionEdited;
     }
 
     public Outflow editOutflow(int index, Transaction<?> updatedTransaction) throws Exception {
