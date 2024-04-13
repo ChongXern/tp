@@ -58,6 +58,9 @@ public class AddInflowCommand extends BaseCommand {
         if (!canExecute) {
             return "Sorry, inflow not added.";
         }
+        if (inflow.getDate().getDateTime() == null) {
+            return "Please enter a valid date or time";
+        }
         manager.addTransaction(inflow);
         return "Ok. Added inflow";
     }

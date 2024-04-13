@@ -55,6 +55,9 @@ public class AddReminderCommand extends BaseCommand {
         if (!canExecute) {
             return "Sorry, reminder not added.";
         }
+        if (reminder.getDate().getDateTime() == null) {
+            return "Please enter a valid date or time";
+        }
         manager.addTransaction(reminder);
         return "Ok. Added reminder";
     }
