@@ -48,7 +48,7 @@ public class EditReminderCommand extends BaseCommand {
         if (!canExecute) {
             return "Sorry, reminder not edited.";
         }
-        manager.editOutflow(reminderIndex, updatedReminder);
+        manager.editReminder(reminderIndex, updatedReminder);
         return "Ok. Edited reminder";
     }
 }
