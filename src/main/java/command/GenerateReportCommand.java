@@ -57,6 +57,9 @@ public class GenerateReportCommand extends BaseCommand {
         }
         if (commandParts[2].startsWith("y/")) {
             year = Integer.parseInt(commandParts[2].substring(2));
+            if (year <= 0) {
+                return "Year must be a valid year";
+            }
         }
         return manager.generateFullReport(monthString, month, year);
     }
