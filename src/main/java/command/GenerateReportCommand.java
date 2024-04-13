@@ -53,7 +53,7 @@ public class GenerateReportCommand extends BaseCommand {
             month = 12;
             break;
         default:
-            return "Month must be in the form of MMM";
+            return "Invalid month format. Month must be in the form of MMM";
         }
         if (commandParts[2].startsWith("y/")) {
             year = Integer.parseInt(commandParts[2].substring(2));
