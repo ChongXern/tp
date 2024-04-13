@@ -1,6 +1,7 @@
 package user;
 
 import customexceptions.ExceededAttemptsException;
+import customexceptions.ExitLoginException;
 import userinterface.UI;
 
 public class Authentication {
@@ -26,12 +27,15 @@ public class Authentication {
         return true;
     }
 
-    public static boolean authenticateUser(BaseUser user, UI ui) throws ExceededAttemptsException {
+    public static boolean authenticateUser(BaseUser user, UI ui) throws ExceededAttemptsException, ExitLoginException {
         Authentication auth = user.getAuthentication();
         String passwordInput;
         for (int i = 0; i < Authentication.attemptsLimit; i++) {
             ui.printMessage("Password: ");
             passwordInput = ui.readInput();
+            if (passwordInput.toLowerCase().equals("exit_login")){
+                throw new ExitLoginException();
+            }
             if (auth.checkPassword(user.getUsername(), passwordInput)) {
                 return true;
             } else {

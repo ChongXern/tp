@@ -3,6 +3,7 @@ package financeproject;
 import command.BaseCommand;
 import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
+import customexceptions.ExitLoginException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
 import customexceptions.IncorrectCommandSyntaxException;
@@ -35,7 +36,7 @@ public class Main {
             user = storage.loadMockUser();
             Authentication.authenticateUser(user, ui);
             ui.printMessage("User has been authenticated. Starting program...");
-        } catch (ExceededAttemptsException e) {
+        } catch (ExceededAttemptsException | ExitLoginException e) {
             ui.printMessage(e.getMessage());
             return;
         }
@@ -50,9 +51,9 @@ public class Main {
 
         // Main program flow
         do {
-            response = ui.readInput();
             ui.printMessage("How can we help you financially today?\n" + //
-                                "Type 'help' to view guide\n");
+                                "Type 'help' to view guide");
+            response = ui.readInput();
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
@@ -61,14 +62,14 @@ public class Main {
             } catch (IncompletePromptException | IncorrectCommandSyntaxException | IllegalArgumentException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
-                StackTraceElement[] stackTrace = e.getStackTrace();
-                if (stackTrace.length > 0) {
-                    StackTraceElement stackElement = stackTrace[0];
-                    System.out.println("Error in file " + stackElement.getFileName() +
-                            " at line " + stackElement.getLineNumber() +
-                            ", method " + stackElement.getMethodName());
-                }
-                ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
+                // StackTraceElement[] stackTrace = e.getStackTrace();
+                // if (stackTrace.length > 0) {
+                //     StackTraceElement stackElement = stackTrace[0];
+                //     System.out.println("Error in file " + stackElement.getFileName() +
+                //             " at line " + stackElement.getLineNumber() +
+                //             ", method " + stackElement.getMethodName());
+                // }
+                // ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
             try{
