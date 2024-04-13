@@ -58,6 +58,9 @@ public class AddOutflowCommand extends BaseCommand {
         if (!canExecute) {
             return "Sorry, outflow not added.";
         }
+        if (outflow.getDate().getDateTime() == null) {
+            return "Please enter a valid date or time";
+        }
         manager.addTransaction(outflow);
         return "Ok. Added outflow";
     }
