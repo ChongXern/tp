@@ -70,31 +70,34 @@ public class TransactionManager {
 
     public Inflow removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
+        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        inflows.removeTransactionIndex(numOfInflows - index);
+        inflows.removeTransactionIndex(index);
         inflows.sortTransactions();
         return transactionRemoved;
     }
 
     public Outflow removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
+        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        outflows.removeTransactionIndex(numOfOutflows - index);
+        outflows.removeTransactionIndex(index);
         outflows.sortTransactions();
         return transactionRemoved;
     }
 
     public Reminder removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
-        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(numOfReminders - index);
+        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        reminders.removeTransactionIndex(numOfReminders - index);
+        transactionList.sortTransactions();
+        
+        reminders.removeTransactionIndex(index);
+        reminders.sortTransactions();
         return transactionRemoved;
     }
 
