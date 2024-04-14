@@ -10,7 +10,6 @@ import user.InactivityTimer;
 //@@author ChongXern
 public class UndoCommand extends BaseCommand {
     private static final int PERMITTED_UNDO_TIME = 10_000;
-    private BaseCommand commandToUndo = null;
     private Inflow inflow;
     private Outflow outflow;
     private Reminder reminder;
@@ -19,13 +18,16 @@ public class UndoCommand extends BaseCommand {
     private boolean canExecute;
     private InactivityTimer timer;
     private long startTime;
+    private String[] lastCommandParts;
 
     public UndoCommand(String[] commandParts) {
         super(false, commandParts);
-        if (commandParts != null) {
-            action = commandParts[0];
-            System.out.println("ACTION IS " + action);
+        if (commandParts[0].contains("flow") || commandParts[0].contains("reminder")) {
+            lastCommandParts = commandParts;
         }
+        System.out.println("NEW RHIQ");
+        action = commandParts[0];
+        System.out.println("ACTION IS " + action);
         canExecute = false;
         timer = new InactivityTimer();
     }
@@ -47,8 +49,9 @@ public class UndoCommand extends BaseCommand {
         this.reminder = reminder;
     }
 
-    public void setCanUndo(boolean canUndo) {
+    public void setCanUndo(boolean canUndo, String[] lastCommandParts) {
         this.canUndo = canUndo;
+        this.lastCommandParts = lastCommandParts;
         startTime = System.currentTimeMillis();
     }
 
@@ -67,7 +70,7 @@ public class UndoCommand extends BaseCommand {
             throw new UndoNotPermittedException(true, true);
         }
         System.out.println("EXECUTING COMMAND UNDO");
-        switch (action) { // Compute how to undo the command to be undone
+        switch (lastCommandParts[0]) { // Compute how to undo the command to be undone
         case "delete-inflow":
             System.out.println("ADDING BACK INFLOW");
             canUndo = true;
@@ -87,6 +90,7 @@ public class UndoCommand extends BaseCommand {
         case "add-inflow":
             System.out.println("DELETING PREVIOUS INFLOW");
             canUndo = true;
+            System.out.println("THIS INFLOW TO BE DELETED IS " + inflow);
             manager.removeTransaction(inflow);
             break;
         case "add-outflow":

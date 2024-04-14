@@ -25,6 +25,7 @@ public class Parser {
     // For undo functionality
     String[] lastCommandParts;
     BaseCommand lastCommand;
+    UndoCommand undoCommand = new UndoCommand(new String[]{"undo", "command"});
     String lastAction;
     public Parser(UI ui) {
         this.ui = ui;
@@ -33,10 +34,9 @@ public class Parser {
     public BaseCommand parseCommand(String command) throws Exception {
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
-        UndoCommand undoCommand = new UndoCommand(lastCommandParts);
         switch (action) {
         case "help":
-            undoCommand.setCanUndo(false);
+            undoCommand.setCanUndo(false, null);
             lastAction = null;
             return new HelpCommand(commandParts);
         case "add-inflow":
@@ -46,7 +46,7 @@ public class Parser {
             lastCommand = new AddInflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "add-outflow":
@@ -56,7 +56,7 @@ public class Parser {
             lastCommand = new AddOutflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "add-reminder":
@@ -66,7 +66,7 @@ public class Parser {
             lastCommand = new AddReminderCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "delete-inflow":
@@ -76,7 +76,7 @@ public class Parser {
             lastCommand = new DeleteInflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "delete-outflow":
@@ -86,7 +86,7 @@ public class Parser {
             lastCommand = new DeleteOutflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "delete-reminder":
@@ -96,7 +96,7 @@ public class Parser {
             lastCommand = new DeleteReminderCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "edit-inflow":
@@ -106,7 +106,7 @@ public class Parser {
             lastCommand = new EditInflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "edit-outflow":
@@ -116,7 +116,7 @@ public class Parser {
             lastCommand = new EditOutflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "edit-reminder":
@@ -126,7 +126,7 @@ public class Parser {
             lastCommand = new EditReminderCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true);
+            undoCommand.setCanUndo(true, commandParts);
             undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "set-budget":
@@ -134,7 +134,7 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastAction = null;
-            undoCommand.setCanUndo(false);
+            undoCommand.setCanUndo(false, null);
             return new SetBudgetCommand(commandParts);
         case "view-history":
             if (commandParts.length < 2) {
@@ -146,7 +146,7 @@ public class Parser {
             if (commandParts.length < 3) {
                 throw new IncompletePromptException(command);
             }
-            undoCommand.setCanUndo(false);
+            undoCommand.setCanUndo(false, null);
             lastAction = null;
             return new GenerateReportCommand(commandParts);
         case "undo":
