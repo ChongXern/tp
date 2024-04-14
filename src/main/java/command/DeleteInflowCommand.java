@@ -12,6 +12,7 @@ public class DeleteInflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) throws Exception {
+        //@@author Kishen271828
         String inflowIndex = null;
         if (commandParts[1].startsWith("i/")) {
             inflowIndex = commandParts[1].substring(2);

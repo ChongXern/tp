@@ -11,6 +11,7 @@ public class EditOutflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) throws Exception {
+        //@@author Kishen271828
         int outflowIndex = -1;
         String outflowName = null;
         double outflowAmount = 0.0;
