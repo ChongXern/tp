@@ -23,7 +23,7 @@ public class TransactionManager {
     public void setBudget(double budget) {
         this.budget = budget;
     }
-    
+
     public String addTransaction(Transaction<?> transaction) {
         transactionList.addTransaction(transaction);
         transactionList.sortTransactions();
@@ -70,34 +70,31 @@ public class TransactionManager {
 
     public Inflow removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(index);
+        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        inflows.removeTransactionIndex(index);
+        inflows.removeTransactionIndex(numOfInflows - index);
         inflows.sortTransactions();
         return transactionRemoved;
     }
 
     public Outflow removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(index);
+        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        outflows.removeTransactionIndex(index);
+        outflows.removeTransactionIndex(numOfOutflows - index);
         outflows.sortTransactions();
         return transactionRemoved;
     }
 
     public Reminder removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
-        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(index);
+        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(numOfReminders - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        transactionList.sortTransactions();
-        
-        reminders.removeTransactionIndex(index);
-        reminders.sortTransactions();
+        reminders.removeTransactionIndex(numOfReminders - index);
         return transactionRemoved;
     }
 
@@ -234,6 +231,18 @@ public class TransactionManager {
     //@@author    
     public int getTransactionListSize() {
         return transactionList.getTransactionListSize();
+    }
+
+    public int getNumOfInflows() {
+        return inflows.getTransactionListSize();
+    }
+
+    public int getNumOfOutflows() {
+        return outflows.getTransactionListSize();
+    }
+
+    public int getNumOfReminders() {
+        return reminders.getTransactionListSize();
     }
 
     public int findTransactionIndex(Transaction<?> transaction) {

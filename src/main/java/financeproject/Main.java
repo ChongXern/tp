@@ -5,8 +5,6 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.ExitLoginException;
 import customexceptions.InactivityTimeoutException;
-import customexceptions.IncompletePromptException;
-import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -59,17 +57,8 @@ public class Main {
                 response = baseCommand.execute(manager);
                 ui.printMessage(response);
                 inactivityTimer.resetTimer();
-            } catch (IncompletePromptException | IncorrectCommandSyntaxException | IllegalArgumentException e) {
-                ui.printMessage(e.getMessage());
             } catch (Exception e) {
-                // StackTraceElement[] stackTrace = e.getStackTrace();
-                // if (stackTrace.length > 0) {
-                //     StackTraceElement stackElement = stackTrace[0];
-                //     System.out.println("Error in file " + stackElement.getFileName() +
-                //             " at line " + stackElement.getLineNumber() +
-                //             ", method " + stackElement.getMethodName());
-                // }
-                // ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
+                ui.printMessage(e.getMessage());
             }
 
             try{

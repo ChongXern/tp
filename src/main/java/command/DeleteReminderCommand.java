@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.DeleteTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import user.InactivityTimer;
@@ -18,7 +19,11 @@ public class DeleteReminderCommand extends BaseCommand {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
         assert reminderIndex != null : "reminderIndex should not be null";
-        reminder = manager.removeReminder(Integer.parseInt(reminderIndex));
+        int reminderIndexParsed = Integer.parseInt(reminderIndex);
+        if (reminderIndexParsed <= 0 || reminderIndexParsed > manager.getNumOfReminders()) {
+            throw new DeleteTransactionException();
+        }
+        reminder = manager.removeReminder(reminderIndexParsed);
         return "Ok. Reminder " + reminder.getName() + " | " + reminder.getCategory().toString() + " deleted";
     }
 }

@@ -21,7 +21,7 @@ public class HelpCommand extends BaseCommand {
         baseString += "8) edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY\n";
         baseString += "9) edit-reminder i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY\n";
         baseString += "10) set-budget a/AMOUNT\n";
-        baseString += "11) view-history n/NUM \n";
+        baseString += "11) view-history n/NUM [w/CHART]\n";
         baseString += "12) generate-report m/MONTH y/YEAR\n";
         baseString += "13) quit \n";
         baseString += "_____________";

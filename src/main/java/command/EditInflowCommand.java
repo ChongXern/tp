@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.EditTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
@@ -10,6 +11,7 @@ public class EditInflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) throws Exception {
+        //@@author Kishen271828
         int inflowIndex = -1;
         String inflowName = null;
         double inflowAmount = 0;
@@ -23,6 +25,9 @@ public class EditInflowCommand extends BaseCommand {
             String part = commandParts[i];
             if (part.startsWith("i/")) {
                 inflowIndex = Integer.parseInt(part.substring(2));
+                if (inflowIndex <= 0 || inflowIndex > manager.getNumOfInflows()) {
+                    throw new EditTransactionException();
+                }
             } else if (part.startsWith("n/")) {
                 inflowName = part.substring(2);
             } else if (part.startsWith("a/")) {
