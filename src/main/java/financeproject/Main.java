@@ -7,6 +7,7 @@ import customexceptions.ExitLoginException;
 import customexceptions.InactivityTimeoutException;
 import customexceptions.IncompletePromptException;
 import customexceptions.IncorrectCommandSyntaxException;
+import customexceptions.UndoNotPermittedException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -14,6 +15,9 @@ import user.Authentication;
 import user.BaseUser;
 import user.InactivityTimer;
 import userinterface.UI;
+
+import javax.swing.undo.CannotUndoException;
+import java.util.concurrent.CancellationException;
 
 public class Main {
     public static void main(String[] args) throws SecurityException {
@@ -51,15 +55,16 @@ public class Main {
 
         // Main program flow
         do {
-            ui.printMessage("How can we help you financially today?\n" + //
-                                "Type 'help' to view guide");
+            //ui.printMessage("How can we help you financially today?\n" + //
+                                //"Type 'help' to view guide");
             response = ui.readInput();
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
                 ui.printMessage(response);
                 inactivityTimer.resetTimer();
-            } catch (IncompletePromptException | IncorrectCommandSyntaxException | IllegalArgumentException e) {
+            } catch (IncompletePromptException | IncorrectCommandSyntaxException |
+                     IllegalArgumentException | UndoNotPermittedException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
                 // StackTraceElement[] stackTrace = e.getStackTrace();

@@ -7,9 +7,8 @@ import financialtransactions.TransactionManager;
 import user.InactivityTimer;
 
 public class AddOutflowCommand extends BaseCommand {
-    public AddOutflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
+    public AddOutflowCommand(String[] commandParts) throws CategoryNotFoundException {
         super(false, commandParts);
-        timer = new InactivityTimer();
         try {
             createOutflow();
         } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {

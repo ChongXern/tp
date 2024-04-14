@@ -14,9 +14,9 @@ public abstract class BaseCommand {
     protected Outflow outflow;
     protected Reminder reminder;
     protected boolean canExecute = true;
-    protected InactivityTimer timer;
     String[] commandParts;
-    public BaseCommand(Boolean isExit, String[] commandParts){
+
+    public BaseCommand(boolean isExit, String[] commandParts) {
         //@@author dylansiew
         this.isExit = isExit;
         this.commandParts = commandParts;

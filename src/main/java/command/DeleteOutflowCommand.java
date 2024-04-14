@@ -7,7 +7,6 @@ import user.InactivityTimer;
 public class DeleteOutflowCommand extends BaseCommand {
     public DeleteOutflowCommand(String[] commandParts) {
         super(false, commandParts);
-        timer = new InactivityTimer();
     }
 
     public String execute(TransactionManager manager) throws Exception {

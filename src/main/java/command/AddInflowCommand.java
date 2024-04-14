@@ -10,7 +10,6 @@ public class AddInflowCommand extends BaseCommand {
 
     public AddInflowCommand(String[] commandParts) throws CategoryNotFoundException, IllegalArgumentException {
         super(false, commandParts);
-        timer = new InactivityTimer();
         try {
             createInflow();
         } catch (IncorrectCommandSyntaxException e) {

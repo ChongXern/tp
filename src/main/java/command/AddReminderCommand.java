@@ -9,7 +9,6 @@ import user.InactivityTimer;
 public class AddReminderCommand extends BaseCommand {
     public AddReminderCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
         super(false, commandParts);
-        timer = new InactivityTimer();
         try {
             createReminder();
         } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {
