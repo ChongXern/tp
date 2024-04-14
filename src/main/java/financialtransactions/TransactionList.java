@@ -64,7 +64,15 @@ public class TransactionList<T extends Transaction<?>> {
         return baseString.toString();
     }
 
-    //@@author chenhowy    
+    //@@author chenhowy
+
+    /**
+     * Returns a string of all the past transactions.
+     * Going through each transaction, the method calls toSave for each of them.
+     * This generates one line for each transaction that will be appended to baseString.
+     * 
+     * @return A string of all past transactions.
+     */
     public String toSave() {
         StringBuilder baseString = new StringBuilder();
         for (T transaction : transactionList) {
@@ -136,7 +144,15 @@ public class TransactionList<T extends Transaction<?>> {
     }
 
     //@@author chenhowy
-    public double totalSpentInPastMonth() {
+
+    /**
+     * Returns the amount of money spent in the current month.
+     * The method checks if the transaction happened from the start of the current calendar month till today.
+     * If it falls in the time period, it will be added to the total amount.
+     * 
+     * @return A double of the amount of money spent in the current month.
+     */
+    public double totalSpentInCurrentMonth() {
         double amount = 0;
         for (T transaction : transactionList) {
             if ((transaction.getDate().getDateTime().getMonth() == LocalDateTime.now().getMonth()) && 
@@ -146,7 +162,15 @@ public class TransactionList<T extends Transaction<?>> {
         }
         return amount;
     }
-    
+
+    /**
+     * Returns the amount of money spent in a certain month of a certain year.
+     * This method can also sum up the total amount of money earned in that month.
+     * 
+     * @param month The month which the user wants to query.
+     * @param year The year which the user wants to query.
+     * @return A double of the amount of money spent in the certain month.
+     */
     public double getTotalSpentInMonth(int month, int year) {
         double amount = 0;
         for (T transaction : transactionList) {
@@ -158,7 +182,12 @@ public class TransactionList<T extends Transaction<?>> {
         return amount;
     }
 
-    public int getTransactionsAfterToday() {
+    /**
+     * Returns the number of reminders that have yet to happen.
+     * 
+     * @return An integer of the number of reminders that have not occurred. 
+     */
+    public int getRemindersAfterToday() {
         int numberOfTransactions = 0;
         LocalDateTime today = LocalDateTime.now();
         for (T transaction : transactionList) {
