@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.DeleteTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import user.InactivityTimer;
@@ -20,6 +21,9 @@ public class DeleteOutflowCommand extends BaseCommand {
         }
         assert outflowIndex != null : "outflowIndex should not be null";
         int outflowIndexParsed = Integer.parseInt(outflowIndex);
+        if (outflowIndexParsed <= 0 || outflowIndexParsed > manager.getNumOfOutflows()) {
+            throw new DeleteTransactionException();
+        }
         outflow = manager.removeOutflow(outflowIndexParsed);
         //outflow = manager.getNthOutflowFromList(outflowIndexParsed);
         return "Ok. Outflow " + outflow.getName() + " " + outflow.getCategory().toString() + " deleted";

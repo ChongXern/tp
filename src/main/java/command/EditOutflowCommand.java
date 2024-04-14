@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.EditTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
@@ -23,6 +24,9 @@ public class EditOutflowCommand extends BaseCommand {
             String part = commandParts[i];
             if (part.startsWith("i/")) {
                 outflowIndex = Integer.parseInt(part.substring(2));
+                if (outflowIndex <= 0 || outflowIndex > manager.getNumOfOutflows()) {
+                    throw new EditTransactionException();
+                }
             } else if (part.startsWith("n/")) {
                 outflowName = part.substring(2);
             } else if (part.startsWith("a/")) {

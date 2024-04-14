@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.DeleteTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import user.InactivityTimer;
@@ -19,6 +20,9 @@ public class DeleteInflowCommand extends BaseCommand {
         }
         assert inflowIndex != null : "inflowIndex should not be null";
         int inflowIndexParsed = Integer.parseInt(inflowIndex);
+        if (inflowIndexParsed <= 0 || inflowIndexParsed > manager.getNumOfInflows()) {
+            throw new DeleteTransactionException();
+        }
         inflow = manager.removeInflow(inflowIndexParsed);
         //inflow = manager.getNthInflowFromList(inflowIndexParsed);
         return "Ok. Inflow " + inflow.getName() + " | " + inflow.getCategory().toString() + " deleted";

@@ -1,5 +1,6 @@
 package command;
 
+import customexceptions.EditTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
@@ -23,6 +24,9 @@ public class EditReminderCommand extends BaseCommand {
             String part = commandParts[i];
             if (part.startsWith("i/")) {
                 reminderIndex = Integer.parseInt(part.substring(2));
+                if (reminderIndex <= 0 || reminderIndex > manager.getNumOfReminders()) {
+                    throw new EditTransactionException();
+                }
             } else if (part.startsWith("n/")) {
                 reminderName = part.substring(2);
             } else if (part.startsWith("a/")) {
