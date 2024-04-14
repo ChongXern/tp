@@ -22,6 +22,8 @@ public class Storage {
         this.filePath = filePath;
     }
     
+    //@@author chenhowy-unused 
+    //This method is not used as TP should not need to support multiple users.
     public void addNewUser(String username, String password) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + "/passwords.txt", true);
@@ -31,12 +33,7 @@ public class Storage {
             throw new Exception("Error adding user");
         }
     }
-    
-    
-    public BaseUser loadMockUser(){
-        return new BaseUser("Bob", "password");
-    }
-    
+
     public BaseUser loadUser(String username) throws UserNotFoundException {
         File f = new File(filePath + "/passwords.txt");
         try {
@@ -55,7 +52,22 @@ public class Storage {
             throw new UserNotFoundException();
         }
     }
+    //@@author
+    public BaseUser loadMockUser(){
+        return new BaseUser("Bob", "password");
+    }
     
+    //@@author chenhowy
+    /**
+     * Returns a transaction manager object containing all the previous transactions that were in the save file
+     * The method will search for file "username.txt" in the ./data directory.
+     * If the file does not exist, it will create a ./data directory if it does not already exist.
+     * Otherwise, an empty transaction manager will be returned
+     * 
+     * @param username the username for the file to be loaded
+     * @return Transaction Manager object with previous transactions loaded 
+     * @throws CategoryNotFoundException If category does not exist.
+     */
     public TransactionManager loadFile(String username) throws CategoryNotFoundException {
         File f = new File(filePath + String.format("/%s.txt", username));
         TransactionManager manager = new TransactionManager();
@@ -92,11 +104,26 @@ public class Storage {
         return manager;
     }
 
+    /**
+     * Creates a file directory ./data
+     * 
+     * @return True if directory was created.
+     */
     private boolean createFileDir() {
         File f = new File(filePath);
         return f.mkdir();
     }
 
+    /**
+     * Returns a string if file was saved successfully.
+     * The method calls toSave of transaction manager which generates a string containing all past transactions.
+     * This string will then be written to the file "username.txt".
+     * 
+     * @param username The username of the current user
+     * @param tm The transaction manager of the current instance that contains the transactions
+     * @return A string if the file was saved
+     * @throws Exception If the file was unable to be saved.
+     */
     public String saveFile(String username, TransactionManager tm) throws Exception {
         try {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));

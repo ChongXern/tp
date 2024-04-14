@@ -188,19 +188,37 @@ public class TransactionManager {
         return String.format("%.2f\n", budget) + transactionList.toSave();
     }
     
-    //@@author chenhowy    
+    //@@author chenhowy
+
+    /**
+     * Returns a string that contains some basic information.
+     * This string is to be displayed on launch of the app.
+     * It contains amount spent in the current month, budget left and reminders.
+     * 
+     * @return A string of basic information to show to the user on launch.
+     */
     public String generateQuickReport() {
         String baseString = "";
         baseString += String.format("You have spent " +
-                "%.2f in the current month.\n", outflows.totalSpentInPastMonth());
+                "%.2f in the current month.\n", outflows.totalSpentInCurrentMonth());
         baseString += String.format("With a budget of " +
-                "%.2f, you have %.2f left to spend.\n", budget, budget - outflows.totalSpentInPastMonth() - 
-                reminders.totalSpentInPastMonth());
+                "%.2f, you have %.2f left to spend.\n", budget, budget - outflows.totalSpentInCurrentMonth() - 
+                reminders.totalSpentInCurrentMonth());
         baseString += String.format("You have " +
-                "%d upcoming payments that require your attention", reminders.getTransactionsAfterToday());
+                "%d upcoming payments that require your attention", reminders.getRemindersAfterToday());
         return baseString;
     }
-    
+
+    /**
+     * Returns a string that contains information about a certain month that has passed.
+     * It first checks if the month has already passed.
+     * It will tell the user their income, spending and savings from that month.
+     * 
+     * @param monthString A string of the certain month.
+     * @param month An integer value of the certain month.
+     * @param year An integer value of the certain year.
+     * @return A string that contains information about the month.
+     */
     public String generateFullReport(String monthString, int month, int year) {
         if (!isBefore(month, year)) {
             return "Please enter a month that is before the current month";
@@ -215,7 +233,16 @@ public class TransactionManager {
                         reminders.getTotalSpentInMonth(month, year));
         return baseString;
     }
-    
+
+    /**
+     * Returns true if the month is before the current month.
+     * If the year is the same as the current year, the month must be before the current month.
+     * If the year is before the current year, the month does not matter.
+     * 
+     * @param month Integer value of the month in question.
+     * @param year Integer value of the year in question.
+     * @return True if the month is before the current month.
+     */
     public boolean isBefore(int month, int year) {
         LocalDateTime today = LocalDateTime.now();
         int todayMonth = today.getMonthValue();
