@@ -5,8 +5,6 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.ExitLoginException;
 import customexceptions.InactivityTimeoutException;
-import customexceptions.IncompletePromptException;
-import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;

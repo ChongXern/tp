@@ -12,7 +12,6 @@ public class DeleteOutflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) throws Exception {
-        //@@author dylansiew
         String outflowIndex = null;
         if (commandParts[1].startsWith("i/")) {
             outflowIndex = commandParts[1].substring(2);
@@ -25,7 +24,6 @@ public class DeleteOutflowCommand extends BaseCommand {
             throw new DeleteTransactionException();
         }
         outflow = manager.removeOutflow(outflowIndexParsed);
-        //outflow = manager.getNthOutflowFromList(outflowIndexParsed);
         return "Ok. Outflow " + outflow.getName() + " " + outflow.getCategory().toString() + " deleted";
     }
 }

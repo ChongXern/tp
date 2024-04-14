@@ -1,6 +1,5 @@
 package command;
 
-import customexceptions.DeleteTransactionException;
 import customexceptions.EditTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;

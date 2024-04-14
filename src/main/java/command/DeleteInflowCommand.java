@@ -24,7 +24,6 @@ public class DeleteInflowCommand extends BaseCommand {
             throw new DeleteTransactionException();
         }
         inflow = manager.removeInflow(inflowIndexParsed);
-        //inflow = manager.getNthInflowFromList(inflowIndexParsed);
         return "Ok. Inflow " + inflow.getName() + " | " + inflow.getCategory().toString() + " deleted";
     }
 }
