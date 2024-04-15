@@ -31,17 +31,17 @@ public class TransactionManager {
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
             inflows.addTransaction(inflow);
-            return String.format("Added: %s", inflow.toString());
+            return String.format("Added: %s", inflow);
         } else if (transaction instanceof Outflow) {
             Outflow outflow = (Outflow) transaction;
             transactionList.setTransactionsType("Outflow");
             outflows.addTransaction(outflow);
-            return String.format("Added: %s", outflow.toString());
+            return String.format("Added: %s", outflow);
         } else if (transaction instanceof Reminder) {
             Reminder reminder = (Reminder) transaction;
             transactionList.setTransactionsType("Reminder");
             reminders.addTransaction(reminder);
-            return String.format("Added: %s", reminder.toString());
+            return String.format("Added: %s", reminder);
         }
         return "Invalid transaction type.";
     }
@@ -148,7 +148,7 @@ public class TransactionManager {
         }
         int index = 1;
         String returnedText = "Inflows:\nTransactions:\n";
-        for (int i = listSize - n; i <= listSize - 1; i++) {
+        for (int i = listSize - 1; i > listSize - n - 1; i--) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Inflow) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -158,7 +158,7 @@ public class TransactionManager {
 
         index = 1;
         returnedText += "\nOutflows:\nTransactions:\n";
-        for (int i = listSize - n; i <= listSize - 1; i++) {
+        for (int i = listSize - 1; i > listSize - n - 1; i--) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Outflow) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -168,7 +168,7 @@ public class TransactionManager {
 
         index = 1;
         returnedText += "\nReminders:\nTransactions:\n";
-        for (int i = listSize - n; i <= listSize - 1; i++) {
+        for (int i = listSize - 1; i > listSize - n - 1; i--) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Reminder) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -189,7 +189,6 @@ public class TransactionManager {
     }
     
     //@@author chenhowy
-
     /**
      * Returns a string that contains some basic information.
      * This string is to be displayed on launch of the app.
@@ -274,14 +273,14 @@ public class TransactionManager {
     }
 
     public Inflow getNthInflowFromList(int n) throws Exception {
-        return (Inflow) inflows.getNthTransaction(n);
+        return (Inflow) inflows.getNthTransaction(getNumOfInflows() - n);
     }
 
     public Outflow getNthOutflowFromList(int n) throws Exception {
-        return (Outflow) outflows.getNthTransaction(n);
+        return (Outflow) outflows.getNthTransaction(getNumOfOutflows() - n);
     }
 
     public Reminder getNthReminderFromList(int n) throws Exception {
-        return (Reminder) reminders.getNthTransaction(n);
+        return (Reminder) reminders.getNthTransaction(getNumOfReminders() - n);
     }
 }
