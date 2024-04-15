@@ -272,14 +272,14 @@ public class TransactionManager {
     }
 
     public Inflow getNthInflowFromList(int n) throws Exception {
-        return (Inflow) inflows.getNthTransaction(n - 1);
+        return (Inflow) inflows.getNthTransaction(getNumOfInflows() - n);
     }
 
     public Outflow getNthOutflowFromList(int n) throws Exception {
-        return (Outflow) outflows.getNthTransaction(n - 1);
+        return (Outflow) outflows.getNthTransaction(getNumOfOutflows() - n);
     }
 
     public Reminder getNthReminderFromList(int n) throws Exception {
-        return (Reminder) reminders.getNthTransaction(n - 1);
+        return (Reminder) reminders.getNthTransaction(getNumOfReminders() - n);
     }
 }
