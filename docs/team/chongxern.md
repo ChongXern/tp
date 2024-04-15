@@ -8,7 +8,7 @@ Finance tracking application that helps keep track of all things related to fina
 #### Enhancements Implemented
 1. **Undo last action functionality**
 
-Allow actions such as `add-inflow` and `delete-outflow` to be undone using the `undo` command, but only if within 10 seconds.
+Allow actions such as `add-inflow` and `delete-outflow` to be undone using the `undo` command.
 
 2. **Bar chart feature for** `view-history`
 
