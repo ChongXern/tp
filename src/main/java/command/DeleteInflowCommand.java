@@ -22,7 +22,6 @@ public class DeleteInflowCommand extends BaseCommand {
         if (inflowIndex <= 0 || inflowIndex > manager.getNumOfInflows()) {
             throw new DeleteTransactionException();
         }
-        //@@author
         try {
             inflow = manager.getNthInflowFromList(inflowIndex);
         } catch (Exception e) {
@@ -31,7 +30,6 @@ public class DeleteInflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) throws Exception {
-        System.out.println("EXECUTE!");
         assert inflowIndex != -1 : "The inflowIndex should exist";
         manager.removeInflow(inflowIndex);
         return "Ok. Inflow " + inflow.getName() + " | " + inflow.getCategory().toString() + " deleted";
