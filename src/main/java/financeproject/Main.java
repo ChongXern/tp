@@ -49,13 +49,17 @@ public class Main {
 
         // Main program flow
         do {
+            ui.printLine();
             ui.printMessage("How can we help you financially today?\n" + //
                                 "Type 'help' to view guide");
+            ui.printLine();
             response = ui.readInput();
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
+                ui.printLine();
                 ui.printMessage(response);
+                ui.printLine();
                 inactivityTimer.resetTimer();
             } catch (Exception e) {
                 ui.printMessage(e.getMessage());

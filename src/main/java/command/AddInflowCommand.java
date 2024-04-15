@@ -54,7 +54,6 @@ public class AddInflowCommand extends BaseCommand {
     }
 
     public String execute(TransactionManager manager) {
-        //@@author Kishen271828
         if (!canExecute) {
             return "Sorry, inflow not added.";
         }
