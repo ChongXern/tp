@@ -55,7 +55,7 @@ Examples:
 - `view-history n/20 w/chart`
 - `view-history all`
 
-### Add Inflow: add-inflow
+### Add Inflow: `add-inflow`
 
 - Adds a new inflow of money to your financial records.
 - `NAME` should not have any white space characters in it.
