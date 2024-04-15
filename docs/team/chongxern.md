@@ -16,7 +16,7 @@ Enable descriptive bar chart of transactions to be viewed using `w/chart`
    
 3. **Inactivity Timer**
 
-Used to check that the user is still inputting commands or is inactive. Also used for aforementioned `undo` command to check if 10 seconds has passed.
+Used to check that the user is still inputting commands or is inactive. After 2.5 min the application will check for availability, and after 3 min the application will shut down by itself.
 
 4. **Bug fixes**
    
@@ -26,4 +26,4 @@ Used to check that the user is still inputting commands or is inactive. Also use
 Added personal contributions to my enhancements, as well as adding more information to other functionalities and improving the formatting of the User Guide with hyperlinks to sections.
 
 #### Contributions to Developer Guide
-Added relevant descriptions and information to enhancments and user guides, 
+Added relevant descriptions, information and other amendments to enhancments and user guides, 
