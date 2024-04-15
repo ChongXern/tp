@@ -16,7 +16,6 @@ public class DeleteInflowCommand extends BaseCommand {
         } else {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
-
         assert inflowIndex != -1 : "inflowIndex should not be null";
         if (inflowIndex <= 0 || inflowIndex > manager.getNumOfInflows()) {
             throw new DeleteTransactionException();

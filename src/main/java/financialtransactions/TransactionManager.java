@@ -70,30 +70,32 @@ public class TransactionManager {
 
     public void removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
+        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        inflows.removeTransactionIndex(numOfInflows - index);
+        inflows.removeTransactionIndex(index);
         inflows.sortTransactions();
     }
 
     public void removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
+        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        outflows.removeTransactionIndex(numOfOutflows - index);
+        outflows.removeTransactionIndex(index);
         outflows.sortTransactions();
     }
 
     public void removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
-        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(numOfReminders - index);
+        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
-        reminders.removeTransactionIndex(numOfReminders - index);
-        //transactionList.sortTransactions();
+        transactionList.sortTransactions();
+
+        reminders.removeTransactionIndex(index);
+        reminders.sortTransactions();
     }
 
     public Inflow editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
