@@ -59,12 +59,15 @@ Examples:
 
 - Adds a new inflow of money to your financial records.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
+- The input parameters can be in any order
 
 Format: `add-inflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/income`
+Example: 
+- `add-inflow n/Salary a/5000 d/21/02/2024 t/1700 c/income`
+- `add-inflow n/Birthday c/gift d/21-03-2023 t/1200 a/50`
 
 ### Delete Inflow: `delete-inflow`
 
@@ -79,12 +82,15 @@ Example: `delete-inflow i/2`
 
 - Adds a new outflow of money to your financial records.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
+- The input parameters can be in any order
 
 Format: `add-outflow n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-outflow n/John a/100 d/19/02/2024 t/1600 c/treat`
+Example: 
+- `add-outflow n/John a/100 d/19-02-2024 t/1600 c/treat`
+- `add-outflow n/Bob a/600 c/treat t/1600 d/19/02/2024`
 
 ### Delete Outflow: `delete-outflow`
 
@@ -99,13 +105,16 @@ Example: `delete-outflow i/5`
 
 - Adds a new reminder of upcoming payment to your financial records.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Take note that the date entered must be in the future.
 - Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES, OTHER*
+- The input parameters can be in any order
 
 Format: `add-reminder n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `add-reminder n/water_bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+Example: 
+- `add-reminder n/water_bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+- `add-reminder a/45 d/21/06/2024 t/1200 n/electricity_bills c/UTILITIES`
 
 ### Delete Reminder: `delete-reminder`
 
@@ -121,39 +130,48 @@ Example: `delete-reminder i/5`
 - Edits an existing entry of inflow from your financial records.
 - Before editing, the list of inflows along with their indices can be viewed using the `view-history` command.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INCOME, INVESTMENT, GIFT, LOAN, REFUND, OTHER*
 - Input the index you want to edit and provide the details you want to update for the inflow.
+- The input parameters can be in any order
 
 Format: `edit-inflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/income`
+Example: 
+- `edit-inflow i/7 n/Salary a/5000 d/21/02/2024 t/1700 c/income`
+- `edit-inflow n/Stocks a/5000 d/27-02-2024 t/1700 c/investment i/4`
 
 ### Edit Outflow: `edit-outflow`
 
 - Edits an existing entry of outflow from your financial records.
 - Before editing, the list of outflows along with their indices can be viewed using the `view-history` command.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *FOOD, RENT, DEBT, SHOPPING, TREAT, EDUCATION, TAX, OTHER*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
+- The input parameters can be in any order
 
 Format: `edit-outflow i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
+Example: 
+- `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
+- `edit-outflow i/3 n/Mary a/150 c/debt d/12-04-2024 t/1600`
 
 ### Edit Reminder: `edit-reminder`
 
 - Edits an existing entry of reminder in your financial records.
 - Before editing, the list of reminders along with their indices can be viewed using the `view-history` command.
 - `NAME` should not have any white space characters in it.
-- Date input is in DD/MM/YYYY format. Time input is 24-hour format.
+- Date input is in DD/MM/YYYY or DD-MM-YYYY format. Time input is 24-hour format.
 - Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES, OTHER*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
+- The input parameters can be in any order
 
 Format: `edit-reminder i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
-Example: `edit-reminder i/2 n/water bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+Example: 
+- `edit-reminder i/2 n/water_bills a/35 d/21/06/2024 t/1200 c/UTILITIES`
+- `edit-reminder i/12 n/income_tax a/2000 d/21-07-2014 t/1100 c/other`
 
 ### Undo last action: `undo`
 - This command will undo the last command inputted by the user.

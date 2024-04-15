@@ -6,6 +6,7 @@ import financialtransactions.TransactionManager;
 
 public class DeleteOutflowCommand extends BaseCommand {
     private int outflowIndex = -1;
+
     public DeleteOutflowCommand(String[] commandParts) {
         super(false, commandParts);
     }
