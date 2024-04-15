@@ -60,6 +60,4 @@ public class AddInflowCommand extends BaseCommand {
         manager.addTransaction(inflow);
         return "Ok. Added inflow";
     }
-
-
 }

@@ -11,7 +11,7 @@ public class DeleteOutflowCommand extends BaseCommand {
     }
 
     public void createTransaction() throws Exception {
-        //@@author dylansiew
+        //@@author Kishen271828
         if (commandParts[1].startsWith("i/")) {
             outflowIndex = Integer.parseInt(commandParts[1].substring(2));
         } else {
@@ -22,6 +22,7 @@ public class DeleteOutflowCommand extends BaseCommand {
         if (outflowIndex <= 0 || outflowIndex > manager.getNumOfOutflows()) {
             throw new DeleteTransactionException();
         }
+        //@@author
         try {
             outflow = manager.getNthOutflowFromList(outflowIndex);
         } catch (Exception e) {

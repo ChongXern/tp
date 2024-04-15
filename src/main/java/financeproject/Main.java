@@ -51,11 +51,11 @@ public class Main {
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
-        do {
-            ui.printLine();
-            ui.printMessage("How can we help you financially today?\n" + //
+        ui.printLine();
+        ui.printMessage("How can we help you financially today?\n" + //
                                 "Type 'help' to view guide");
-            ui.printLine();
+        ui.printLine();
+        do {
             response = ui.readInput();
             parser.setManager(manager);
             try {
