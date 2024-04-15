@@ -24,15 +24,12 @@ public class UndoCommand extends BaseCommand {
         if (commandParts[0].contains("flow") || commandParts[0].contains("reminder")) {
             lastCommandParts = commandParts;
         }
-        System.out.println("NEW RHIQ");
         action = commandParts[0];
-        System.out.println("ACTION IS " + action);
         canExecute = false;
     }
 
     public void setInflow(Inflow inflow) {
         this.inflow = inflow;
-        System.out.println("THIS SET INFLOW IS " + this.inflow.getName());
         this.outflow = null;
         this.reminder = null;
     }
@@ -60,18 +57,14 @@ public class UndoCommand extends BaseCommand {
 
     public void allowExecute(String lastAction) {
         canExecute = (lastAction != null);
-        System.out.println("INFLOW IS: " + inflow);
     }
 
     public String execute(TransactionManager manager) throws Exception {
         if (!canExecute) {
-            System.out.println("CANNOT EXECUTE UNDO");
             throw new UndoNotPermittedException(true, true);
         }
-        System.out.println("EXECUTING COMMAND UNDO");
         switch (lastCommandParts[0]) { // Compute how to undo the command to be undone
         case "delete-inflow":
-            System.out.println("ADDING BACK INFLOW");
             canUndo = true;
             index = Integer.parseInt(lastCommandParts[1].substring(2));
             System.out.println(index);
@@ -88,9 +81,7 @@ public class UndoCommand extends BaseCommand {
             Reminder reminderToRemove = manager.getNthReminderFromList(index);
             return manager.addTransaction(reminderToRemove);
         case "add-inflow":
-            System.out.println("DELETING PREVIOUS INFLOW");
             canUndo = true;
-            System.out.println("THIS INFLOW TO BE DELETED IS " + inflow);
             manager.removeTransaction(inflow);
             break;
         case "add-outflow":

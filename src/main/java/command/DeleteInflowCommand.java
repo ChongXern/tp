@@ -7,7 +7,6 @@ public class DeleteInflowCommand extends BaseCommand {
     private int inflowIndex = -1;
     public DeleteInflowCommand(String[] commandParts) {
         super(false, commandParts);
-        System.out.println("CREATE DELETE INFLOW COMMAND");
     }
 
     public void createTransaction() throws IncorrectCommandSyntaxException {
@@ -19,7 +18,6 @@ public class DeleteInflowCommand extends BaseCommand {
         assert inflowIndex != -1 : "The inflowIndex should exist";
         try {
             inflow = manager.getNthInflowFromList(inflowIndex);
-            System.out.println("TRANSACTION INFLOW CREATED");
         } catch (Exception e) {
             System.out.println("Sorry. " + e.getMessage());
         }

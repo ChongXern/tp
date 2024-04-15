@@ -40,7 +40,6 @@ public class Parser {
     }
 
     public BaseCommand parseCommand(String command) throws Exception {
-        System.out.println("SIZE OF MANAGER BEFORE IS " + manager.getTransactionListSize());
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
         switch (action) {

@@ -28,7 +28,6 @@ public class TransactionManager {
         transactionList.addTransaction(transaction);
         transactionList.sortTransactions();
         if (transaction instanceof Inflow) {
-            System.out.println("TRANSACTION INSTANCE OF INFLOW");
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
             inflows.addTransaction(inflow);
