@@ -4,25 +4,26 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class AddReminderCommand extends BaseCommand {
-    public AddReminderCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
+    String reminderName = null;
+    double reminderAmount = 0.0;
+    String reminderDate = null;
+    String reminderTime = null;
+    String reminderCategory = null;
+
+    public AddReminderCommand(String[] commandParts) throws CategoryNotFoundException {
         super(false, commandParts);
         try {
-            createReminder();
+            createTransaction();
         } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+        assert reminderCategory != null : "Reminder should have a valid category";
+        reminder.setCategory(reminderCategory.toUpperCase());
     }
 
-    private void createReminder() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
-        String reminderName = null;
-        double reminderAmount = 0.0;
-        String reminderDate = null;
-        String reminderTime = null;
-        String reminderCategory = null;
-
+    public void createTransaction() throws IncorrectCommandSyntaxException {
         /* Iterates through the parts of the original command string that checks and updates
         relevant reminder information. */
         for (int i = 1; i < commandParts.length; i++) {
@@ -46,8 +47,6 @@ public class AddReminderCommand extends BaseCommand {
         }
         String reminderDateTime = reminderDate + " " + reminderTime;
         reminder = new Reminder(reminderName, reminderAmount, reminderDateTime);
-        assert reminderCategory != null;
-        reminder.setCategory(reminderCategory.toUpperCase());
     }
 
     public String execute(TransactionManager manager) {

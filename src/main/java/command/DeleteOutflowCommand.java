@@ -2,25 +2,37 @@ package command;
 
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class DeleteOutflowCommand extends BaseCommand {
+    private int outflowIndex = -1;
+    private TransactionManager manager;
+
     public DeleteOutflowCommand(String[] commandParts) {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
+    public void createTransaction() throws IncorrectCommandSyntaxException {
         //@@author dylansiew
-        String outflowIndex = null;
         if (commandParts[1].startsWith("i/")) {
-            outflowIndex = commandParts[1].substring(2);
+            outflowIndex = Integer.parseInt(commandParts[1].substring(2));
         } else {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
-        assert outflowIndex != null : "outflowIndex should not be null";
-        int outflowIndexParsed = Integer.parseInt(outflowIndex);
-        outflow = manager.removeOutflow(outflowIndexParsed);
-        //outflow = manager.getNthOutflowFromList(outflowIndexParsed);
+        assert outflowIndex != -1 : "The outflowIndex should exist";
+        try {
+            outflow = manager.getNthOutflowFromList(outflowIndex);
+        } catch (Exception e) {
+            System.out.println("Sorry. " + e.getMessage());
+        }
+    }
+
+    public void setManager(TransactionManager manager) {
+        this.manager = manager;
+    }
+
+    public String execute(TransactionManager manager) throws Exception {
+        assert outflowIndex != -1 : "The outflowIndex should exist";
+        manager.removeOutflow(outflowIndex);
         return "Ok. Outflow " + outflow.getName() + " " + outflow.getCategory().toString() + " deleted";
     }
 }

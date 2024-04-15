@@ -10,6 +10,7 @@ import user.InactivityTimer;
 //@@author ChongXern
 public class UndoCommand extends BaseCommand {
     private static final int PERMITTED_UNDO_TIME = 10_000;
+    private int index;
     private Inflow inflow;
     private Outflow outflow;
     private Reminder reminder;
@@ -109,5 +110,9 @@ public class UndoCommand extends BaseCommand {
             return "Ok. " + action + " has been undone.";
         }
         throw new UndoNotPermittedException(didUndoTimerRunout(), true);
+    }
+
+    @Override
+    public void createTransaction() {
     }
 }

@@ -1,10 +1,10 @@
 package command;
 
+import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 //@@author dylansiew
 public abstract class BaseCommand {
@@ -25,6 +25,7 @@ public abstract class BaseCommand {
         this.canExecute = false;
     }
     public abstract String execute(TransactionManager manager) throws Exception;
+    public abstract void createTransaction() throws IncorrectCommandSyntaxException;
 
     public boolean isExit() {
         return this.isExit;

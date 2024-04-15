@@ -19,4 +19,8 @@ public class SetBudgetCommand extends BaseCommand{
         manager.setBudget(budget);
         return "Ok. Budget set.";
     }
+
+    @Override
+    public void createTransaction() {
+    }
 }

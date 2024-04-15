@@ -63,5 +63,9 @@ public class GenerateReportCommand extends BaseCommand {
         }
         return manager.generateFullReport(monthString, month, year);
     }
-        
+
+    @Override
+    public void createTransaction() {
+    }
+
 }

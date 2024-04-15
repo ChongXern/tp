@@ -27,4 +27,8 @@ public class HelpCommand extends BaseCommand {
         baseString += "_____________";
         return baseString;
     }
+
+    @Override
+    public void createTransaction() {
+    }
 }
