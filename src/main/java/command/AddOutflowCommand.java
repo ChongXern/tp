@@ -4,27 +4,26 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class AddOutflowCommand extends BaseCommand {
-    public AddOutflowCommand(String[] commandParts) throws IncorrectCommandSyntaxException, CategoryNotFoundException {
+    String outflowName = null;
+    double outflowAmount = 0.0;
+    String outflowDate = null;
+    String outflowTime = null;
+    String outflowCategory = null;
+
+    public AddOutflowCommand(String[] commandParts) throws CategoryNotFoundException {
         super(false, commandParts);
-        timer = new InactivityTimer();
         try {
-            createOutflow();
+            createTransaction();
         } catch (IncorrectCommandSyntaxException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+        assert outflowCategory != null;
+        outflow.setCategory(outflowCategory);
     }
 
-    private void createOutflow() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
-        //@@author Kishen271828
-        String outflowName = null;
-        double outflowAmount = 0.0;
-        String outflowDate = null;
-        String outflowTime = null;
-        String outflowCategory = null;
-
+    public void createTransaction() throws IncorrectCommandSyntaxException {
         /* Iterates through the parts of the original command string that checks and updates
         relevant outflow information. */
         for (int i = 1 ; i < commandParts.length; i++) {
@@ -49,8 +48,6 @@ public class AddOutflowCommand extends BaseCommand {
         String outflowDateTime = outflowDate + " " + outflowTime;
 
         outflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
-        assert outflowCategory != null;
-        outflow.setCategory(outflowCategory);
     }
 
     public String execute(TransactionManager manager) {

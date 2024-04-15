@@ -1,24 +1,26 @@
 package command;
 
 import customexceptions.EditTransactionException;
+import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
 
 public class EditInflowCommand extends BaseCommand {
+    private int inflowIndex = -1;
+    private String inflowName = null;
+    private double inflowAmount = 0;
+    private String inflowDate = null;
+    private String inflowTime = null;
+    private String inflowCategory = null;
+    private Inflow updatedInflow;
+
     public EditInflowCommand(String[] commandParts) {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
-        //@@author Kishen271828
-        int inflowIndex = -1;
-        String inflowName = null;
-        double inflowAmount = 0;
-        String inflowDate = null;
-        String inflowTime = null;
-        String inflowCategory = null;
-
+    @Override
+    public void createTransaction() throws Exception {
         /* Iterates through the parts of the original command string that checks and updates
         relevant inflow information. */
         for (int i = 1; i < commandParts.length; i++) {
@@ -45,11 +47,23 @@ public class EditInflowCommand extends BaseCommand {
                 throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
+        assert inflowIndex != -1 : "inflow index should exist";
+        assert inflowCategory != null : "inflow category should not be null";
+        try {
+            inflow = manager.getNthInflowFromList(inflowIndex);
+        } catch (Exception e) {
+            System.out.println("Sorry, something went wrong: " + e.getMessage());
+        }
 
-        String inflowDateTime = inflowDate + " " + inflowTime;
-        Inflow updatedInflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
-        assert inflowCategory != null : "inflowCategory should not be null";
-        updatedInflow.setCategory(inflowCategory);
+        updatedInflow = new Inflow(inflowName, inflowAmount, inflowDate + " " + inflowTime);
+        try {
+            updatedInflow.setCategory(inflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public String execute(TransactionManager manager) throws Exception {
         if (!canExecute) {
             return "Sorry, inflow not edited.";
         }

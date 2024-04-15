@@ -11,4 +11,8 @@ public class ExitCommand extends BaseCommand {
     public String execute(TransactionManager manager) {
         return "Exiting application";
     }
+
+    @Override
+    public void createTransaction() {
+    }
 }

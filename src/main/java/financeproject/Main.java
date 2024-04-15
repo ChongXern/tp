@@ -5,6 +5,9 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.ExceededAttemptsException;
 import customexceptions.ExitLoginException;
 import customexceptions.InactivityTimeoutException;
+import customexceptions.IncompletePromptException;
+import customexceptions.IncorrectCommandSyntaxException;
+import customexceptions.UndoNotPermittedException;
 import financialtransactions.TransactionManager;
 import parser.Parser;
 import storage.Storage;
@@ -16,6 +19,7 @@ import userinterface.UI;
 public class Main {
     public static void main(String[] args) throws SecurityException {
         Storage storage = new Storage("./data"); // Storage manager for jar file
+        TransactionManager manager;
 
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
@@ -38,8 +42,7 @@ public class Main {
             ui.printMessage(e.getMessage());
             return;
         }
-        TransactionManager manager;
-        try{
+        try {
             manager = storage.loadFile(user.getUsername());
         } catch (CategoryNotFoundException e){
             ui.printMessage(e.getMessage());
@@ -49,16 +52,19 @@ public class Main {
 
         // Main program flow
         do {
-            ui.printMessage("How can we help you financially today?\n" + //
-                                "Type 'help' to view guide");
+            //ui.printMessage("How can we help you financially today?\n" + "Type 'help' to view guide");
             response = ui.readInput();
+            parser.setManager(manager);
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
                 ui.printMessage(response);
                 inactivityTimer.resetTimer();
-            } catch (Exception e) {
+            } catch (IncompletePromptException | IncorrectCommandSyntaxException |
+                     IllegalArgumentException | UndoNotPermittedException e) {
                 ui.printMessage(e.getMessage());
+            } catch (Exception e) {
+                ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
             try{
