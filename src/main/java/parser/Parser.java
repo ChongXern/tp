@@ -17,135 +17,167 @@ import command.BaseCommand;
 import command.HelpCommand;
 import command.GenerateReportCommand;
 import customexceptions.IncompletePromptException;
-import financialtransactions.Inflow;
-import financialtransactions.Outflow;
-import financialtransactions.Reminder;
 import userinterface.UI;
+
+import financialtransactions.TransactionManager;
 
 public class Parser {
     UI ui;
 
     // For undo functionality
-    String[] lastCommandParts = null;
+    String[] lastCommandParts;
     BaseCommand lastCommand;
-    Inflow lastInflow;
-    Outflow lastOutflow;
-    Reminder lastReminder;
-
+    UndoCommand undoCommand = new UndoCommand(new String[]{" "});
+    String lastAction;
+    TransactionManager manager; // Fetches transactions based on indexes only.
     public Parser(UI ui) {
         this.ui = ui;
     }
 
+    public void setManager(TransactionManager manager) {
+        this.manager = manager;
+        undoCommand.setManager(manager);
+    }
 
     public BaseCommand parseCommand(String command) throws Exception {
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
         switch (action) {
         case "help":
+            undoCommand.setCanUndo(false, null);
+            lastAction = null;
             return new HelpCommand(commandParts);
         case "add-inflow":
             if (commandParts.length < 6) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new AddInflowCommand(commandParts);
-            lastInflow = lastCommand.getInflow();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "add-outflow":
             if (commandParts.length < 6) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new AddOutflowCommand(commandParts);
-            lastOutflow = lastCommand.getOutflow();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "add-reminder":
             if (commandParts.length < 6) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new AddReminderCommand(commandParts);
-            lastReminder = lastCommand.getReminder();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "delete-inflow":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
+            lastAction = action;
             lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+
             lastCommand = new DeleteInflowCommand(commandParts);
-            lastInflow = lastCommand.getInflow();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "delete-outflow":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new DeleteOutflowCommand(commandParts);
-            lastOutflow = lastCommand.getOutflow();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "delete-reminder":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new DeleteReminderCommand(commandParts);
-            lastReminder = lastCommand.getReminder();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "edit-inflow":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new EditInflowCommand(commandParts);
-            lastInflow = lastCommand.getInflow();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "edit-outflow":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new EditOutflowCommand(commandParts);
-            lastOutflow = lastCommand.getOutflow();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setOutflow(lastCommand.getOutflow());
             return lastCommand;
         case "edit-reminder":
             if (commandParts.length < 7) {
                 throw new IncompletePromptException(command);
             }
-            lastCommandParts = commandParts;
             lastCommand = new EditReminderCommand(commandParts);
-            lastReminder = lastCommand.getReminder();
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
+            lastAction = action;
+            lastCommandParts = commandParts;
+            undoCommand.setCanUndo(true, commandParts);
+            undoCommand.setReminder(lastCommand.getReminder());
             return lastCommand;
         case "set-budget":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
+            lastAction = null;
+            undoCommand.setCanUndo(false, null);
             return new SetBudgetCommand(commandParts);
         case "view-history":
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
+            lastAction = null;
             return new ViewHistoryCommand(commandParts);
         case "generate-report":
             if (commandParts.length < 3) {
                 throw new IncompletePromptException(command);
             }
+            undoCommand.setCanUndo(false, null);
+            lastAction = null;
             return new GenerateReportCommand(commandParts);
         case "undo":
-            UndoCommand undoCommand = new UndoCommand(lastCommandParts);
-            if (lastCommandParts[0].contains("inflow")) {
-                undoCommand.setInflow(lastInflow);
-            } else if (lastCommandParts[0].contains("outflow")) {
-                undoCommand.setOutflow(lastOutflow);
-            } else if (lastCommandParts[0].contains("reminder")) {
-                undoCommand.setReminder(lastReminder);
-            }
-            lastCommandParts = null;
+            undoCommand.allowExecute(lastAction);
+            lastAction = null;
             return undoCommand;
         case "quit":
             return new ExitCommand(commandParts);
         default:
             throw new IncompletePromptException(command);
-            // throw new Exception("Invalid command");
         }
     }
 }

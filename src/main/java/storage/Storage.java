@@ -129,9 +129,9 @@ public class Storage {
             FileWriter fw = new FileWriter(filePath + String.format("/%s.txt", username));
             fw.write(tm.toSave());
             fw.close();
-            return "File saved...";
         } catch (IOException e) {
             throw new Exception("Error saving file");
         }
+        return "File saved...";
     }
 }

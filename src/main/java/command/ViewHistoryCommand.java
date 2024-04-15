@@ -30,4 +30,8 @@ public class ViewHistoryCommand extends BaseCommand {
         boolean isIncludeBarChart = commandParts.length == 3 && commandParts[2].equalsIgnoreCase("w/chart");
         return manager.showLastNTransactions(numTransactions, isIncludeBarChart);
     }
+
+    @Override
+    public void createTransaction() {
+    }
 }
