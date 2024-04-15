@@ -70,21 +70,21 @@ public class TransactionManager {
 
     public void removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Inflow transactionRemoved = getNthInflowFromList(index);
+        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        inflows.removeTransactionIndex(inflows.getIndexOfParticularTransaction(transactionRemoved));
+        inflows.removeTransactionIndex(numOfInflows - index);
         inflows.sortTransactions();
     }
 
     public void removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Outflow transactionRemoved = getNthOutflowFromList(index);
+        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        outflows.removeTransactionIndex(outflows.getIndexOfParticularTransaction(transactionRemoved));
+        outflows.removeTransactionIndex(numOfOutflows - index);
         outflows.sortTransactions();
     }
 
