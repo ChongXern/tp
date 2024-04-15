@@ -1,6 +1,5 @@
 package command;
 
-import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;

@@ -52,8 +52,7 @@ public class Main {
 
         // Main program flow
         do {
-            //ui.printMessage("How can we help you financially today?\n" + //
-                                //"Type 'help' to view guide");
+            //ui.printMessage("How can we help you financially today?\n" + "Type 'help' to view guide");
             response = ui.readInput();
             parser.setManager(manager);
             try {
