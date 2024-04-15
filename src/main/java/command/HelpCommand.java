@@ -24,7 +24,6 @@ public class HelpCommand extends BaseCommand {
         baseString += "11) view-history n/NUM [w/CHART]\n";
         baseString += "12) generate-report m/MONTH y/YEAR\n";
         baseString += "13) quit \n";
-        baseString += "_____________";
         return baseString;
     }
 

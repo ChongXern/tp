@@ -12,6 +12,10 @@ public class UI {
         System.out.println(message);
     }
 
+    public void printLine() {
+        System.out.println("____________________________________________________________________");
+    }
+
     public String readInput() {
         if (sc.hasNextLine()) {
             return sc.nextLine();

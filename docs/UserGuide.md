@@ -55,7 +55,7 @@ Examples:
 - `view-history n/20 w/chart`
 - `view-history all`
 
-### Add Inflow: add-inflow
+### Add Inflow: `add-inflow`
 
 - Adds a new inflow of money to your financial records.
 - `NAME` should not have any white space characters in it.
@@ -101,7 +101,7 @@ Example: `delete-outflow i/5`
 - `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
 - Take note that the date entered must be in the future.
-- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
+- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES, OTHER*
 
 Format: `add-reminder n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`
 
@@ -148,7 +148,7 @@ Example: `edit-outflow i/6 n/John a/100 d/19/02/2024 t/1600 c/food`
 - Before editing, the list of reminders along with their indices can be viewed using the `view-history` command.
 - `NAME` should not have any white space characters in it.
 - Date input is in DD/MM/YYYY format. Time input is 24-hour format.
-- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES*
+- Only the following categories are allowed: *INSTALLMENT, CREDITCARD, UTILITIES, OTHER*
 - Input the index you want to edit and provide the details you want to edit for the outflow.
 
 Format: `edit-reminder i/INDEX n/NAME a/AMOUNT d/DATE t/TIME c/CATEGORY`

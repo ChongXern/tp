@@ -280,6 +280,6 @@ public class TransactionManager {
     }
 
     public Reminder getNthReminderFromList(int n) throws Exception {
-        return (Reminder) reminders.getNthTransaction(n -1);
+        return (Reminder) reminders.getNthTransaction(n - 1);
     }
 }
