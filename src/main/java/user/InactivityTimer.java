@@ -4,10 +4,9 @@ import customexceptions.InactivityTimeoutException;
 
 //@@author ChongXern
 public class InactivityTimer {
-    public static final int INACTIVITY_TIME = 180_000;
-    public static final int GRACE_TIME = 30_000;
-    public static final int PERMITTED_UNDO_TIME = 10_000;
-    private long startTime;
+    private static final int INACTIVITY_TIME = 180_000;
+    private static final int GRACE_TIME = 30_000;
+    public long startTime;
 
     public InactivityTimer() {
         startTime = System.currentTimeMillis();
@@ -27,8 +26,8 @@ public class InactivityTimer {
         }
     }
 
-    public boolean canUndo() {
+    public void checkTimeFromStart() {
         long timeDifference = System.currentTimeMillis() - startTime;
-        return timeDifference <= PERMITTED_UNDO_TIME;
+        System.out.println(timeDifference + "ms has passed");
     }
 }

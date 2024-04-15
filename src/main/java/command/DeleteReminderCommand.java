@@ -3,27 +3,35 @@ package command;
 import customexceptions.DeleteTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class DeleteReminderCommand extends BaseCommand {
+    private int reminderIndex = -1;
+
     public DeleteReminderCommand(String[] commandParts) {
         super(false, commandParts);
-        timer = new InactivityTimer();
     }
 
-    public String execute(TransactionManager manager) throws Exception {
-        String reminderIndex = null;
+    public void createTransaction() throws Exception {
         if (commandParts[1].startsWith("i/")) {
-            reminderIndex = commandParts[1].substring(2);
+            reminderIndex = Integer.parseInt(commandParts[1].substring(2));
         } else {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
-        assert reminderIndex != null : "reminderIndex should not be null";
-        int reminderIndexParsed = Integer.parseInt(reminderIndex);
-        if (reminderIndexParsed <= 0 || reminderIndexParsed > manager.getNumOfReminders()) {
+
+        assert reminderIndex != -1 : "reminderIndex should exist";
+        if (reminderIndex <= 0 || reminderIndex > manager.getNumOfReminders()) {
             throw new DeleteTransactionException();
         }
-        reminder = manager.removeReminder(reminderIndexParsed);
+        try {
+            reminder = manager.getNthReminderFromList(reminderIndex);
+        } catch (Exception e) {
+            System.out.println("Sorry. " + e.getMessage());
+        }
+    }
+
+    public String execute(TransactionManager manager) throws Exception {
+        assert reminderIndex != -1 : "reminderIndex should exist";
+        manager.removeReminder(reminderIndex);
         return "Ok. Reminder " + reminder.getName() + " | " + reminder.getCategory().toString() + " deleted";
     }
 }

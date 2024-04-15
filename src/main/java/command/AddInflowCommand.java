@@ -4,28 +4,40 @@ import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Inflow;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class AddInflowCommand extends BaseCommand {
+    String inflowName = null;
+    double inflowAmount = 0;
+    String inflowDate = null;
+    String inflowTime = null;
+    String inflowCategory = null;
 
     public AddInflowCommand(String[] commandParts) throws CategoryNotFoundException, IllegalArgumentException {
         super(false, commandParts);
-        timer = new InactivityTimer();
         try {
-            createInflow();
+            createTransaction();
         } catch (IncorrectCommandSyntaxException e) {
             System.out.println(e.getMessage());
         }
+        assert inflowCategory != null;
+        inflow.setCategory(inflowCategory);
     }
 
-    private void createInflow() throws IncorrectCommandSyntaxException, CategoryNotFoundException {
+    @Override
+    public String execute(TransactionManager manager) {
         //@@author Kishen271828
-        String inflowName = null;
-        double inflowAmount = 0;
-        String inflowDate = null;
-        String inflowTime = null;
-        String inflowCategory = null;
+        if (!canExecute) {
+            return "Sorry, inflow not added.";
+        }
+        if (inflow.getDate().getDateTime() == null) {
+            return "Please enter a valid date or time";
+        }
+        manager.addTransaction(inflow);
+        return "Ok. Added inflow";
+    }
 
+    public void createTransaction() throws IncorrectCommandSyntaxException {
+        //@@author Kishen271828
         /* Iterates through the parts of the original command string that checks and updates
         relevant inflow information. */
         for (int i = 1; i < commandParts.length; i++) {
@@ -49,20 +61,7 @@ public class AddInflowCommand extends BaseCommand {
         }
         String inflowDateTime = inflowDate + " " + inflowTime;
         inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
-        assert inflowCategory != null;
-        inflow.setCategory(inflowCategory);
     }
 
-    public String execute(TransactionManager manager) {
-        //@@author Kishen271828
-        if (!canExecute) {
-            return "Sorry, inflow not added.";
-        }
-        if (inflow.getDate().getDateTime() == null) {
-            return "Please enter a valid date or time";
-        }
-        manager.addTransaction(inflow);
-        return "Ok. Added inflow";
-    }
 
 }

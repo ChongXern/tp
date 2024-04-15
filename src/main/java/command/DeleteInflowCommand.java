@@ -3,28 +3,35 @@ package command;
 import customexceptions.DeleteTransactionException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 public class DeleteInflowCommand extends BaseCommand {
+    private int inflowIndex = -1;
     public DeleteInflowCommand(String[] commandParts) {
         super(false, commandParts);
-        timer = new InactivityTimer();
     }
 
-    public String execute(TransactionManager manager) throws Exception {
-        //@@author Kishen271828
-        String inflowIndex = null;
+    public void createTransaction() throws Exception {
         if (commandParts[1].startsWith("i/")) {
-            inflowIndex = commandParts[1].substring(2);
+            inflowIndex = Integer.parseInt(commandParts[1].substring(2));
         } else {
             throw new IncorrectCommandSyntaxException(commandParts[0]);
         }
-        assert inflowIndex != null : "inflowIndex should not be null";
-        int inflowIndexParsed = Integer.parseInt(inflowIndex);
-        if (inflowIndexParsed <= 0 || inflowIndexParsed > manager.getNumOfInflows()) {
+
+        assert inflowIndex != -1 : "inflowIndex should not be null";
+        if (inflowIndex <= 0 || inflowIndex > manager.getNumOfInflows()) {
             throw new DeleteTransactionException();
         }
-        inflow = manager.removeInflow(inflowIndexParsed);
+        try {
+            inflow = manager.getNthInflowFromList(inflowIndex);
+        } catch (Exception e) {
+            System.out.println("Sorry. " + e.getMessage());
+        }
+    }
+
+    public String execute(TransactionManager manager) throws Exception {
+        System.out.println("EXECUTE!");
+        assert inflowIndex != -1 : "The inflowIndex should exist";
+        manager.removeInflow(inflowIndex);
         return "Ok. Inflow " + inflow.getName() + " | " + inflow.getCategory().toString() + " deleted";
     }
 }

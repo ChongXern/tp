@@ -68,7 +68,7 @@ public class TransactionManager {
         return "Invalid transaction type.";
     }
 
-    public Inflow removeInflow(int index) throws Exception {
+    public void removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
         Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(numOfInflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
@@ -76,10 +76,9 @@ public class TransactionManager {
 
         inflows.removeTransactionIndex(numOfInflows - index);
         inflows.sortTransactions();
-        return transactionRemoved;
     }
 
-    public Outflow removeOutflow(int index) throws Exception {
+    public void removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
         Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(numOfOutflows - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
@@ -87,15 +86,14 @@ public class TransactionManager {
 
         outflows.removeTransactionIndex(numOfOutflows - index);
         outflows.sortTransactions();
-        return transactionRemoved;
     }
 
-    public Reminder removeReminder(int index) throws Exception {
+    public void removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
         Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(numOfReminders - index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         reminders.removeTransactionIndex(numOfReminders - index);
-        return transactionRemoved;
+        //transactionList.sortTransactions();
     }
 
     public Inflow editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
@@ -249,13 +247,10 @@ public class TransactionManager {
         int todayYear = today.getYear();
         if (year < todayYear) {
             return true;
-        } else if (year == todayYear && month < todayMonth) {
-            return true;
-        } else {
-            return false;
         }
+        return year == todayYear && month < todayMonth;
     }
-    //@@author    
+
     public int getTransactionListSize() {
         return transactionList.getTransactionListSize();
     }

@@ -1,24 +1,27 @@
 package command;
 
 import customexceptions.EditTransactionException;
+import customexceptions.CategoryNotFoundException;
 import customexceptions.IncorrectCommandSyntaxException;
 import financialtransactions.Outflow;
 import financialtransactions.TransactionManager;
 
 public class EditOutflowCommand extends BaseCommand {
+    //@@author Kishen271828
+    private int outflowIndex = -1;
+    private String outflowName = null;
+    private double outflowAmount = 0.0;
+    private String outflowDate = null;
+    private String outflowTime = null;
+    private String outflowCategory = null;
+    private Outflow updatedOutflow;
+
     public EditOutflowCommand(String[] commandParts) {
         super(false, commandParts);
     }
 
-    public String execute(TransactionManager manager) throws Exception {
-        //@@author Kishen271828
-        int outflowIndex = -1;
-        String outflowName = null;
-        double outflowAmount = 0.0;
-        String outflowDate = null;
-        String outflowTime = null;
-        String outflowCategory = null;
-
+    @Override
+    public void createTransaction() throws Exception {
         /* Iterates through the parts of the original command string that checks and updates
         relevant outflow information. */
         for (int i = 1; i < commandParts.length; i++) {
@@ -45,11 +48,24 @@ public class EditOutflowCommand extends BaseCommand {
                 throw new IncorrectCommandSyntaxException(commandParts[0]);
             }
         }
+        assert outflowIndex != -1 : "outflow index should exist.";
+        assert outflowCategory != null : "outflow category should not be null";
+        try {
+            outflow = manager.getNthOutflowFromList(outflowIndex);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Sorry. " + e.getMessage());
+        }
+        updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDate + " " + outflowTime);
+        try {
+            updatedOutflow.setCategory(outflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-        String outflowDateTime = outflowDate + " " + outflowTime;
-        Outflow updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDateTime);
-        assert outflowCategory != null : "outflowCategory should not be null";
-        updatedOutflow.setCategory(outflowCategory);
+    public String execute(TransactionManager manager) throws Exception {
         if (!canExecute) {
             return "Sorry, outflow not edited.";
         }
