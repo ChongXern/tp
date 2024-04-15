@@ -27,7 +27,7 @@ public class Parser {
     // For undo functionality
     String[] lastCommandParts;
     BaseCommand lastCommand;
-    UndoCommand undoCommand = new UndoCommand(new String[]{"undo", "command"});
+    UndoCommand undoCommand = new UndoCommand(new String[]{" "});
     String lastAction;
     TransactionManager manager; // Fetches transactions based on indexes only.
     public Parser(UI ui) {

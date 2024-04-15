@@ -46,7 +46,6 @@ public class EditOutflowCommand extends BaseCommand {
         assert outflowIndex != -1 : "outflow index should exist.";
         assert outflowCategory != null : "outflow category should not be null";
         try {
-            updatedOutflow.setCategory(outflowCategory);
             outflow = manager.getNthOutflowFromList(outflowIndex);
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
@@ -54,6 +53,11 @@ public class EditOutflowCommand extends BaseCommand {
             System.out.println("Sorry. " + e.getMessage());
         }
         updatedOutflow = new Outflow(outflowName, outflowAmount, outflowDate + " " + outflowTime);
+        try {
+            updatedOutflow.setCategory(outflowCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String execute(TransactionManager manager) throws Exception {

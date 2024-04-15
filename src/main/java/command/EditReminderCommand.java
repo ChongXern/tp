@@ -46,7 +46,6 @@ public class EditReminderCommand extends BaseCommand {
         assert reminderIndex != -1 : "outflow index should exist.";
         assert reminderCategory != null : "outflow category should not be null";
         try {
-            updatedReminder.setCategory(reminderCategory);
             reminder = manager.getNthReminderFromList(reminderIndex);
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
@@ -54,6 +53,11 @@ public class EditReminderCommand extends BaseCommand {
             System.out.println("Sorry. " + e.getMessage());
         }
         updatedReminder = new Reminder(reminderName, reminderAmount, reminderDate + " " + reminderTime);
+        try {
+            updatedReminder.setCategory(reminderCategory);
+        } catch (CategoryNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String execute(TransactionManager manager) throws Exception {

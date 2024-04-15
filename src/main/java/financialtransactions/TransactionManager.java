@@ -222,11 +222,8 @@ public class TransactionManager {
         int todayYear = today.getYear();
         if (year < todayYear) {
             return true;
-        } else if (year == todayYear && month < todayMonth) {
-            return true;
-        } else {
-            return false;
         }
+        return year == todayYear && month < todayMonth;
     }
 
     public int getTransactionListSize() {
@@ -238,7 +235,6 @@ public class TransactionManager {
     }
 
     public Inflow getNthInflowFromList(int n) throws Exception {
-        System.out.println("HELLO WORLD");
         return (Inflow) inflows.getNthTransaction(n - 1);
     }
 

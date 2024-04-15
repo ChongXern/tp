@@ -44,16 +44,19 @@ public class EditInflowCommand extends BaseCommand {
             }
         }
         assert inflowIndex != -1 : "inflow index should exist";
-        assert inflowCategory != null : "inflowCategory should not be null";
+        assert inflowCategory != null : "inflow category should not be null";
+        try {
+            inflow = manager.getNthInflowFromList(inflowIndex);
+        } catch (Exception e) {
+            System.out.println("Sorry, something went wrong: " + e.getMessage());
+        }
+
+        updatedInflow = new Inflow(inflowName, inflowAmount, inflowDate + " " + inflowTime);
         try {
             updatedInflow.setCategory(inflowCategory);
-            inflow = manager.getNthInflowFromList(inflowIndex);
         } catch (CategoryNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Sorry. " + e.getMessage());
         }
-        updatedInflow = new Inflow(inflowName, inflowAmount, inflowDate + " " + inflowTime);
     }
 
     public String execute(TransactionManager manager) throws Exception {
