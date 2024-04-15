@@ -13,7 +13,6 @@ public class UndoCommand extends BaseCommand {
     private Inflow inflow;
     private Outflow outflow;
     private Reminder reminder;
-    private String action;
     private boolean canUndo = false;
     private boolean canExecute;
     private long startTime;
@@ -23,8 +22,9 @@ public class UndoCommand extends BaseCommand {
         super(false, commandParts);
         if (commandParts[0].contains("flow") || commandParts[0].contains("reminder")) {
             lastCommandParts = commandParts;
+        } else {
+            lastCommandParts = null;
         }
-        action = commandParts[0];
         canExecute = false;
     }
 
@@ -112,7 +112,7 @@ public class UndoCommand extends BaseCommand {
         }
         if (canUndo) {
             canUndo = false;
-            return "Ok. " + action + " has been undone.";
+            return "Ok. " + lastCommandParts[0] + " has been undone.";
         }
         throw new UndoNotPermittedException(didUndoTimerRunout(), true);
     }
