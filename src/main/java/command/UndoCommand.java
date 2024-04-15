@@ -20,7 +20,7 @@ public class UndoCommand extends BaseCommand {
 
     public UndoCommand(String[] commandParts) {
         super(false, commandParts);
-        if (commandParts[0].contains("flow") || commandParts[0].contains("reminder")) {
+        if (commandParts[0].contains("add") || commandParts[0].contains("delete")) {
             lastCommandParts = commandParts;
         } else {
             lastCommandParts = null;
@@ -68,18 +68,15 @@ public class UndoCommand extends BaseCommand {
             canUndo = true;
             index = Integer.parseInt(lastCommandParts[1].substring(2));
             System.out.println(index);
-            Inflow inflowToRemove = manager.getNthInflowFromList(index);
-            return manager.addTransaction(inflowToRemove);
+            return manager.addTransaction(inflow);
         case "delete-outflow":
             canUndo = true;
             index = Integer.parseInt(lastCommandParts[1].substring(2));
-            Outflow outflowToRemove = manager.getNthOutflowFromList(index);
-            return manager.addTransaction(outflowToRemove);
+            return manager.addTransaction(outflow);
         case "delete-reminder":
             canUndo = true;
             index = Integer.parseInt(lastCommandParts[1].substring(2));
-            Reminder reminderToRemove = manager.getNthReminderFromList(index);
-            return manager.addTransaction(reminderToRemove);
+            return manager.addTransaction(reminder);
         case "add-inflow":
             canUndo = true;
             manager.removeTransaction(inflow);
@@ -91,21 +88,6 @@ public class UndoCommand extends BaseCommand {
         case "add-reminder":
             canUndo = true;
             manager.removeTransaction(reminder);
-            break;
-        case "edit-inflow":
-            canUndo = true;
-            index = Integer.parseInt(lastCommandParts[1].substring(2));
-            manager.editInflow(index, inflow);
-            break;
-        case "edit-outflow":
-            canUndo = true;
-            index = Integer.parseInt(lastCommandParts[1].substring(2));
-            manager.editOutflow(index, outflow);
-            break;
-        case "edit-reminder":
-            canUndo = true;
-            index = Integer.parseInt(lastCommandParts[1].substring(2));
-            manager.editReminder(index, reminder);
             break;
         default:
             throw new UndoNotPermittedException(didUndoTimerRunout(), true);

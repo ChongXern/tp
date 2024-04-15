@@ -70,31 +70,31 @@ public class TransactionManager {
 
     public void removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
-        Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(index);
+        Inflow transactionRemoved = getNthInflowFromList(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        inflows.removeTransactionIndex(index);
+        inflows.removeTransactionIndex(inflows.getIndexOfParticularTransaction(transactionRemoved));
         inflows.sortTransactions();
     }
 
     public void removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
-        Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(index);
+        Outflow transactionRemoved = getNthOutflowFromList(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        outflows.removeTransactionIndex(index);
+        outflows.removeTransactionIndex(outflows.getIndexOfParticularTransaction(transactionRemoved));
         outflows.sortTransactions();
     }
 
     public void removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
-        Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(index);
+        Reminder transactionRemoved = getNthReminderFromList(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
 
-        reminders.removeTransactionIndex(index);
+        reminders.removeTransactionIndex(reminders.getIndexOfParticularTransaction(transactionRemoved));
         reminders.sortTransactions();
     }
 
@@ -148,7 +148,7 @@ public class TransactionManager {
         }
         int index = 1;
         String returnedText = "Inflows:\nTransactions:\n";
-        for (int i = listSize - 1; i > listSize - n - 1; i--) {
+        for (int i = listSize - n; i <= listSize - 1; i++) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Inflow) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -158,7 +158,7 @@ public class TransactionManager {
 
         index = 1;
         returnedText += "\nOutflows:\nTransactions:\n";
-        for (int i = listSize - 1; i > listSize - n - 1; i--) {
+        for (int i = listSize - n; i <= listSize - 1; i++) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Outflow) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -168,7 +168,7 @@ public class TransactionManager {
 
         index = 1;
         returnedText += "\nReminders:\nTransactions:\n";
-        for (int i = listSize - 1; i > listSize - n - 1; i--) {
+        for (int i = listSize - n; i <= listSize - 1; i++) {
             Transaction<?> transaction = transactionList.getNthTransaction(i);
             if (transaction instanceof Reminder) {
                 returnedText += String.format("%d)  %s\n", index, transactionList.getNthTransaction(i).toString());
@@ -274,14 +274,14 @@ public class TransactionManager {
     }
 
     public Inflow getNthInflowFromList(int n) throws Exception {
-        return (Inflow) inflows.getNthTransaction(getNumOfInflows() - n);
+        return (Inflow) inflows.getNthTransaction(n);
     }
 
     public Outflow getNthOutflowFromList(int n) throws Exception {
-        return (Outflow) outflows.getNthTransaction(getNumOfOutflows() - n);
+        return (Outflow) outflows.getNthTransaction(n);
     }
 
     public Reminder getNthReminderFromList(int n) throws Exception {
-        return (Reminder) reminders.getNthTransaction(getNumOfReminders() - n);
+        return (Reminder) reminders.getNthTransaction(n);
     }
 }
