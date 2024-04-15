@@ -29,7 +29,7 @@ public abstract class BaseCommand {
 
     public abstract String execute(TransactionManager manager) throws Exception;
 
-    public abstract void createTransaction() throws IncorrectCommandSyntaxException;
+    public abstract void createTransaction() throws Exception;
 
     public boolean isExit() {
         return this.isExit;
