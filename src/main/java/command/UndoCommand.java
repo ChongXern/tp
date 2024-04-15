@@ -67,7 +67,6 @@ public class UndoCommand extends BaseCommand {
         case "delete-inflow":
             canUndo = true;
             index = Integer.parseInt(lastCommandParts[1].substring(2));
-            System.out.println(index);
             return manager.addTransaction(inflow);
         case "delete-outflow":
             canUndo = true;
