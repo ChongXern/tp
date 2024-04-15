@@ -5,8 +5,6 @@ import financialtransactions.TransactionManager;
 
 public class DeleteOutflowCommand extends BaseCommand {
     private int outflowIndex = -1;
-    private TransactionManager manager;
-
     public DeleteOutflowCommand(String[] commandParts) {
         super(false, commandParts);
     }
@@ -24,10 +22,6 @@ public class DeleteOutflowCommand extends BaseCommand {
         } catch (Exception e) {
             System.out.println("Sorry. " + e.getMessage());
         }
-    }
-
-    public void setManager(TransactionManager manager) {
-        this.manager = manager;
     }
 
     public String execute(TransactionManager manager) throws Exception {

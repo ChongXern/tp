@@ -13,14 +13,9 @@ public class EditInflowCommand extends BaseCommand {
     private String inflowTime = null;
     private String inflowCategory = null;
     private Inflow updatedInflow;
-    private TransactionManager manager;
 
     public EditInflowCommand(String[] commandParts) {
         super(false, commandParts);
-    }
-
-    public void setManager(TransactionManager manager) {
-        this.manager = manager;
     }
 
     @Override

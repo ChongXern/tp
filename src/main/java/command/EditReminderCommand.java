@@ -13,14 +13,9 @@ public class EditReminderCommand extends BaseCommand {
     private String reminderTime = null;
     private String reminderCategory = null;
     private Reminder updatedReminder;
-    private TransactionManager manager;
 
     public EditReminderCommand(String[] commandParts) {
         super(false, commandParts);
-    }
-
-    public void setManager(TransactionManager manager) {
-        this.manager = manager;
     }
 
     @Override

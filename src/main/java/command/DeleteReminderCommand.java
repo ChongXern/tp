@@ -5,7 +5,6 @@ import financialtransactions.TransactionManager;
 
 public class DeleteReminderCommand extends BaseCommand {
     private int reminderIndex = -1;
-    private TransactionManager manager;
 
     public DeleteReminderCommand(String[] commandParts) {
         super(false, commandParts);
@@ -23,10 +22,6 @@ public class DeleteReminderCommand extends BaseCommand {
         } catch (Exception e) {
             System.out.println("Sorry. " + e.getMessage());
         }
-    }
-
-    public void setManager(TransactionManager manager) {
-        this.manager = manager;
     }
 
     public String execute(TransactionManager manager) throws Exception {
