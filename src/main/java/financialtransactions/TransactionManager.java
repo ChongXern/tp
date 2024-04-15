@@ -28,6 +28,7 @@ public class TransactionManager {
         transactionList.addTransaction(transaction);
         transactionList.sortTransactions();
         if (transaction instanceof Inflow) {
+            System.out.println("TRANSACTION INSTANCE OF INFLOW");
             Inflow inflow = (Inflow) transaction;
             transactionList.setTransactionsType("Inflow");
             inflows.addTransaction(inflow);
@@ -68,7 +69,7 @@ public class TransactionManager {
         return "Invalid transaction type.";
     }
 
-    public Inflow removeInflow(int index) throws Exception {
+    public void removeInflow(int index) throws Exception {
         int numOfInflows = inflows.getTransactionListSize();
         Inflow transactionRemoved = (Inflow) inflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
@@ -76,10 +77,9 @@ public class TransactionManager {
 
         inflows.removeTransactionIndex(index);
         inflows.sortTransactions();
-        return transactionRemoved;
     }
 
-    public Outflow removeOutflow(int index) throws Exception {
+    public void removeOutflow(int index) throws Exception {
         int numOfOutflows = outflows.getTransactionListSize();
         Outflow transactionRemoved = (Outflow) outflows.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
@@ -87,18 +87,16 @@ public class TransactionManager {
 
         outflows.removeTransactionIndex(index);
         outflows.sortTransactions();
-        return transactionRemoved;
     }
 
-    public Reminder removeReminder(int index) throws Exception {
+    public void removeReminder(int index) throws Exception {
         int numOfReminders = reminders.getTransactionListSize();
         Reminder transactionRemoved = (Reminder) reminders.getNthTransaction(index);
         transactionList.removeTransactionIndex(transactionList.getIndexOfParticularTransaction(transactionRemoved));
         transactionList.sortTransactions();
-        
+
         reminders.removeTransactionIndex(index);
         reminders.sortTransactions();
-        return transactionRemoved;
     }
 
     public Inflow editInflow(int index, Transaction<?> updatedTransaction) throws Exception {
@@ -231,7 +229,7 @@ public class TransactionManager {
             return false;
         }
     }
-    //@@author    
+
     public int getTransactionListSize() {
         return transactionList.getTransactionListSize();
     }
@@ -241,6 +239,7 @@ public class TransactionManager {
     }
 
     public Inflow getNthInflowFromList(int n) throws Exception {
+        System.out.println("HELLO WORLD");
         return (Inflow) inflows.getNthTransaction(n - 1);
     }
 

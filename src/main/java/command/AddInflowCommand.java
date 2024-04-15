@@ -23,6 +23,19 @@ public class AddInflowCommand extends BaseCommand {
         inflow.setCategory(inflowCategory);
     }
 
+    @Override
+    public String execute(TransactionManager manager) {
+        //@@author Kishen271828
+        if (!canExecute) {
+            return "Sorry, inflow not added.";
+        }
+        if (inflow.getDate().getDateTime() == null) {
+            return "Please enter a valid date or time";
+        }
+        manager.addTransaction(inflow);
+        return "Ok. Added inflow";
+    }
+
     public void createTransaction() throws IncorrectCommandSyntaxException {
         //@@author Kishen271828
         /* Iterates through the parts of the original command string that checks and updates
@@ -50,16 +63,5 @@ public class AddInflowCommand extends BaseCommand {
         inflow = new Inflow(inflowName, inflowAmount, inflowDateTime);
     }
 
-    public String execute(TransactionManager manager) {
-        //@@author Kishen271828
-        if (!canExecute) {
-            return "Sorry, inflow not added.";
-        }
-        if (inflow.getDate().getDateTime() == null) {
-            return "Please enter a valid date or time";
-        }
-        manager.addTransaction(inflow);
-        return "Ok. Added inflow";
-    }
 
 }

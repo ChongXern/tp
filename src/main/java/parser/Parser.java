@@ -19,6 +19,8 @@ import command.GenerateReportCommand;
 import customexceptions.IncompletePromptException;
 import userinterface.UI;
 
+import financialtransactions.TransactionManager;
+
 public class Parser {
     UI ui;
 
@@ -27,11 +29,18 @@ public class Parser {
     BaseCommand lastCommand;
     UndoCommand undoCommand = new UndoCommand(new String[]{"undo", "command"});
     String lastAction;
+    TransactionManager manager; // Fetches transactions based on indexes only.
     public Parser(UI ui) {
         this.ui = ui;
     }
 
+    public void setManager(TransactionManager manager) {
+        this.manager = manager;
+        undoCommand.setManager(manager);
+    }
+
     public BaseCommand parseCommand(String command) throws Exception {
+        System.out.println("SIZE OF MANAGER BEFORE IS " + manager.getTransactionListSize());
         String[] commandParts = command.split("\\s+");
         String action = commandParts[0];
         switch (action) {
@@ -73,10 +82,13 @@ public class Parser {
             if (commandParts.length < 2) {
                 throw new IncompletePromptException(command);
             }
-            lastCommand = new DeleteInflowCommand(commandParts);
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);
+
+            lastCommand = new DeleteInflowCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             undoCommand.setInflow(lastCommand.getInflow());
             return lastCommand;
         case "delete-outflow":
@@ -84,6 +96,8 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastCommand = new DeleteOutflowCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);
@@ -94,6 +108,8 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastCommand = new DeleteReminderCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);
@@ -104,6 +120,8 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastCommand = new EditInflowCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);
@@ -114,6 +132,8 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastCommand = new EditOutflowCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);
@@ -124,6 +144,8 @@ public class Parser {
                 throw new IncompletePromptException(command);
             }
             lastCommand = new EditReminderCommand(commandParts);
+            lastCommand.setManager(manager);
+            lastCommand.createTransaction();
             lastAction = action;
             lastCommandParts = commandParts;
             undoCommand.setCanUndo(true, commandParts);

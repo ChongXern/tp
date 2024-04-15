@@ -16,12 +16,10 @@ import user.BaseUser;
 import user.InactivityTimer;
 import userinterface.UI;
 
-import javax.swing.undo.CannotUndoException;
-import java.util.concurrent.CancellationException;
-
 public class Main {
     public static void main(String[] args) throws SecurityException {
         Storage storage = new Storage("./data"); // Storage manager for jar file
+        TransactionManager manager;
 
         UI ui = new UI();
         ui.printMessage("Welcome. Enter your username and password to login.");
@@ -44,8 +42,7 @@ public class Main {
             ui.printMessage(e.getMessage());
             return;
         }
-        TransactionManager manager;
-        try{
+        try {
             manager = storage.loadFile(user.getUsername());
         } catch (CategoryNotFoundException e){
             ui.printMessage(e.getMessage());
@@ -58,6 +55,7 @@ public class Main {
             //ui.printMessage("How can we help you financially today?\n" + //
                                 //"Type 'help' to view guide");
             response = ui.readInput();
+            parser.setManager(manager);
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
@@ -67,14 +65,7 @@ public class Main {
                      IllegalArgumentException | UndoNotPermittedException e) {
                 ui.printMessage(e.getMessage());
             } catch (Exception e) {
-                // StackTraceElement[] stackTrace = e.getStackTrace();
-                // if (stackTrace.length > 0) {
-                //     StackTraceElement stackElement = stackTrace[0];
-                //     System.out.println("Error in file " + stackElement.getFileName() +
-                //             " at line " + stackElement.getLineNumber() +
-                //             ", method " + stackElement.getMethodName());
-                // }
-                // ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
+                ui.printMessage("Uh-oh, something went wrong: " + e.getMessage());
             }
 
             try{

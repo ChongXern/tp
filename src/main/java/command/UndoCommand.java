@@ -5,7 +5,6 @@ import financialtransactions.Inflow;
 import financialtransactions.Outflow;
 import financialtransactions.Reminder;
 import financialtransactions.TransactionManager;
-import user.InactivityTimer;
 
 //@@author ChongXern
 public class UndoCommand extends BaseCommand {
@@ -17,7 +16,6 @@ public class UndoCommand extends BaseCommand {
     private String action;
     private boolean canUndo = false;
     private boolean canExecute;
-    private InactivityTimer timer;
     private long startTime;
     private String[] lastCommandParts;
 
@@ -30,12 +28,11 @@ public class UndoCommand extends BaseCommand {
         action = commandParts[0];
         System.out.println("ACTION IS " + action);
         canExecute = false;
-        timer = new InactivityTimer();
     }
 
     public void setInflow(Inflow inflow) {
         this.inflow = inflow;
-        System.out.println("THIS INFLOW IS " + this.inflow.getName());
+        System.out.println("THIS SET INFLOW IS " + this.inflow.getName());
         this.outflow = null;
         this.reminder = null;
     }
@@ -63,6 +60,7 @@ public class UndoCommand extends BaseCommand {
 
     public void allowExecute(String lastAction) {
         canExecute = (lastAction != null);
+        System.out.println("INFLOW IS: " + inflow);
     }
 
     public String execute(TransactionManager manager) throws Exception {
@@ -75,18 +73,19 @@ public class UndoCommand extends BaseCommand {
         case "delete-inflow":
             System.out.println("ADDING BACK INFLOW");
             canUndo = true;
-            int inflowIndex = Integer.parseInt(commandParts[1].substring(2));
-            Inflow inflowToRemove = manager.getNthInflowFromList(inflowIndex);
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            System.out.println(index);
+            Inflow inflowToRemove = manager.getNthInflowFromList(index);
             return manager.addTransaction(inflowToRemove);
         case "delete-outflow":
             canUndo = true;
-            int outflowIndex = Integer.parseInt(commandParts[1].substring(2));
-            Outflow outflowToRemove = manager.getNthOutflowFromList(outflowIndex);
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            Outflow outflowToRemove = manager.getNthOutflowFromList(index);
             return manager.addTransaction(outflowToRemove);
         case "delete-reminder":
             canUndo = true;
-            int reminderIndex = Integer.parseInt(commandParts[1].substring(2));
-            Reminder reminderToRemove = manager.getNthReminderFromList(reminderIndex);
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            Reminder reminderToRemove = manager.getNthReminderFromList(index);
             return manager.addTransaction(reminderToRemove);
         case "add-inflow":
             System.out.println("DELETING PREVIOUS INFLOW");
@@ -101,6 +100,21 @@ public class UndoCommand extends BaseCommand {
         case "add-reminder":
             canUndo = true;
             manager.removeTransaction(reminder);
+            break;
+        case "edit-inflow":
+            canUndo = true;
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            manager.editInflow(index, inflow);
+            break;
+        case "edit-outflow":
+            canUndo = true;
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            manager.editOutflow(index, outflow);
+            break;
+        case "edit-reminder":
+            canUndo = true;
+            index = Integer.parseInt(lastCommandParts[1].substring(2));
+            manager.editReminder(index, reminder);
             break;
         default:
             throw new UndoNotPermittedException(didUndoTimerRunout(), true);
