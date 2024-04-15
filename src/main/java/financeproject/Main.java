@@ -35,6 +35,10 @@ public class Main {
             ui.printMessage("Username: ");
             response = ui.readInput();
             //user = storage.loadUser(response);
+            if (!response.toLowerCase().equals("bob")){
+                ui.printMessage("User not found, exiting program");
+                return;
+            }
             user = storage.loadMockUser();
             Authentication.authenticateUser(user, ui);
             ui.printMessage("User has been authenticated. Starting program...");
