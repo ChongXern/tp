@@ -121,10 +121,8 @@ public class Parser {
             lastCommand = new EditInflowCommand(commandParts);
             lastCommand.setManager(manager);
             lastCommand.createTransaction();
-            lastAction = action;
-            lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true, commandParts);
-            undoCommand.setInflow(lastCommand.getInflow());
+            lastAction = null;
+            undoCommand.setCanUndo(false, null);
             return lastCommand;
         case "edit-outflow":
             if (commandParts.length < 7) {
@@ -133,10 +131,8 @@ public class Parser {
             lastCommand = new EditOutflowCommand(commandParts);
             lastCommand.setManager(manager);
             lastCommand.createTransaction();
-            lastAction = action;
-            lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true, commandParts);
-            undoCommand.setOutflow(lastCommand.getOutflow());
+            lastAction = null;
+            undoCommand.setCanUndo(false, null);
             return lastCommand;
         case "edit-reminder":
             if (commandParts.length < 7) {
@@ -145,10 +141,8 @@ public class Parser {
             lastCommand = new EditReminderCommand(commandParts);
             lastCommand.setManager(manager);
             lastCommand.createTransaction();
-            lastAction = action;
-            lastCommandParts = commandParts;
-            undoCommand.setCanUndo(true, commandParts);
-            undoCommand.setReminder(lastCommand.getReminder());
+            lastAction = null;
+            undoCommand.setCanUndo(false, null);
             return lastCommand;
         case "set-budget":
             if (commandParts.length < 2) {
