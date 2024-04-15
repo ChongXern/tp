@@ -4,7 +4,7 @@ import customexceptions.CategoryNotFoundException;
 
 public class Reminder extends Transaction<Reminder.Category> {
     public enum Category {
-        INSTALLMENT, CREDITCARD, UTILITIES
+        INSTALLMENT, CREDITCARD, UTILITIES, OTHER
     }
 
     public Reminder(String name, double amount, String date) {

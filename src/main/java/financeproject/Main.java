@@ -51,14 +51,19 @@ public class Main {
         ui.printMessage(manager.generateQuickReport());
 
         // Main program flow
+        ui.printLine();
+        ui.printMessage("How can we help you financially today?\n" + //
+                                "Type 'help' to view guide");
+        ui.printLine();
         do {
-            //ui.printMessage("How can we help you financially today?\n" + "Type 'help' to view guide");
             response = ui.readInput();
             parser.setManager(manager);
             try {
                 baseCommand = parser.parseCommand(response);
                 response = baseCommand.execute(manager);
+                ui.printLine();
                 ui.printMessage(response);
+                ui.printLine();
                 inactivityTimer.resetTimer();
             } catch (IncompletePromptException | IncorrectCommandSyntaxException |
                      IllegalArgumentException | UndoNotPermittedException e) {
