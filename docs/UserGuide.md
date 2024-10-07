@@ -7,7 +7,7 @@ FinTrack is a desktop app designed for individuals who want to manage their fina
 ## Quick Start
 
 1. Ensure that you have Java 11 or above installed.
-2. Download the latest version of `FinTrack.jar` from [here](https://github.com/AY2324S2-CS2113-F14-4/tp/releases/tag/v2.0).
+2. Download the latest version of `FinTrack.jar` from the latest milestone in our product website.
 3. Copy the file to the folder you want to use as the home folder for your FinTrack app.
 4. Open a command terminal, navigate to the folder containing the jar file, and run the command `java -jar FinTrack.jar` to run the application.
 5. Upon starting FinTrack, you will first be prompted to type the username and password. The username is **Bob** and the password is **password**
